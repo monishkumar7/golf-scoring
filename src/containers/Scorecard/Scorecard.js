@@ -7,7 +7,7 @@ class Scorecard extends Component {
     render() {
         return (
             <div>
-                <HoleScore holeNumber="1" holeScore="3"/>
+                <HoleScore holeNumber="1" holeScore={this.props.holeScore}/>
                 <Total total="10" />
             </div>
         );

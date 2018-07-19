@@ -10,7 +10,8 @@ const holeInput = (props) => {
             <Input
                 type="number"
                 name={props.name}
-                value={props.value} />
+                value={props.value}
+                changed={props.changed}/>
         </div>
     )
 }
