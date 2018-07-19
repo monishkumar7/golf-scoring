@@ -1,6 +1,14 @@
 .Input {
     display: block;
-    width: 100%;
     padding: 5px 10px;
     margin: 10px;
+}
+
+.Input input {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #444;
 }
