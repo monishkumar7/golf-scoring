@@ -9,10 +9,16 @@ import * as actionTypes from '../../store/actions';
 
 class App extends Component {
   render() {
+    const holeInput = (
+      this.props.holesArray.map(hole => {
+        return <HoleInput key={hole.id} holeNumber={hole.id} name={hole.id} value={hole.value} changed={(event) => this.props.onInputChanged(event.target.value)}/>
+      })
+    );
+
     return (
       <Aux>
-        <Scorecard holeScore={this.props.score}/>
-        <HoleInput holeNumber="1" name="hole1" value={this.props.score} changed={(event) => this.props.onInputChanged(event.target.value)}/>
+        <Scorecard total={this.props.total} holesArray={this.props.holesArray}/>
+        {holeInput}
       </Aux>
     );
   }
@@ -20,7 +26,10 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    score: state.score
+    holesArray: state.holesArray,
+    total1: state.total1,
+    total2: state.total2,
+    total: state.total
   }
 }
 

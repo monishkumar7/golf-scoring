@@ -5,10 +5,16 @@ import Total from '../../components/Total/Total';
 
 class Scorecard extends Component {
     render() {
+        const scorecard = (
+            this.props.holesArray.map(hole => {
+                return <HoleScore key={hole.id} holeNumber={hole.id} holeScore={hole.value}/>
+            })
+        )
+
         return (
             <div>
-                <HoleScore holeNumber="1" holeScore={this.props.holeScore}/>
-                <Total total="10" />
+                {scorecard}
+                <Total total={this.props.total} />
             </div>
         );
     }
