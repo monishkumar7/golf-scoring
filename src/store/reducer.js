@@ -23,15 +23,44 @@ const initialState = {
     ],
     total1: '',
     total2: '',
-    total: 70
+    total: ''
 }
 
 const reducer = (state = initialState, action) => {
     switch(action.type) {
         case actionTypes.INPUT_CHANGE:
+            let updatedTotal1 = state.total1;
+            let updatedTotal2 = state.total2;
+            let updatedTotal = state.total;
+            if(action.newScore !== '') {
+                if(action.holeId < 10) {
+                    updatedTotal1 = updatedTotal1 + parseFloat(action.newScore) - state.holesArray[action.holeId-1].value;
+                } else if (action.holeId > 9) {
+                    updatedTotal2 =  updatedTotal2 + parseFloat(action.newScore) - state.holesArray[action.holeId-1].value;
+                }
+                updatedTotal = updatedTotal + parseFloat(action.newScore) - state.holesArray[action.holeId-1].value;
+            } else {
+                if(action.holeId < 10) {
+                    updatedTotal1 = updatedTotal1 - state.holesArray[action.holeId-1].value;
+                } else if (action.holeId > 9) {
+                    updatedTotal2 =  updatedTotal2 - state.holesArray[action.holeId-1].value;
+                }
+                updatedTotal = updatedTotal - state.holesArray[action.holeId-1].value;
+            }
             return {
-                ...initialState,
-                score: action.newScore
+                holesArray: state.holesArray.map((arrayItem, index) => {
+                    if(index+1 !== action.holeId){
+                        return arrayItem;
+                    }
+
+                    return {
+                        ...arrayItem,
+                        value: action.newScore
+                    }
+                }),
+                total1: updatedTotal1,
+                total2: updatedTotal2,
+                total: updatedTotal,
             }
         default:
             return state;

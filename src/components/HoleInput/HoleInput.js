@@ -8,10 +8,10 @@ const holeInput = (props) => {
         <div className={classes.HoleInput}>
             <h4>Hole #{props.holeNumber}</h4>
             <Input
-                type="number"
                 name={props.name}
                 value={props.value}
                 changed={props.changed}/>
+            <h4>Par - {props.par}</h4>
         </div>
     )
 }
