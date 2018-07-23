@@ -62,6 +62,10 @@ const reducer = (state = initialState, action) => {
                 total2: updatedTotal2,
                 total: updatedTotal,
             }
+
+        case actionTypes.RESET_SCORE:
+            return initialState;
+
         default:
             return state;
     }

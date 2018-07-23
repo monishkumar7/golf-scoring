@@ -4,17 +4,21 @@
     padding: 5px;
     margin: 5px;
     width: 50px;
+    box-shadow: -1px 1px 4px 0px #ccc;
+    text-align: center;
+}
+
+.HoleScore hr {
+    margin: 4px 5px 4px;
+    border: 0.5px solid #ccc;
 }
 
 .Number {
-    border: 1px solid #ccc;
-    text-align: center;
+    font-size: 14px;
+    font-weight: 200;
 }
 
 .Score {
-    border: 1px solid #ccc;
-    border-top: none;
-    text-align: center;
     font-weight: bold;
     font-size: 31px;
 }

@@ -20,10 +20,10 @@ class Scorecard extends Component {
         return (
             <div>
                 {scorecard1}
-                <Total total={this.props.total1} />
+                <Total title="Front" total={this.props.total1} />
                 {scorecard2}
-                <Total total={this.props.total2} />
-                <Total total={this.props.total} />
+                <Total title="Back" total={this.props.total2} />
+                <Total title="Total" total={this.props.total} />
             </div>
         );
     }

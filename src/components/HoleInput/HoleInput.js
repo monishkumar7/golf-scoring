@@ -6,12 +6,12 @@ import Input from '../UI/Input/Input';
 const holeInput = (props) => {
     return (
         <div className={classes.HoleInput}>
-            <h4>Hole #{props.holeNumber}</h4>
+            <p>Hole #{props.holeNumber}</p>
             <Input
                 name={props.name}
                 value={props.value}
                 changed={props.changed}/>
-            <h4>Par - {props.par}</h4>
+            <p>Par - {props.par}</p>
         </div>
     )
 }

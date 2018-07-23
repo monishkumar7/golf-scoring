@@ -6,3 +6,7 @@
     box-shadow: 0 2px 3px #ccc;
     margin: 10px;
 }
+
+.HoleInput p {
+    margin: 0
+}
