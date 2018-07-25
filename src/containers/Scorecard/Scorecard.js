@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import HoleScore from '../../components/HoleScore/HoleScore';
 import Total from '../../components/Total/Total';
+import classes from './Scorecard.css';
 
 class Scorecard extends Component {
     render() {
@@ -18,11 +19,13 @@ class Scorecard extends Component {
         )
 
         return (
-            <div>
+            <div className={classes.Scorecard}>
                 {scorecard1}
                 <Total title="Front" total={this.props.total1} />
+                <br/>
                 {scorecard2}
                 <Total title="Back" total={this.props.total2} />
+                <br/>
                 <Total title="Total" total={this.props.total} />
             </div>
         );
