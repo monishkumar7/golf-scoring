@@ -18,8 +18,10 @@ class App extends Component {
 
     return (
       <Aux>
+        <Button disabled={false} clicked={this.props.onLogin}>Login</Button>
         <Button disabled={false} clicked={this.props.onResetClicked}>Reset Score</Button>
-        <Scorecard total={this.props.total} total1={this.props.total1} total2={this.props.total2} holesArray={this.props.holesArray}/>
+        <Button disabled={false} clicked={this.props.onLogout}>Logout</Button>
+        <Scorecard auth={this.props.auth} total={this.props.total} total1={this.props.total1} total2={this.props.total2} holesArray={this.props.holesArray}/>
         <div style={{margin: "20px auto", width: "90%"}}>
         {holeInput}
         </div>
@@ -33,14 +35,17 @@ const mapStateToProps = state => {
     holesArray: state.holesArray,
     total1: state.total1,
     total2: state.total2,
-    total: state.total
+    total: state.total,
+    auth: state.authenticated
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     onInputChanged: (score, id) => dispatch({type: actionTypes.INPUT_CHANGE, newScore: score, holeId: id}),
-    onResetClicked: () => dispatch({type: actionTypes.RESET_SCORE})
+    onResetClicked: () => dispatch({type: actionTypes.RESET_SCORE}),
+    onLogin: () => dispatch({type:actionTypes.AUTH_SUCCESS}),
+    onLogout: () => dispatch({type:actionTypes.AUTH_FAIL})
   }
 }
 

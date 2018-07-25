@@ -23,7 +23,8 @@ const initialState = {
     ],
     total1: '',
     total2: '',
-    total: ''
+    total: '',
+    authenticated: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -66,6 +67,17 @@ const reducer = (state = initialState, action) => {
         case actionTypes.RESET_SCORE:
             return initialState;
 
+        case actionTypes.AUTH_SUCCESS:
+            return {
+                ...state,
+                authenticated: true
+            }
+
+        case actionTypes.AUTH_FAIL:
+            return {
+                ...state,
+                authenticated: false
+            }
         default:
             return state;
     }
