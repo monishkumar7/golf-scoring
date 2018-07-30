@@ -5,7 +5,7 @@ import './App.css';
 import Scorecard from '../Scorecard/Scorecard';
 import HoleInput from '../../components/HoleInput/HoleInput';
 import Aux from '../../hoc/Aux';
-import * as actionTypes from '../../store/actions';
+import * as actionCreators from '../../store/actions';
 import Button from '../../components/UI/Button/Button';
 
 class App extends Component {
@@ -21,6 +21,7 @@ class App extends Component {
         <Button disabled={false} clicked={this.props.onLogin}>Login</Button>
         <Button disabled={false} clicked={this.props.onResetClicked}>Reset Score</Button>
         <Button disabled={false} clicked={this.props.onLogout}>Logout</Button>
+        <Button disabled={false} clicked={this.props.onAuthStart}>Auth Start</Button>
         <Scorecard auth={this.props.auth} total={this.props.total} total1={this.props.total1} total2={this.props.total2} holesArray={this.props.holesArray}/>
         <div style={{margin: "20px auto", width: "90%"}}>
         {holeInput}
@@ -42,10 +43,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onInputChanged: (score, id) => dispatch({type: actionTypes.INPUT_CHANGE, newScore: score, holeId: id}),
-    onResetClicked: () => dispatch({type: actionTypes.RESET_SCORE}),
-    onLogin: () => dispatch({type:actionTypes.AUTH_SUCCESS}),
-    onLogout: () => dispatch({type:actionTypes.AUTH_FAIL})
+    onInputChanged: (score, id) => dispatch(actionCreators.inputChange(score, id)),
+    onResetClicked: () => dispatch(actionCreators.resetScore()),
+    onAuthStart: () => dispatch(actionCreators.authStart()),
+    onLogin: () => dispatch(actionCreators.authSuccess()),
+    onLogout: () => dispatch(actionCreators.authFail())
   }
 }
 
