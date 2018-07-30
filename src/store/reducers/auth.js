@@ -12,6 +12,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.AUTH_SUCCESS:
             return {
                 ...state,
+                userId: action.userId,
                 authenticated: true
             }
 
