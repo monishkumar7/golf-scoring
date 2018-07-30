@@ -33,11 +33,11 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    holesArray: state.holesArray,
-    total1: state.total1,
-    total2: state.total2,
-    total: state.total,
-    auth: state.authenticated
+    holesArray: state.scores.holesArray,
+    total1: state.scores.total1,
+    total2: state.scores.total2,
+    total: state.scores.total,
+    auth: state.auth.authenticated
   }
 }
 
