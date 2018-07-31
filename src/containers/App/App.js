@@ -64,7 +64,10 @@ const mapDispatchToProps = dispatch => {
   return {
     onInputChanged: (score, id) =>
       dispatch(actionCreators.inputChange(score, id)),
-    onResetClicked: () => dispatch(actionCreators.resetScore()),
+    onResetClicked: () => {
+      let confirmation = window.confirm("Are you sure?");
+      if (confirmation) dispatch(actionCreators.resetScore());
+    },
     onAuthStart: (username, password) =>
       dispatch(actionCreators.authStart(username, password)),
     onSubmitClicked: () => dispatch(actionCreators.submitScore())
