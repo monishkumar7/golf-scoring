@@ -1,12 +1,12 @@
 .HoleInput {
-    display: inline-block;
-    box-sizing: border-box;
-    text-align: center;
-    padding: 10px;
-    box-shadow: 0 2px 3px #ccc;
-    margin: 10px;
+  display: inline-block;
+  box-sizing: border-box;
+  text-align: center;
+  padding: 10px;
+  box-shadow: 0 2px 3px #ccc;
+  margin: 10px;
 }
 
 .HoleInput p {
-    margin: 0
+  margin: 0;
 }

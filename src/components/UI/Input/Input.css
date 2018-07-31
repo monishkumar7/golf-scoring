@@ -1,15 +1,15 @@
 .Input {
-    display: block;
-    padding: 5px 10px;
-    margin: 10px;
+  display: block;
+  padding: 5px 10px;
+  margin: 10px;
 }
 
 .Input input {
-    width: 40px;
-    height: 40px;
-    font-size: 25px;
-    font-weight: bold;
-    padding: 5px;
-    text-align: center;
-    border: 1px solid #444;
+  width: 40px;
+  height: 40px;
+  font-size: 25px;
+  font-weight: bold;
+  padding: 5px;
+  text-align: center;
+  border: 1px solid #444;
 }

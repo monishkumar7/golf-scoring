@@ -1,23 +1,23 @@
 .Total {
-    display: inline-block;
-    box-sizing: border-box;
-    padding: 5px;
-    margin: 5px;
-    width: 90px;
-    box-shadow: -1px 1px 4px 0px #ccc;
-    text-align: center
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 5px;
+  margin: 5px;
+  width: 90px;
+  box-shadow: -1px 1px 4px 0px #ccc;
+  text-align: center;
 }
 
 .Total hr {
-    margin: 4px 5px 4px;
-    border: 0.5px solid #ccc;
+  margin: 4px 5px 4px;
+  border: 0.5px solid #ccc;
 }
 
 .Title {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .TotalValue {
-    font-weight: bold;
-    font-size: 31px;
+  font-weight: bold;
+  font-size: 31px;
 }

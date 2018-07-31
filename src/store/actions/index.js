@@ -1,10 +1,3 @@
-export {
-    authStart,
-    authSuccess,
-    authFail
-} from './auth';
+export { authStart, authSuccess, authFail } from "./auth";
 
-export {
-    inputChange,
-    resetScore
-} from './scores';
+export { inputChange, resetScore } from "./scores";
