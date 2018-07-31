@@ -2,10 +2,10 @@ import axios from "axios";
 
 import * as actionTypes from "./actionTypes";
 
-export const authStart = () => {
+export const authStart = (username, password) => {
   return dispatch => {
     axios
-      .get("https://reqres.in/api/users/2")
+      .get("https://reqres.in/api/" + username + "/" + password)
       .then(response => {
         dispatch(
           authSuccess(
@@ -14,7 +14,7 @@ export const authStart = () => {
         );
       })
       .catch(error => {
-        dispatch(authFail());
+        dispatch(authFail(error));
       });
   };
 };
@@ -26,8 +26,9 @@ export const authSuccess = userId => {
   };
 };
 
-export const authFail = () => {
+export const authFail = error => {
   return {
-    type: actionTypes.AUTH_FAIL
+    type: actionTypes.AUTH_FAIL,
+    error: error.message
   };
 };

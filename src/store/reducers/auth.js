@@ -19,7 +19,8 @@ const reducer = (state = initialState, action) => {
     case actionTypes.AUTH_FAIL:
       return {
         ...state,
-        authenticated: false
+        authenticated: false,
+        error: action.error
       };
     default:
       return state;

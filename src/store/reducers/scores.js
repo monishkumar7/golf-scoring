@@ -23,7 +23,8 @@ const initialState = {
   ],
   total1: "",
   total2: "",
-  total: ""
+  total: "",
+  submitted: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -76,6 +77,18 @@ const reducer = (state = initialState, action) => {
 
     case actionTypes.RESET_SCORE:
       return initialState;
+
+    case actionTypes.SUBMIT_SUCCESS:
+      return {
+        ...state,
+        submitted: true
+      };
+
+    case actionTypes.SUBMIT_FAIL:
+      return {
+        ...state,
+        submitted: false
+      };
 
     default:
       return state;

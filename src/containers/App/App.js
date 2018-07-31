@@ -9,6 +9,10 @@ import * as actionCreators from "../../store/actions";
 import Button from "../../components/UI/Button/Button";
 
 class App extends Component {
+  componentDidMount = () => {
+    this.props.onAuthStart("users", 4); // (username, password)
+  };
+
   render() {
     const holeInput = this.props.holesArray.map(hole => {
       return (
@@ -27,18 +31,6 @@ class App extends Component {
 
     return (
       <Aux>
-        <Button disabled={false} clicked={this.props.onLogin}>
-          Login
-        </Button>
-        <Button disabled={false} clicked={this.props.onResetClicked}>
-          Reset Score
-        </Button>
-        <Button disabled={false} clicked={this.props.onLogout}>
-          Logout
-        </Button>
-        <Button disabled={false} clicked={this.props.onAuthStart}>
-          Auth Start
-        </Button>
         <Scorecard
           auth={this.props.auth}
           total={this.props.total}
@@ -47,6 +39,12 @@ class App extends Component {
           holesArray={this.props.holesArray}
         />
         <div style={{ margin: "20px auto", width: "90%" }}>{holeInput}</div>
+        <Button disabled={false} clicked={this.props.onResetClicked}>
+          Reset Score
+        </Button>
+        <Button disabled={false} clicked={this.props.onSubmitClicked}>
+          Submit Score
+        </Button>
       </Aux>
     );
   }
@@ -67,9 +65,9 @@ const mapDispatchToProps = dispatch => {
     onInputChanged: (score, id) =>
       dispatch(actionCreators.inputChange(score, id)),
     onResetClicked: () => dispatch(actionCreators.resetScore()),
-    onAuthStart: () => dispatch(actionCreators.authStart()),
-    onLogin: () => dispatch(actionCreators.authSuccess()),
-    onLogout: () => dispatch(actionCreators.authFail())
+    onAuthStart: (username, password) =>
+      dispatch(actionCreators.authStart(username, password)),
+    onSubmitClicked: () => dispatch(actionCreators.submitScore())
   };
 };
 
