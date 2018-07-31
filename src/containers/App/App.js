@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import "./App.css";
 import Scorecard from "../Scorecard/Scorecard";
 import HoleInput from "../../components/HoleInput/HoleInput";
-import Aux from "../../hoc/Aux";
+import classes from "./App.css";
 import * as actionCreators from "../../store/actions";
 import Button from "../../components/UI/Button/Button";
 
@@ -30,7 +30,7 @@ class App extends Component {
     });
 
     return (
-      <Aux>
+      <div className={classes.App}>
         <Scorecard
           auth={this.props.auth}
           total={this.props.total}
@@ -38,14 +38,14 @@ class App extends Component {
           total2={this.props.total2}
           holesArray={this.props.holesArray}
         />
-        <div style={{ margin: "20px auto", width: "90%" }}>{holeInput}</div>
         <Button disabled={false} clicked={this.props.onResetClicked}>
           Reset Score
         </Button>
         <Button disabled={false} clicked={this.props.onSubmitClicked}>
           Submit Score
         </Button>
-      </Aux>
+        <div style={{ margin: "20px auto", width: "90%" }}>{holeInput}</div>
+      </div>
     );
   }
 }

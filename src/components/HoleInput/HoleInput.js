@@ -7,7 +7,12 @@ const holeInput = props => {
   return (
     <div className={classes.HoleInput}>
       <p>Hole #{props.holeNumber}</p>
-      <Input name={props.name} value={props.value} changed={props.changed} />
+      <Input
+        name={props.name}
+        value={props.value}
+        type="number"
+        changed={props.changed}
+      />
       <p>Par - {props.par}</p>
     </div>
   );
