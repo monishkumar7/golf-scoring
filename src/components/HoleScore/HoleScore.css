@@ -2,21 +2,20 @@
   display: inline-block;
   box-sizing: border-box;
   padding: 0 0 5px 0;
-  margin: 0 0 5px 0;
-  width: 40px;
+  margin: 0;
+  width: 36px;
   text-align: center;
-  background: #faf8f5;
+  background: #fff;
 }
 
 .Number {
   font-size: 14px;
   font-weight: 200;
-  background: #c5cbcb;
+  background: #d7d8db;
   margin: 0 0 5px 0;
   padding: 5px 0;
 }
 
 .Score {
-  font-weight: bold;
-  font-size: 31px;
+  font-size: 20px;
 }

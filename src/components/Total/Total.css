@@ -2,16 +2,16 @@
   display: inline-block;
   box-sizing: border-box;
   padding: 0 0 5px 0;
-  margin: 0 0 5px 0;
+  margin: 0;
   width: 70px;
   text-align: center;
-  background: #fff9f0;
+  background: #fff;
 }
 
 .Title {
   font-size: 14px;
   font-weight: 200;
-  background: #949494;
+  background: #323642;
   margin: 0 0 5px 0;
   padding: 5px 0;
   color: white;
@@ -19,5 +19,5 @@
 
 .TotalValue {
   font-weight: bold;
-  font-size: 31px;
+  font-size: 20px;
 }
