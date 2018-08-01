@@ -22,6 +22,7 @@ class App extends Component {
           name={hole.id}
           par={hole.par}
           value={hole.value}
+          difficulty={hole.difficulty}
           changed={event =>
             this.props.onInputChanged(event.target.value, hole.id)
           }
@@ -31,19 +32,21 @@ class App extends Component {
 
     return (
       <div className={classes.App}>
-        <Scorecard
-          auth={this.props.auth}
-          total={this.props.total}
-          total1={this.props.total1}
-          total2={this.props.total2}
-          holesArray={this.props.holesArray}
-        />
-        <Button disabled={false} clicked={this.props.onResetClicked}>
-          Reset Score
-        </Button>
-        <Button disabled={false} clicked={this.props.onSubmitClicked}>
-          Submit Score
-        </Button>
+        <div className={classes.Scorecard}>
+          <Scorecard
+            auth={this.props.auth}
+            total={this.props.total}
+            total1={this.props.total1}
+            total2={this.props.total2}
+            holesArray={this.props.holesArray}
+          />
+          <Button disabled={false} clicked={this.props.onResetClicked}>
+            Reset Score
+          </Button>
+          <Button disabled={false} clicked={this.props.onSubmitClicked}>
+            Submit Score
+          </Button>
+        </div>
         <div style={{ margin: "20px auto", width: "90%" }}>{holeInput}</div>
       </div>
     );

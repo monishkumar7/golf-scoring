@@ -3,3 +3,9 @@
   margin: 10px auto;
   text-align: center;
 }
+
+@media (max-width: 620px) {
+  .Scorecard {
+    text-align: left;
+  }
+}

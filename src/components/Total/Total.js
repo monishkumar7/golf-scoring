@@ -10,7 +10,6 @@ const total = props => {
   return (
     <div className={classes.Total}>
       <div className={classes.Title}>{props.title}</div>
-      <hr />
       <div className={classes.TotalValue}>{total}</div>
     </div>
   );

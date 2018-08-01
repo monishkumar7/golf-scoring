@@ -14,6 +14,7 @@ const holeInput = props => {
         changed={props.changed}
       />
       <p>Par - {props.par}</p>
+      <p>Difficulty - {props.difficulty}</p>
     </div>
   );
 };

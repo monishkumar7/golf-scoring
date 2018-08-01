@@ -1,21 +1,19 @@
 .HoleScore {
   display: inline-block;
   box-sizing: border-box;
-  padding: 5px;
-  margin: 5px;
-  width: 50px;
-  box-shadow: -1px 1px 4px 0px #ccc;
+  padding: 0 0 5px 0;
+  margin: 0 0 5px 0;
+  width: 40px;
   text-align: center;
-}
-
-.HoleScore hr {
-  margin: 4px 5px 4px;
-  border: 0.5px solid #ccc;
+  background: #faf8f5;
 }
 
 .Number {
   font-size: 14px;
   font-weight: 200;
+  background: #c5cbcb;
+  margin: 0 0 5px 0;
+  padding: 5px 0;
 }
 
 .Score {

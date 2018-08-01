@@ -8,8 +8,7 @@ const holeScore = props => {
   }
   return (
     <div className={classes.HoleScore}>
-      <div className={classes.Number}>#&nbsp;{props.holeNumber}</div>
-      <hr />
+      <div className={classes.Number}>#{props.holeNumber}</div>
       <div className={classes.Score}>{holeScore}</div>
     </div>
   );
