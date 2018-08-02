@@ -20,6 +20,8 @@ class Scorecard extends Component {
 
     return (
       <div className={classes.Scorecard}>
+        Scorecard
+        <br />
         {scorecard1}
         <Total title="Front" total={this.props.total1} />
         <br />

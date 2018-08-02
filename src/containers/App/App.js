@@ -31,7 +31,7 @@ class App extends Component {
     });
 
     let authContent = "Please Login to Continue!";
-    let sourceStatus = "Desktop Login";
+    let sourceStatus = null;
     if (this.props.isAppMode) sourceStatus = "App Login";
     if (this.props.isLoggedIn) {
       authContent = (
@@ -43,14 +43,17 @@ class App extends Component {
               total2={this.props.total2}
               holesArray={this.props.holesArray}
             />
-            <Button disabled={false} clicked={this.props.onResetClicked}>
-              Reset Score
-            </Button>
-            <Button disabled={false} clicked={this.props.onSubmitClicked}>
-              Submit Score
-            </Button>
           </div>
-          <div style={{ margin: "20px auto", width: "90%" }}>{holeInput}</div>
+          <div style={{ margin: "20px auto", width: "90%" }}>
+            User Input <br />
+            {holeInput}
+          </div>
+          <Button disabled={false} clicked={this.props.onResetClicked}>
+            Reset Score
+          </Button>
+          <Button disabled={false} clicked={this.props.onSubmitClicked}>
+            Submit Score
+          </Button>
           <p>{sourceStatus}</p>
         </div>
       );
