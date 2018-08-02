@@ -24,11 +24,18 @@ const initialState = {
   total1: "",
   total2: "",
   total: "",
+  eventId: null,
   submitted: false
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.UPDATE_EVENTID:
+      return {
+        ...state,
+        eventId: action.eventId
+      };
+
     case actionTypes.INPUT_CHANGE:
       let updatedTotal1 = state.total1;
       let updatedTotal2 = state.total2;
@@ -60,6 +67,7 @@ const reducer = (state = initialState, action) => {
         updatedTotal = updatedTotal - state.holesArray[action.holeId - 1].value;
       }
       return {
+        ...state,
         holesArray: state.holesArray.map((arrayItem, index) => {
           if (index + 1 !== action.holeId) {
             return arrayItem;

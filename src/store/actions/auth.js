@@ -2,7 +2,7 @@ import axios from "../../axios-allcal";
 
 import * as actionTypes from "./actionTypes";
 
-export const authStart = (loginToken, appMode) => {
+export const authStart = loginToken => {
   return dispatch => {
     axios
       .get("/account", {
@@ -12,7 +12,7 @@ export const authStart = (loginToken, appMode) => {
       })
       .then(response => {
         console.log(response);
-        dispatch(authSuccess(response.data.name, appMode));
+        dispatch(authSuccess(response.data.userId, response.data.name));
       })
       .catch(error => {
         dispatch(authFail(error));
@@ -20,11 +20,11 @@ export const authStart = (loginToken, appMode) => {
   };
 };
 
-export const authSuccess = (userId, appMode) => {
+export const authSuccess = (userId, userName) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
     userId: userId,
-    appMode: appMode
+    userName: userName
   };
 };
 

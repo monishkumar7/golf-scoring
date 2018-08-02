@@ -11,7 +11,9 @@ class Scoring extends Component {
   componentDidMount = () => {
     const params = new URLSearchParams(this.props.location.search);
     const loginToken = params.get("loginToken");
+    const eventId = params.get("eventId");
     this.props.onAuthStart(loginToken);
+    this.props.onUpdateEventId(eventId);
   };
 
   render() {
@@ -32,8 +34,9 @@ class Scoring extends Component {
     });
 
     let authContent = "Please Login to Continue!";
-    let sourceStatus = this.props.userId;
-    if (this.props.isAppMode) sourceStatus = "App Login - " + this.props.userId;
+    let sourceStatus = this.props.userName;
+    if (this.props.isAppMode)
+      sourceStatus = "App Login - " + this.props.userName;
     if (this.props.isLoggedIn) {
       authContent = (
         <div className={classes.Scoring}>
@@ -71,7 +74,7 @@ const mapStateToProps = state => {
     total: state.scores.total,
     isLoggedIn: state.auth.isLoggedIn,
     isAppMode: state.auth.appMode,
-    userId: state.auth.userId
+    userName: state.auth.userName
   };
 };
 
@@ -83,9 +86,9 @@ const mapDispatchToProps = dispatch => {
       let confirmation = window.confirm("Are you sure?");
       if (confirmation) dispatch(actionCreators.resetScore());
     },
-    onAuthStart: (username, password, appMode) =>
-      dispatch(actionCreators.authStart(username, password, appMode)),
-    onSubmitClicked: () => dispatch(actionCreators.submitScore())
+    onAuthStart: loginToken => dispatch(actionCreators.authStart(loginToken)),
+    onSubmitClicked: () => dispatch(actionCreators.submitScore()),
+    onUpdateEventId: eventId => dispatch(actionCreators.updateEventId(eventId))
   };
 };
 

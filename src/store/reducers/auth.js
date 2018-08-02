@@ -2,6 +2,7 @@ import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   userId: null,
+  userName: null,
   error: null,
   loading: false,
   isLoggedIn: false,
@@ -15,7 +16,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         userId: action.userId,
         isLoggedIn: true,
-        appMode: action.appMode
+        userName: action.userName
       };
 
     case actionTypes.AUTH_FAIL:

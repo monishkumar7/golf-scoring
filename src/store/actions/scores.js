@@ -2,6 +2,13 @@ import axios from "axios";
 
 import * as actionTypes from "./actionTypes";
 
+export const updateEventId = eventId => {
+  return {
+    type: actionTypes.UPDATE_EVENTID,
+    eventId: eventId
+  };
+};
+
 export const inputChange = (score, id) => {
   return {
     type: actionTypes.INPUT_CHANGE,
