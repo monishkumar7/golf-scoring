@@ -2,14 +2,15 @@ import axios from "axios";
 
 import * as actionTypes from "./actionTypes";
 
-export const authStart = (username, password) => {
+export const authStart = (username, password, appMode) => {
   return dispatch => {
     axios
       .get("https://reqres.in/api/" + username + "/" + password)
       .then(response => {
         dispatch(
           authSuccess(
-            response.data.data.first_name + " " + response.data.data.last_name
+            response.data.data.first_name + " " + response.data.data.last_name,
+            appMode
           )
         );
       })
@@ -19,10 +20,11 @@ export const authStart = (username, password) => {
   };
 };
 
-export const authSuccess = userId => {
+export const authSuccess = (userId, appMode) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
-    userId: userId
+    userId: userId,
+    appMode: appMode
   };
 };
 

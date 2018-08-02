@@ -18,22 +18,17 @@ class Scorecard extends Component {
       );
     });
 
-    let display = <div>Not Authenticated</div>;
-    if (this.props.auth) {
-      display = (
-        <div className={classes.Scorecard}>
-          {scorecard1}
-          <Total title="Front" total={this.props.total1} />
-          <br />
-          {scorecard2}
-          <Total title="Back" total={this.props.total2} />
-          <br />
-          <Total title="Total" total={this.props.total} />
-        </div>
-      );
-    }
-
-    return display;
+    return (
+      <div className={classes.Scorecard}>
+        {scorecard1}
+        <Total title="Front" total={this.props.total1} />
+        <br />
+        {scorecard2}
+        <Total title="Back" total={this.props.total2} />
+        <br />
+        <Total title="Total" total={this.props.total} />
+      </div>
+    );
   }
 }
 

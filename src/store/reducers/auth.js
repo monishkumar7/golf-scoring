@@ -4,7 +4,8 @@ const initialState = {
   userId: null,
   error: null,
   loading: false,
-  authenticated: false
+  isLoggedIn: false,
+  appMode: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -13,13 +14,14 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         userId: action.userId,
-        authenticated: true
+        isLoggedIn: true,
+        appMode: action.appMode
       };
 
     case actionTypes.AUTH_FAIL:
       return {
         ...state,
-        authenticated: false,
+        isLoggedIn: false,
         error: action.error
       };
     default:

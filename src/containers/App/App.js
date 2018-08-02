@@ -30,26 +30,32 @@ class App extends Component {
       );
     });
 
-    return (
-      <div className={classes.App}>
-        <div className={classes.Scorecard}>
-          <Scorecard
-            auth={this.props.auth}
-            total={this.props.total}
-            total1={this.props.total1}
-            total2={this.props.total2}
-            holesArray={this.props.holesArray}
-          />
-          <Button disabled={false} clicked={this.props.onResetClicked}>
-            Reset Score
-          </Button>
-          <Button disabled={false} clicked={this.props.onSubmitClicked}>
-            Submit Score
-          </Button>
+    let authContent = "Please Login to Continue!";
+    let sourceStatus = "Desktop Login";
+    if (this.props.isAppMode) sourceStatus = "App Login";
+    if (this.props.isLoggedIn) {
+      authContent = (
+        <div className={classes.App}>
+          <div className={classes.Scorecard}>
+            <Scorecard
+              total={this.props.total}
+              total1={this.props.total1}
+              total2={this.props.total2}
+              holesArray={this.props.holesArray}
+            />
+            <Button disabled={false} clicked={this.props.onResetClicked}>
+              Reset Score
+            </Button>
+            <Button disabled={false} clicked={this.props.onSubmitClicked}>
+              Submit Score
+            </Button>
+          </div>
+          <div style={{ margin: "20px auto", width: "90%" }}>{holeInput}</div>
+          <p>{sourceStatus}</p>
         </div>
-        <div style={{ margin: "20px auto", width: "90%" }}>{holeInput}</div>
-      </div>
-    );
+      );
+    }
+    return authContent;
   }
 }
 
@@ -59,7 +65,8 @@ const mapStateToProps = state => {
     total1: state.scores.total1,
     total2: state.scores.total2,
     total: state.scores.total,
-    auth: state.auth.authenticated
+    isLoggedIn: state.auth.isLoggedIn,
+    isAppMode: state.auth.appMode
   };
 };
 
@@ -71,8 +78,8 @@ const mapDispatchToProps = dispatch => {
       let confirmation = window.confirm("Are you sure?");
       if (confirmation) dispatch(actionCreators.resetScore());
     },
-    onAuthStart: (username, password) =>
-      dispatch(actionCreators.authStart(username, password)),
+    onAuthStart: (username, password, appMode) =>
+      dispatch(actionCreators.authStart(username, password, appMode)),
     onSubmitClicked: () => dispatch(actionCreators.submitScore())
   };
 };
