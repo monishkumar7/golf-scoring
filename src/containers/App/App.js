@@ -10,7 +10,7 @@ import Button from "../../components/UI/Button/Button";
 
 class App extends Component {
   componentDidMount = () => {
-    this.props.onAuthStart("users", 4); // (username, password)
+    this.props.onAuthStart("24c565ca80ee61f4bef499a485b02d19e3026596"); // (username, password)
   };
 
   render() {
@@ -31,8 +31,8 @@ class App extends Component {
     });
 
     let authContent = "Please Login to Continue!";
-    let sourceStatus = null;
-    if (this.props.isAppMode) sourceStatus = "App Login";
+    let sourceStatus = this.props.userId;
+    if (this.props.isAppMode) sourceStatus = "App Login - " + this.props.userId;
     if (this.props.isLoggedIn) {
       authContent = (
         <div className={classes.App}>
@@ -69,7 +69,8 @@ const mapStateToProps = state => {
     total2: state.scores.total2,
     total: state.scores.total,
     isLoggedIn: state.auth.isLoggedIn,
-    isAppMode: state.auth.appMode
+    isAppMode: state.auth.appMode,
+    userId: state.auth.userId
   };
 };
 
