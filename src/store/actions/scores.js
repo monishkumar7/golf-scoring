@@ -74,8 +74,7 @@ export const fetchScores = (eventId, loginToken) => {
         }
       })
       .then(response => {
-        console.log(response);
-        dispatch(fetchSuccess());
+        dispatch(fetchSuccess(response.data.data));
       })
       .catch(error => {
         console.log(error);
@@ -84,9 +83,10 @@ export const fetchScores = (eventId, loginToken) => {
   };
 };
 
-export const fetchSuccess = () => {
+export const fetchSuccess = holeScores => {
   return {
-    type: actionTypes.FETCH_SUCCESS
+    type: actionTypes.FETCH_SUCCESS,
+    holeScores: holeScores
   };
 };
 

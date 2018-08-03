@@ -36,6 +36,29 @@ const reducer = (state = initialState, action) => {
         eventId: action.eventId
       };
 
+    case actionTypes.FETCH_SUCCESS:
+      const holeScores = action.holeScores;
+      let updatedHolesArray = [...state.holesArray];
+      let updatedTotal11 = 0;
+      let updatedTotal21 = 0;
+      let updatedTotal22 = 0;
+      for (let holeScore of holeScores) {
+        updatedHolesArray[holeScore.holeNumber - 1].value = holeScore.score;
+        if (holeScore.holeNumber <= 9) {
+          updatedTotal11 += parseFloat(holeScore.score);
+        } else {
+          updatedTotal21 += parseFloat(holeScore.score);
+        }
+        updatedTotal22 += parseFloat(holeScore.score);
+      }
+      return {
+        ...state,
+        holesArray: updatedHolesArray,
+        total1: updatedTotal11,
+        total2: updatedTotal21,
+        total: updatedTotal22
+      };
+
     case actionTypes.INPUT_CHANGE:
       let updatedTotal1 = state.total1;
       let updatedTotal2 = state.total2;
