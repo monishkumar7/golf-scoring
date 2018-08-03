@@ -1,3 +1,9 @@
 export { authStart } from "./auth";
 
-export { updateEventId, inputChange, resetScore, submitScore } from "./scores";
+export {
+  updateEventId,
+  inputChangeUpdate,
+  resetScore,
+  submitScore,
+  fetchScores
+} from "./scores";

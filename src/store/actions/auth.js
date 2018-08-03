@@ -1,17 +1,16 @@
-import axios from "../../axios-allcal";
+import axiosApi from "../../axios-allcal-api";
 
 import * as actionTypes from "./actionTypes";
 
 export const authStart = loginToken => {
   return dispatch => {
-    axios
+    axiosApi
       .get("/account", {
         headers: {
           "login-token": loginToken
         }
       })
       .then(response => {
-        console.log(response);
         dispatch(authSuccess(response.data.userId, response.data.name));
       })
       .catch(error => {

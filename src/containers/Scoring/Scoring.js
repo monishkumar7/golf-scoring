@@ -10,10 +10,18 @@ import Button from "../../components/UI/Button/Button";
 class Scoring extends Component {
   componentDidMount = () => {
     const params = new URLSearchParams(this.props.location.search);
-    const loginToken = params.get("loginToken");
-    const eventId = params.get("eventId");
+    this.setParams(params);
+
+    const loginToken = localStorage.getItem("loginToken");
+    const eventId = localStorage.getItem("eventId");
     this.props.onAuthStart(loginToken);
     this.props.onUpdateEventId(eventId);
+    this.props.onFetchScores(eventId, loginToken);
+  };
+
+  setParams = params => {
+    localStorage.setItem("loginToken", params.get("loginToken"));
+    localStorage.setItem("eventId", params.get("eventId"));
   };
 
   render() {
@@ -27,7 +35,7 @@ class Scoring extends Component {
           value={hole.value}
           difficulty={hole.difficulty}
           changed={event =>
-            this.props.onInputChanged(event.target.value, hole.id)
+            this.props.onInputChanged(hole.id, event.target.value)
           }
         />
       );
@@ -80,15 +88,17 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onInputChanged: (score, id) =>
-      dispatch(actionCreators.inputChange(score, id)),
+    onInputChanged: (holeNumber, holeScore) =>
+      dispatch(actionCreators.inputChangeUpdate(holeNumber, holeScore)),
     onResetClicked: () => {
       let confirmation = window.confirm("Are you sure?");
       if (confirmation) dispatch(actionCreators.resetScore());
     },
     onAuthStart: loginToken => dispatch(actionCreators.authStart(loginToken)),
     onSubmitClicked: () => dispatch(actionCreators.submitScore()),
-    onUpdateEventId: eventId => dispatch(actionCreators.updateEventId(eventId))
+    onUpdateEventId: eventId => dispatch(actionCreators.updateEventId(eventId)),
+    onFetchScores: (eventId, loginToken) =>
+      dispatch(actionCreators.fetchScores(eventId, loginToken))
   };
 };
 
