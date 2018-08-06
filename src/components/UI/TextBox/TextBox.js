@@ -8,6 +8,7 @@ const textBox = props => {
       <input
         type={props.type}
         onChange={props.changed}
+        readOnly={props.readOnly}
         name={props.name}
         value={props.value}
       />
