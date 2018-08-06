@@ -43,13 +43,15 @@ const reducer = (state = initialState, action) => {
       let updatedTotal21 = 0;
       let updatedTotal22 = 0;
       for (let holeScore of holeScores) {
-        updatedHolesArray[holeScore.holeNumber - 1].value = holeScore.score;
-        if (holeScore.holeNumber <= 9) {
-          updatedTotal11 += parseFloat(holeScore.score);
-        } else {
-          updatedTotal21 += parseFloat(holeScore.score);
+        if (holeScore.score) {
+          updatedHolesArray[holeScore.holeNumber - 1].value = holeScore.score;
+          if (holeScore.holeNumber <= 9) {
+            updatedTotal11 += parseFloat(holeScore.score);
+          } else {
+            updatedTotal21 += parseFloat(holeScore.score);
+          }
+          updatedTotal22 += parseFloat(holeScore.score);
         }
-        updatedTotal22 += parseFloat(holeScore.score);
       }
       return {
         ...state,
