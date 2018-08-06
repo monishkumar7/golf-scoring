@@ -1,12 +1,18 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
 
-import "./App.css";
+import classes from "./App.css";
 import Scoring from "../Scoring/Scoring";
+import Login from "../../components/Login/Login";
 
 class App extends Component {
   render() {
-    return <Route path="/" component={Scoring} />;
+    return (
+      <div className={classes.App}>
+        <Route path="/" component={Login} />
+        <Route path="/" component={Scoring} />
+      </div>
+    );
   }
 }
 
