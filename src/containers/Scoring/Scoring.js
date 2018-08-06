@@ -53,14 +53,12 @@ class Scoring extends Component {
     if (this.props.isLoggedIn) {
       authContent = (
         <div className={classes.Scoring}>
-          <div className={classes.Scorecard}>
-            <Scorecard
-              total={this.props.total}
-              total1={this.props.total1}
-              total2={this.props.total2}
-              holesArray={this.props.holesArray}
-            />
-          </div>
+          <Scorecard
+            total={this.props.total}
+            total1={this.props.total1}
+            total2={this.props.total2}
+            holesArray={this.props.holesArray}
+          />
           <div style={{ margin: "20px auto", width: "90%" }}>
             User Input <br />
             {holeInput}

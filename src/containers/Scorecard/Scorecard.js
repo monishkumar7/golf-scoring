@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-import HoleScore from "../../components/HoleScore/HoleScore";
-import Text from "../../components/Text/Text";
+import HoleScore from "../../components/Scorecard/HoleScore/HoleScore";
+import TableHeader from "../../components/Scorecard/TableHeader/TableHeader";
 import classes from "./Scorecard.css";
 
 class Scorecard extends Component {
@@ -20,17 +20,19 @@ class Scorecard extends Component {
 
     return (
       <div className={classes.Scorecard}>
-        Scorecard
-        <br />
-        <Text title="Hole" value="Score" />
+        <p className={classes.Header}>RB Golf Scorecard</p>
+        <TableHeader title="Hole" text content="Score" />
         {scorecard1}
-        <Text title="Front" value={this.props.total1} />
+        <TableHeader title="Front" content={this.props.total1} />
         <br />
-        <Text title="Hole" value="Score" />
+        <hr className={classes.Separator} />
+        <TableHeader title="Hole" text content="Score" />
         {scorecard2}
-        <Text title="Back" value={this.props.total2} />
+        <TableHeader title="Back" content={this.props.total2} />
         <br />
-        <Text title="Total" value={this.props.total} />
+        <hr className={classes.Separator} />
+        <TableHeader title="Par" summary content="72" />
+        <TableHeader title="Total" summary content={this.props.total} />
       </div>
     );
   }

@@ -1,4 +1,4 @@
-.Total {
+.TableHeader {
   display: inline-block;
   box-sizing: border-box;
   padding: 0 0 5px 0;
@@ -8,15 +8,25 @@
   background: #fff;
 }
 
+.Summary {
+  width: 195px;
+}
+
 .Title {
   font-size: 14px;
   font-weight: bold;
   background: #bdd4de;
   margin: 0 0 5px 0;
   padding: 5px 0;
+  text-transform: uppercase;
 }
 
-.Value {
+.Text {
   font-weight: bold;
   font-size: 20px;
+}
+
+.TextDiv {
+  font-size: 12px;
+  padding: 8px 0 2px 0;
 }
