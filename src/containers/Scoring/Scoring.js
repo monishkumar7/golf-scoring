@@ -24,6 +24,11 @@ class Scoring extends Component {
     localStorage.setItem("eventId", params.get("eventId"));
   };
 
+  submitScore = () => {
+    this.props.history.push("/submitSuccess");
+    this.props.onSubmitClicked();
+  };
+
   render() {
     const holeInput = this.props.holesArray.map(hole => {
       return (
@@ -63,7 +68,7 @@ class Scoring extends Component {
           <Button disabled={false} clicked={this.props.onResetClicked}>
             Reset Score
           </Button>
-          <Button disabled={false} clicked={this.props.onSubmitClicked}>
+          <Button disabled={false} clicked={this.submitScore}>
             Submit Score
           </Button>
           <p>{sourceStatus}</p>
@@ -92,7 +97,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(actionCreators.inputChangeUpdate(holeNumber, holeScore)),
     onResetClicked: () => {
       let confirmation = window.confirm("Are you sure?");
-      if (confirmation) dispatch(actionCreators.resetScore());
+      if (confirmation) dispatch(actionCreators.resetScoreUpdate());
     },
     onAuthStart: loginToken => dispatch(actionCreators.authStart(loginToken)),
     onSubmitClicked: () => dispatch(actionCreators.submitScore()),

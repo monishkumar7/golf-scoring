@@ -41,6 +41,33 @@ export const inputChange = (score, id) => {
   };
 };
 
+export const resetScoreUpdate = () => {
+  const loginToken = localStorage.getItem("loginToken");
+  const eventId = localStorage.getItem("eventId");
+  return dispatch => {
+    for (let i = 1; i <= 18; i++) {
+      const data = {
+        holeNumber: i,
+        score: ""
+      };
+      axiosStaging
+        .put("event/" + eventId + "/score", data, {
+          headers: {
+            "login-token": loginToken
+          }
+        })
+        .then(response => {
+          console.log(response);
+          dispatch(resetScore());
+          fetchScores(eventId, loginToken);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  };
+};
+
 export const resetScore = () => {
   return {
     type: actionTypes.RESET_SCORE

@@ -4,6 +4,9 @@ import classes from "./Login.css";
 import TextBox from "../UI/TextBox/TextBox";
 import Button from "../UI/Button/Button";
 
+//FIXME:
+//1. Proper Login Flow
+
 class Login extends Component {
   state = {
     email: "e2b4db8eefc5b1601f24689a311054c32e64ffa9", //LoginID

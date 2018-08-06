@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import classes from "./App.css";
 import Scoring from "../Scoring/Scoring";
 import Login from "../../components/Login/Login";
+import SubmitSuccess from "../../components/SubmitSuccess/SubmitSuccess";
 
 class App extends Component {
   render() {
@@ -12,6 +13,7 @@ class App extends Component {
         <Switch>
           <Route path="/" exact component={Login} />
           <Route path="/scores" component={Scoring} />
+          <Route path="/submitSuccess" component={SubmitSuccess} />
         </Switch>
       </div>
     );

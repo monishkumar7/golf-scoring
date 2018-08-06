@@ -3,7 +3,7 @@ export { authStart } from "./auth";
 export {
   updateEventId,
   inputChangeUpdate,
-  resetScore,
+  resetScoreUpdate,
   submitScore,
   fetchScores
 } from "./scores";
