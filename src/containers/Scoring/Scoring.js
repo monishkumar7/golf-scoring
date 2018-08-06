@@ -47,9 +47,6 @@ class Scoring extends Component {
     });
 
     let authContent = "Please Login to Continue!";
-    let sourceStatus = this.props.userName;
-    if (this.props.isAppMode)
-      sourceStatus = "App Login - " + this.props.userName;
     if (this.props.isLoggedIn) {
       authContent = (
         <div className={classes.Scoring}>
@@ -59,17 +56,13 @@ class Scoring extends Component {
             total2={this.props.total2}
             holesArray={this.props.holesArray}
           />
-          <div style={{ margin: "20px auto", width: "90%" }}>
-            User Input <br />
-            {holeInput}
-          </div>
+          <div style={{ margin: "20px auto", width: "90%" }}>{holeInput}</div>
           <Button disabled={false} clicked={this.props.onResetClicked}>
             Reset Score
           </Button>
           <Button disabled={false} clicked={this.submitScore}>
             Submit Score
           </Button>
-          <p>{sourceStatus}</p>
         </div>
       );
     }

@@ -1,10 +1,28 @@
-import axiosApi from "../../axios-allcal-api";
+import axios from "../../axios-allcal-staging-api";
 
 import * as actionTypes from "./actionTypes";
 
+export const login = (email, password) => {
+  return dispatch => {
+    const data = {
+      email: email,
+      password: password
+    };
+    axios
+      .post("/auth/login", data)
+      .then(response => {
+        console.log(response);
+        dispatch(authStart(response.data.loginToken));
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+};
+
 export const authStart = loginToken => {
   return dispatch => {
-    axiosApi
+    axios
       .get("/account", {
         headers: {
           "login-token": loginToken

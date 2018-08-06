@@ -1,4 +1,4 @@
-import axiosStaging from "../../axios-allcal-staging";
+import axios from "../../axios-allcal-staging-dashboard";
 
 import * as actionTypes from "./actionTypes";
 
@@ -17,7 +17,7 @@ export const inputChangeUpdate = (holeNumber, holeScore) => {
       holeNumber: holeNumber,
       score: holeScore
     };
-    axiosStaging
+    axios
       .put("event/" + eventId + "/score", data, {
         headers: {
           "login-token": loginToken
@@ -50,7 +50,7 @@ export const resetScoreUpdate = () => {
         holeNumber: i,
         score: ""
       };
-      axiosStaging
+      axios
         .put("event/" + eventId + "/score", data, {
           headers: {
             "login-token": loginToken
@@ -94,7 +94,7 @@ export const submitFail = () => {
 
 export const fetchScores = (eventId, loginToken) => {
   return dispatch => {
-    axiosStaging
+    axios
       .get("/event/" + eventId + "/score", {
         headers: {
           "login-token": loginToken

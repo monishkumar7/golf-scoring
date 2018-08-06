@@ -1,4 +1,4 @@
-export { authStart } from "./auth";
+export { authStart, login } from "./auth";
 
 export {
   updateEventId,
