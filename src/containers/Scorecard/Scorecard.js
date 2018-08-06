@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import HoleScore from "../../components/HoleScore/HoleScore";
-import Total from "../../components/Total/Total";
+import Text from "../../components/Text/Text";
 import classes from "./Scorecard.css";
 
 class Scorecard extends Component {
@@ -22,13 +22,15 @@ class Scorecard extends Component {
       <div className={classes.Scorecard}>
         Scorecard
         <br />
+        <Text title="Hole" value="Score" />
         {scorecard1}
-        <Total title="Front" total={this.props.total1} />
+        <Text title="Front" value={this.props.total1} />
         <br />
+        <Text title="Hole" value="Score" />
         {scorecard2}
-        <Total title="Back" total={this.props.total2} />
+        <Text title="Back" value={this.props.total2} />
         <br />
-        <Total title="Total" total={this.props.total} />
+        <Text title="Total" value={this.props.total} />
       </div>
     );
   }

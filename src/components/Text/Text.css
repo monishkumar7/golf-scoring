@@ -10,14 +10,13 @@
 
 .Title {
   font-size: 14px;
-  font-weight: 200;
-  background: #323642;
+  font-weight: bold;
+  background: #bdd4de;
   margin: 0 0 5px 0;
   padding: 5px 0;
-  color: white;
 }
 
-.TotalValue {
+.Value {
   font-weight: bold;
   font-size: 20px;
 }
