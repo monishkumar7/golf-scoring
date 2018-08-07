@@ -24,12 +24,9 @@ export const inputChangeUpdate = (holeNumber, holeScore) => {
         }
       })
       .then(response => {
-        console.log(response);
         dispatch(inputChange(holeScore, holeNumber));
       })
-      .catch(error => {
-        console.log(error);
-      });
+      .catch(error => {});
   };
 };
 
@@ -57,13 +54,11 @@ export const resetScoreUpdate = () => {
           }
         })
         .then(response => {
-          console.log(response);
           dispatch(resetScore());
           fetchScores(eventId, loginToken);
+          document.location.reload();
         })
-        .catch(error => {
-          console.log(error);
-        });
+        .catch(error => {});
     }
   };
 };
@@ -75,9 +70,7 @@ export const resetScore = () => {
 };
 
 export const submitScore = () => {
-  return dispatch => {
-    console.log("submitScore");
-  };
+  return dispatch => {};
 };
 
 export const submitSuccess = () => {
@@ -104,7 +97,6 @@ export const fetchScores = (eventId, loginToken) => {
         dispatch(fetchSuccess(response.data.data));
       })
       .catch(error => {
-        console.log(error);
         dispatch(fetchFail());
       });
   };
