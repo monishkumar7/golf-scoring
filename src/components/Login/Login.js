@@ -110,7 +110,7 @@ class Login extends Component {
         <h4>RB Golf Scoring</h4>
         <form onSubmit={this.submitHandler}>
           {form}
-          <Button>SUBMIT</Button>
+          <Button>Login</Button>
           <br />
           {loginMessage}
           <br />

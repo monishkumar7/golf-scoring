@@ -39,7 +39,7 @@ export const appLogin = loginToken => {
           authSuccess(
             response.data.userId,
             response.data.name,
-            response.data.loginToken,
+            loginToken,
             true
           )
         );
