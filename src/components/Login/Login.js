@@ -99,26 +99,41 @@ class Login extends Component {
       />
     ));
 
+    let loginMessage = "";
+    if (this.props.loginError) {
+      loginMessage =
+        "Login Failed. The username / password combination is invalid.";
+    }
+
     return (
       <div className={classes.Login}>
         <h4>RB Golf Scoring</h4>
         <form onSubmit={this.submitHandler}>
           {form}
           <Button>SUBMIT</Button>
+          <br />
+          {loginMessage}
+          <br />
         </form>
       </div>
     );
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    loginError: state.auth.error
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     onLoginClick: (email, password) =>
-      dispatch(actionCreators.login(email, password))
+      dispatch(actionCreators.webLogin(email, password))
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Login);

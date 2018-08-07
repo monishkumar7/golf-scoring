@@ -2,7 +2,7 @@ import axios from "../../axios-allcal-staging-api";
 
 import * as actionTypes from "./actionTypes";
 
-export const login = (email, password) => {
+export const webLogin = (email, password) => {
   return dispatch => {
     const data = {
       email: email,
@@ -11,16 +11,22 @@ export const login = (email, password) => {
     axios
       .post("/auth/login", data)
       .then(response => {
-        console.log(response);
-        dispatch(authStart(response.data.loginToken));
+        dispatch(
+          authSuccess(
+            response.data.userId,
+            response.data.name,
+            response.data.loginToken,
+            false
+          )
+        );
       })
       .catch(error => {
-        console.log(error);
+        dispatch(authFail(error));
       });
   };
 };
 
-export const authStart = loginToken => {
+export const appLogin = loginToken => {
   return dispatch => {
     axios
       .get("/account", {
@@ -29,7 +35,14 @@ export const authStart = loginToken => {
         }
       })
       .then(response => {
-        dispatch(authSuccess(response.data.userId, response.data.name));
+        dispatch(
+          authSuccess(
+            response.data.userId,
+            response.data.name,
+            response.data.loginToken,
+            true
+          )
+        );
       })
       .catch(error => {
         dispatch(authFail(error));
@@ -37,11 +50,13 @@ export const authStart = loginToken => {
   };
 };
 
-export const authSuccess = (userId, userName) => {
+export const authSuccess = (userId, userName, loginToken, appMode) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
     userId: userId,
-    userName: userName
+    userName: userName,
+    loginToken: loginToken,
+    appMode: appMode
   };
 };
 

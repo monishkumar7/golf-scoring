@@ -14,7 +14,7 @@ class Scoring extends Component {
 
     const loginToken = localStorage.getItem("loginToken");
     const eventId = localStorage.getItem("eventId");
-    this.props.onAuthStart(loginToken);
+    this.props.onAppLogin(loginToken);
     this.props.onUpdateEventId(eventId);
     this.props.onFetchScores(eventId, loginToken);
   };
@@ -90,7 +90,7 @@ const mapDispatchToProps = dispatch => {
       let confirmation = window.confirm("Are you sure?");
       if (confirmation) dispatch(actionCreators.resetScoreUpdate());
     },
-    onAuthStart: loginToken => dispatch(actionCreators.authStart(loginToken)),
+    onAppLogin: loginToken => dispatch(actionCreators.appLogin(loginToken)),
     onSubmitClicked: () => dispatch(actionCreators.submitScore()),
     onUpdateEventId: eventId => dispatch(actionCreators.updateEventId(eventId)),
     onFetchScores: (eventId, loginToken) =>
