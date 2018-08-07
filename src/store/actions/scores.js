@@ -54,9 +54,8 @@ export const resetScoreUpdate = () => {
           }
         })
         .then(response => {
-          dispatch(resetScore());
           fetchScores(eventId, loginToken);
-          document.location.reload();
+          dispatch(resetScore());
         })
         .catch(error => {});
     }
