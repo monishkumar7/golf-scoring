@@ -5,5 +5,7 @@ export {
   inputChangeUpdate,
   resetScoreUpdate,
   submitScore,
-  fetchScores
+  fetchScores,
+  incrementScore,
+  decrementScore
 } from "./scores";

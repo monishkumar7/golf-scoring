@@ -2,11 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import Scorecard from "../Scorecard/Scorecard";
-import HoleInput from "../../components/HoleInput/HoleInput";
+// import HoleInput from "../../components/HoleInput/HoleInput";
+import HoleScore from "../../components/HoleScore/HoleScore";
 import classes from "./Scoring.css";
 import * as actionCreators from "../../store/actions";
 import Button from "../../components/UI/Button/Button";
 
+//#FIXME:
+//Infinte Calls to API
 class Scoring extends Component {
   componentDidMount = () => {
     const params = new URLSearchParams(this.props.location.search);
@@ -30,18 +33,32 @@ class Scoring extends Component {
   };
 
   render() {
+    // const holeInput = this.props.holesArray.map(hole => {
+    //   return (
+    //     <HoleInput
+    //       key={hole.id}
+    //       holeNumber={hole.id}
+    //       name={hole.id}
+    //       par={hole.par}
+    //       value={hole.value}
+    //       difficulty={hole.difficulty}
+    //       changed={event =>
+    //         this.props.onInputChanged(hole.id, event.target.value)
+    //       }
+    //     />
+    //   );
+    // });
+
     const holeInput = this.props.holesArray.map(hole => {
       return (
-        <HoleInput
+        <HoleScore
           key={hole.id}
-          holeNumber={hole.id}
-          name={hole.id}
+          number={hole.id}
           par={hole.par}
-          value={hole.value}
+          score={hole.value}
           difficulty={hole.difficulty}
-          changed={event =>
-            this.props.onInputChanged(hole.id, event.target.value)
-          }
+          decrement={this.props.onDecrementScore(hole.id, hole.value)}
+          increment={this.props.onIncrementScore(hole.id, hole.value)}
         />
       );
     });
@@ -92,6 +109,10 @@ const mapDispatchToProps = dispatch => {
     },
     onAppLogin: loginToken => dispatch(actionCreators.appLogin(loginToken)),
     onSubmitClicked: () => dispatch(actionCreators.submitScore()),
+    onIncrementScore: (holeNumber, holeScore) =>
+      dispatch(actionCreators.incrementScore(holeNumber, holeScore)),
+    onDecrementScore: (holeNumber, holeScore) =>
+      dispatch(actionCreators.decrementScore(holeNumber, holeScore)),
     onUpdateEventId: eventId => dispatch(actionCreators.updateEventId(eventId)),
     onFetchScores: (eventId, loginToken) =>
       dispatch(actionCreators.fetchScores(eventId, loginToken))

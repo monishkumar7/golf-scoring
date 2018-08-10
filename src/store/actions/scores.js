@@ -30,6 +30,48 @@ export const inputChangeUpdate = (holeNumber, holeScore) => {
   };
 };
 
+export const incrementScore = (holeNumber, holeScore) => {
+  const loginToken = localStorage.getItem("loginToken");
+  const eventId = localStorage.getItem("eventId");
+  return dispatch => {
+    const data = {
+      holeNumber: holeNumber,
+      score: holeScore + 1
+    };
+    axios
+      .put("event/" + eventId + "/score", data, {
+        headers: {
+          "login-token": loginToken
+        }
+      })
+      .then(response => {
+        dispatch(inputChange(holeScore + 1, holeNumber));
+      })
+      .catch(error => {});
+  };
+};
+
+export const decrementScore = (holeNumber, holeScore) => {
+  const loginToken = localStorage.getItem("loginToken");
+  const eventId = localStorage.getItem("eventId");
+  return dispatch => {
+    const data = {
+      holeNumber: holeNumber,
+      score: holeScore + 1
+    };
+    axios
+      .put("event/" + eventId + "/score", data, {
+        headers: {
+          "login-token": loginToken
+        }
+      })
+      .then(response => {
+        dispatch(inputChange(holeScore - 1, holeNumber));
+      })
+      .catch(error => {});
+  };
+};
+
 export const inputChange = (score, id) => {
   return {
     type: actionTypes.INPUT_CHANGE,
