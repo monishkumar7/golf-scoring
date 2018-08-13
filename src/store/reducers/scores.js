@@ -46,11 +46,11 @@ const reducer = (state = initialState, action) => {
         if (holeScore.score) {
           updatedHolesArray[holeScore.holeNumber - 1].value = holeScore.score;
           if (holeScore.holeNumber <= 9) {
-            updatedTotal11 += parseFloat(holeScore.score);
+            updatedTotal11 += +holeScore.score;
           } else {
-            updatedTotal21 += parseFloat(holeScore.score);
+            updatedTotal21 += +holeScore.score;
           }
-          updatedTotal22 += parseFloat(holeScore.score);
+          updatedTotal22 += +holeScore.score;
         }
       }
       return {
@@ -65,31 +65,29 @@ const reducer = (state = initialState, action) => {
       let updatedTotal1 = state.total1;
       let updatedTotal2 = state.total2;
       let updatedTotal = state.total;
-      if (action.newScore !== "") {
+      if (state.holesArray[action.holeId - 1].touched) {
         if (action.holeId < 10) {
           updatedTotal1 =
-            updatedTotal1 +
-            parseFloat(action.newScore) -
-            state.holesArray[action.holeId - 1].value;
+            +updatedTotal1 +
+            +action.newScore -
+            +state.holesArray[action.holeId - 1].value;
         } else if (action.holeId > 9) {
           updatedTotal2 =
-            updatedTotal2 +
-            parseFloat(action.newScore) -
-            state.holesArray[action.holeId - 1].value;
+            +updatedTotal2 +
+            +action.newScore -
+            +state.holesArray[action.holeId - 1].value;
         }
         updatedTotal =
-          updatedTotal +
-          parseFloat(action.newScore) -
-          state.holesArray[action.holeId - 1].value;
+          +updatedTotal +
+          +action.newScore -
+          +state.holesArray[action.holeId - 1].value;
       } else {
         if (action.holeId < 10) {
-          updatedTotal1 =
-            updatedTotal1 - state.holesArray[action.holeId - 1].value;
+          updatedTotal1 = +updatedTotal1 + +action.newScore;
         } else if (action.holeId > 9) {
-          updatedTotal2 =
-            updatedTotal2 - state.holesArray[action.holeId - 1].value;
+          updatedTotal2 = +updatedTotal2 + +action.newScore;
         }
-        updatedTotal = updatedTotal - state.holesArray[action.holeId - 1].value;
+        updatedTotal = +updatedTotal + +action.newScore;
       }
       return {
         ...state,
@@ -100,7 +98,8 @@ const reducer = (state = initialState, action) => {
 
           return {
             ...arrayItem,
-            value: action.newScore
+            value: action.newScore,
+            touched: true
           };
         }),
         total1: updatedTotal1,

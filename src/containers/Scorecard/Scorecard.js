@@ -9,13 +9,23 @@ class Scorecard extends Component {
   render() {
     const scorecard1 = this.props.holesArray.slice(0, 9).map(hole => {
       return (
-        <HoleScore key={hole.id} holeNumber={hole.id} holeScore={hole.value} />
+        <HoleScore
+          key={hole.id}
+          holeNumber={hole.id}
+          holeScore={hole.value}
+          touched={hole.touched}
+        />
       );
     });
 
     const scorecard2 = this.props.holesArray.slice(9).map(hole => {
       return (
-        <HoleScore key={hole.id} holeNumber={hole.id} holeScore={hole.value} />
+        <HoleScore
+          key={hole.id}
+          holeNumber={hole.id}
+          holeScore={hole.value}
+          touched={hole.touched}
+        />
       );
     });
 

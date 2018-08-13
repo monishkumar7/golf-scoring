@@ -3,7 +3,7 @@ import React from "react";
 import classes from "./HoleScore.css";
 const holeScore = props => {
   let holeScore = "-";
-  if (props.holeScore !== "") {
+  if (props.touched) {
     holeScore = props.holeScore;
   }
   return (
