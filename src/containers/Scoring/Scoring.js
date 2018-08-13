@@ -8,8 +8,6 @@ import classes from "./Scoring.css";
 import * as actionCreators from "../../store/actions";
 import Button from "../../components/UI/Button/Button";
 
-//#FIXME:
-//Infinte Calls to API
 class Scoring extends Component {
   componentDidMount = () => {
     const params = new URLSearchParams(this.props.location.search);
@@ -57,8 +55,12 @@ class Scoring extends Component {
           par={hole.par}
           score={hole.value}
           difficulty={hole.difficulty}
-          decrement={this.props.onDecrementScore(hole.id, hole.value)}
-          increment={this.props.onIncrementScore(hole.id, hole.value)}
+          decrement={() => {
+            this.props.onDecrementScore(hole.id, hole.value);
+          }}
+          increment={() => {
+            this.props.onIncrementScore(hole.id, hole.value);
+          }}
         />
       );
     });

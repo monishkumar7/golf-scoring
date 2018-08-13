@@ -36,7 +36,7 @@ export const incrementScore = (holeNumber, holeScore) => {
   return dispatch => {
     const data = {
       holeNumber: holeNumber,
-      score: holeScore + 1
+      score: +holeScore + +1
     };
     axios
       .put("event/" + eventId + "/score", data, {
@@ -45,7 +45,7 @@ export const incrementScore = (holeNumber, holeScore) => {
         }
       })
       .then(response => {
-        dispatch(inputChange(holeScore + 1, holeNumber));
+        dispatch(inputChange(+holeScore + +1, holeNumber));
       })
       .catch(error => {});
   };
@@ -57,7 +57,7 @@ export const decrementScore = (holeNumber, holeScore) => {
   return dispatch => {
     const data = {
       holeNumber: holeNumber,
-      score: holeScore + 1
+      score: holeScore - 1
     };
     axios
       .put("event/" + eventId + "/score", data, {
@@ -96,11 +96,11 @@ export const resetScoreUpdate = () => {
           }
         })
         .then(response => {
-          fetchScores(eventId, loginToken);
           dispatch(resetScore());
         })
         .catch(error => {});
     }
+    dispatch(fetchScores(eventId, loginToken));
   };
 };
 
