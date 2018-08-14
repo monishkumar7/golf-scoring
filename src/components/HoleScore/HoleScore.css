@@ -10,3 +10,14 @@
   padding: 10px;
   display: inline-block;
 }
+/* 
+.Left,
+.Right {
+  display: inline-block;
+} */
+/* 
+@media (min-width: 600px) {
+  .HoleScore {
+    width: 400px;
+  }
+} */

@@ -83,7 +83,11 @@ export const inputChange = (score, id) => {
 export const resetScoreUpdate = () => {
   const loginToken = localStorage.getItem("loginToken");
   const eventId = localStorage.getItem("eventId");
+  //FIXME:
+  //Don't do reset like this.
+  //Use a proper API
   return dispatch => {
+    let c = 0;
     for (let i = 1; i <= 18; i++) {
       const data = {
         holeNumber: i,
@@ -97,10 +101,13 @@ export const resetScoreUpdate = () => {
         })
         .then(response => {
           dispatch(resetScore());
+          c++;
+          c === 17
+            ? dispatch(fetchScores(eventId, loginToken))
+            : console.log("Not yet");
         })
         .catch(error => {});
     }
-    dispatch(fetchScores(eventId, loginToken));
   };
 };
 
@@ -136,6 +143,7 @@ export const fetchScores = (eventId, loginToken) => {
       })
       .then(response => {
         dispatch(fetchSuccess(response.data.data));
+        console.log("fetchscores");
       })
       .catch(error => {
         dispatch(fetchFail());
