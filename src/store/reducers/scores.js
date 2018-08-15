@@ -28,6 +28,79 @@ const initialState = {
   submitted: false
 };
 
+const fetchSuccess = (state, action) => {
+  const holeScores = action.holeScores;
+  let updatedHolesArray = [...state.holesArray];
+  let updatedTotal11 = 0;
+  let updatedTotal21 = 0;
+  let updatedTotal22 = 0;
+  for (let holeScore of holeScores) {
+    if (holeScore.score) {
+      updatedHolesArray[holeScore.holeNumber - 1].value = holeScore.score;
+      if (holeScore.holeNumber <= 9) {
+        updatedTotal11 += +holeScore.score;
+      } else {
+        updatedTotal21 += +holeScore.score;
+      }
+      updatedTotal22 += +holeScore.score;
+    }
+  }
+  return {
+    ...state,
+    holesArray: updatedHolesArray,
+    total1: updatedTotal11,
+    total2: updatedTotal21,
+    total: updatedTotal22
+  };
+};
+
+const inputChange = (state, action) => {
+  let updatedTotal1 = state.total1;
+  let updatedTotal2 = state.total2;
+  let updatedTotal = state.total;
+  if (state.holesArray[action.holeId - 1].touched) {
+    if (action.holeId < 10) {
+      updatedTotal1 =
+        +updatedTotal1 +
+        +action.newScore -
+        +state.holesArray[action.holeId - 1].value;
+    } else if (action.holeId > 9) {
+      updatedTotal2 =
+        +updatedTotal2 +
+        +action.newScore -
+        +state.holesArray[action.holeId - 1].value;
+    }
+    updatedTotal =
+      +updatedTotal +
+      +action.newScore -
+      +state.holesArray[action.holeId - 1].value;
+  } else {
+    if (action.holeId < 10) {
+      updatedTotal1 = +updatedTotal1 + +action.newScore;
+    } else if (action.holeId > 9) {
+      updatedTotal2 = +updatedTotal2 + +action.newScore;
+    }
+    updatedTotal = +updatedTotal + +action.newScore;
+  }
+  return {
+    ...state,
+    holesArray: state.holesArray.map((arrayItem, index) => {
+      if (index + 1 !== action.holeId) {
+        return arrayItem;
+      }
+
+      return {
+        ...arrayItem,
+        value: action.newScore,
+        touched: true
+      };
+    }),
+    total1: updatedTotal1,
+    total2: updatedTotal2,
+    total: updatedTotal
+  };
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.UPDATE_EVENTID:
@@ -37,75 +110,10 @@ const reducer = (state = initialState, action) => {
       };
 
     case actionTypes.FETCH_SUCCESS:
-      const holeScores = action.holeScores;
-      let updatedHolesArray = [...state.holesArray];
-      let updatedTotal11 = 0;
-      let updatedTotal21 = 0;
-      let updatedTotal22 = 0;
-      for (let holeScore of holeScores) {
-        if (holeScore.score) {
-          updatedHolesArray[holeScore.holeNumber - 1].value = holeScore.score;
-          if (holeScore.holeNumber <= 9) {
-            updatedTotal11 += +holeScore.score;
-          } else {
-            updatedTotal21 += +holeScore.score;
-          }
-          updatedTotal22 += +holeScore.score;
-        }
-      }
-      return {
-        ...state,
-        holesArray: updatedHolesArray,
-        total1: updatedTotal11,
-        total2: updatedTotal21,
-        total: updatedTotal22
-      };
+      return fetchSuccess(state, action);
 
     case actionTypes.INPUT_CHANGE:
-      let updatedTotal1 = state.total1;
-      let updatedTotal2 = state.total2;
-      let updatedTotal = state.total;
-      if (state.holesArray[action.holeId - 1].touched) {
-        if (action.holeId < 10) {
-          updatedTotal1 =
-            +updatedTotal1 +
-            +action.newScore -
-            +state.holesArray[action.holeId - 1].value;
-        } else if (action.holeId > 9) {
-          updatedTotal2 =
-            +updatedTotal2 +
-            +action.newScore -
-            +state.holesArray[action.holeId - 1].value;
-        }
-        updatedTotal =
-          +updatedTotal +
-          +action.newScore -
-          +state.holesArray[action.holeId - 1].value;
-      } else {
-        if (action.holeId < 10) {
-          updatedTotal1 = +updatedTotal1 + +action.newScore;
-        } else if (action.holeId > 9) {
-          updatedTotal2 = +updatedTotal2 + +action.newScore;
-        }
-        updatedTotal = +updatedTotal + +action.newScore;
-      }
-      return {
-        ...state,
-        holesArray: state.holesArray.map((arrayItem, index) => {
-          if (index + 1 !== action.holeId) {
-            return arrayItem;
-          }
-
-          return {
-            ...arrayItem,
-            value: action.newScore,
-            touched: true
-          };
-        }),
-        total1: updatedTotal1,
-        total2: updatedTotal2,
-        total: updatedTotal
-      };
+      return inputChange(state, action);
 
     case actionTypes.RESET_SCORE:
       return initialState;

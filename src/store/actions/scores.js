@@ -104,7 +104,7 @@ export const resetScoreUpdate = () => {
           c++;
           c === 17
             ? dispatch(fetchScores(eventId, loginToken))
-            : console.log("Not yet");
+            : console.log(null);
         })
         .catch(error => {});
     }
@@ -143,7 +143,6 @@ export const fetchScores = (eventId, loginToken) => {
       })
       .then(response => {
         dispatch(fetchSuccess(response.data.data));
-        console.log("fetchscores");
       })
       .catch(error => {
         dispatch(fetchFail());

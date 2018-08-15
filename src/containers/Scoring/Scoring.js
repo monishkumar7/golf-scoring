@@ -1,52 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import Scorecard from "../Scorecard/Scorecard";
-// import HoleInput from "../../components/HoleInput/HoleInput";
+import Scorecard from "../../components/Scorecard/Scorecard";
 import HoleScore from "../../components/HoleScore/HoleScore";
 import classes from "./Scoring.css";
 import * as actionCreators from "../../store/actions";
 import Button from "../../components/UI/Button/Button";
 
 class Scoring extends Component {
-  componentDidMount = () => {
-    const params = new URLSearchParams(this.props.location.search);
-    this.setParams(params);
-
-    const loginToken = localStorage.getItem("loginToken");
-    const eventId = localStorage.getItem("eventId");
-    this.props.onAppLogin(loginToken);
-    this.props.onUpdateEventId(eventId);
-    this.props.onFetchScores(eventId, loginToken);
-  };
-
-  setParams = params => {
-    localStorage.setItem("loginToken", params.get("loginToken"));
-    localStorage.setItem("eventId", params.get("eventId"));
-  };
-
   submitScore = () => {
     this.props.history.push("/submitSuccess");
     this.props.onSubmitClicked();
   };
 
   render() {
-    // const holeInput = this.props.holesArray.map(hole => {
-    //   return (
-    //     <HoleInput
-    //       key={hole.id}
-    //       holeNumber={hole.id}
-    //       name={hole.id}
-    //       par={hole.par}
-    //       value={hole.value}
-    //       difficulty={hole.difficulty}
-    //       changed={event =>
-    //         this.props.onInputChanged(hole.id, event.target.value)
-    //       }
-    //     />
-    //   );
-    // });
-
     const holeInput = this.props.holesArray.map(hole => {
       return (
         <HoleScore
@@ -66,7 +33,7 @@ class Scoring extends Component {
     });
 
     let authContent = "Please Login to Continue!";
-    if (this.props.isLoggedIn) {
+    if (this.props.auth) {
       authContent = (
         <div className={classes.Scoring}>
           <Scorecard
@@ -95,7 +62,7 @@ const mapStateToProps = state => {
     total1: state.scores.total1,
     total2: state.scores.total2,
     total: state.scores.total,
-    isLoggedIn: state.auth.isLoggedIn,
+    auth: state.auth.auth,
     isAppMode: state.auth.appMode,
     userName: state.auth.userName
   };
