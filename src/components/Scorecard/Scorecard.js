@@ -28,7 +28,7 @@ const scorecard = props => {
   });
 
   return (
-    <Grid container>
+    <Grid container style={{ position: "sticky", top: "0", zIndex: "1" }}>
       <Grid item xs={12} md={6} xl={4}>
         <TableHeader title="Hole" text content="Score" />
         {scorecard1}

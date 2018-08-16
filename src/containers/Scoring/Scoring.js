@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Grid } from "@material-ui/core";
 
 import Scorecard from "../../components/Scorecard/Scorecard";
-import HoleScore from "../../components/HoleScore/HoleScore";
+import HoleInput from "../../components/HoleInput/HoleInput";
 import classes from "./Scoring.css";
 import * as actionCreators from "../../store/actions";
 import Button from "../../components/UI/Button/Button";
@@ -16,7 +17,7 @@ class Scoring extends Component {
   render() {
     const holeInput = this.props.holesArray.map(hole => {
       return (
-        <HoleScore
+        <HoleInput
           key={hole.id}
           number={hole.id}
           par={hole.par}
@@ -42,7 +43,7 @@ class Scoring extends Component {
             total2={this.props.total2}
             holesArray={this.props.holesArray}
           />
-          <div style={{ margin: "20px auto", width: "90%" }}>{holeInput}</div>
+          <Grid container>{holeInput}</Grid>
           <Button disabled={false} clicked={this.props.onResetClicked}>
             Reset Score
           </Button>
