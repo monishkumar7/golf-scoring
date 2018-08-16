@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
@@ -8,7 +8,7 @@ const styles = {
     boxSizing: "border-box",
     padding: "0 0 5px 0",
     margin: "0",
-    width: "60px",
+    width: "14%",
     textAlign: "center",
     background: "#fff"
   },
@@ -22,14 +22,14 @@ const styles = {
   },
   text: {
     fontWeight: "bold",
-    fontSize: "20px"
+    fontSize: "19px"
   },
   textDiv: {
     fontSize: "12px",
     padding: "8px 0 2px 0"
   },
   summary: {
-    width: "195px"
+    width: "50%"
   }
 };
 
@@ -55,12 +55,12 @@ const tableHeader = props => {
     divClasses.push(props.classes.summary);
   }
   return (
-    <Grid item>
+    <div className={divClasses.join(" ")}>
       <Typography variant="body1" className={props.classes.title}>
         {props.title}
       </Typography>
       <Typography variant="headline">{contentDiv}</Typography>
-    </Grid>
+    </div>
   );
 };
 

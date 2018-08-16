@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 
 import classes from "./App.css";
 import Scoring from "../Scoring/Scoring";
-import Login from "../Login/Login";
 import SubmitSuccess from "../../components/SubmitSuccess/SubmitSuccess";
 import Layout from "../../components/Layout/Layout";
 import * as actionCreators from "../../store/actions";
@@ -30,8 +29,7 @@ class App extends Component {
       <div className={classes.App}>
         <Layout auth={this.props.auth} userName={this.props.userName}>
           <Switch>
-            <Route path="/" exact component={Login} />
-            <Route path="/scores" component={Scoring} />
+            <Route path="/" component={Scoring} />
             <Route path="/submitSuccess" component={SubmitSuccess} />
           </Switch>
         </Layout>

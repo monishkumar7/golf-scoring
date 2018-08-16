@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
@@ -16,6 +16,7 @@ const styles = {
     padding: "0 0 5px 0",
     margin: "0",
     textAlign: "center",
+    width: "8%",
     background: "#fff"
   },
   score: {
@@ -29,18 +30,14 @@ const holeScore = props => {
     holeScore = props.holeScore;
   }
   return (
-    <Grid item className={props.classes.holeScore}>
+    <div className={props.classes.holeScore}>
       <Typography variant="body1" className={props.classes.holeNumber}>
         {props.holeNumber}
       </Typography>
       <Typography variant="headline" className={props.classes.score}>
         {holeScore}
       </Typography>
-    </Grid>
-    // <div className={classes.HoleScore}>
-    //   <div className={classes.Number}>{props.holeNumber}</div>
-    //   <div className={classes.Score}>{holeScore}</div>
-    // </div>
+    </div>
   );
 };
 
