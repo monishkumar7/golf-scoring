@@ -1,4 +1,5 @@
 import React from "react";
+import { Grid } from "@material-ui/core";
 
 import HoleScore from "./HoleScore/HoleScore";
 import TableHeader from "./TableHeader/TableHeader";
@@ -28,7 +29,8 @@ const scorecard = props => {
   });
 
   return (
-    <div className={classes.Scorecard}>
+    // <div className={classes.Scorecard}>
+    <Grid container>
       <TableHeader title="Hole" text content="Score" />
       {scorecard1}
       <TableHeader title="Front" content={props.total1} />
@@ -41,7 +43,8 @@ const scorecard = props => {
       <hr className={classes.Separator} />
       <TableHeader title="Par" summary content="72" />
       <TableHeader title="Total" summary content={props.total} />
-    </div>
+      {/* </div> */}
+    </Grid>
   );
 };
 
