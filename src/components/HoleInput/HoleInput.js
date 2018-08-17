@@ -1,28 +1,55 @@
 import React from "react";
 
-import { Button, Grid, Typography, Card } from "@material-ui/core";
+import { Grid, Typography, Card } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import Button from "../UI/Button/Button";
 
-const styles = {
+const styles = theme => ({
   holeScore: {
     padding: "5px 10px"
   },
   card: {
-    padding: "10px 10px 20px"
+    padding: "10px 10px 20px",
+    borderRadius: "0"
   },
   score: {
-    display: "inline-block"
+    display: "inline-block",
+    fontSize: "2.5rem",
+    margin: "0 15px"
   },
   button: {
     margin: "0 10px",
-    minWidth: "45px"
+    minWidth: "45px",
+    borderRadius: "0",
+    backgroundColor: theme.palette.secondary.main,
+    color: "white"
   },
   cardHeader: {
     margin: "-10px -10px 10px",
-    backgroundColor: "yellow",
-    padding: "5px"
+    backgroundColor: theme.palette.primary.light,
+    padding: "5px",
+    color: "white"
+  },
+  cardContent: {
+    display: "inline-flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%"
+  },
+  cardLeftPane: {
+    display: "flex",
+    flex: "0 1 50%",
+    justifyContent: "center",
+    alignContent: "center",
+    flexFlow: "column"
+  },
+  cardRightPane: {
+    display: "flex",
+    flex: "0 1 50%",
+    justifyContent: "center",
+    alignContent: "center"
   }
-};
+});
 
 const HoleScore = props => {
   return (
@@ -31,51 +58,20 @@ const HoleScore = props => {
         <Typography variant="subheading" className={props.classes.cardHeader}>
           Hole {props.number}
         </Typography>
-        <div
-          style={{
-            display: "inline-flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            width: "100%"
-          }}
-        >
-          <div
-            style={{
-              display: "inline-block",
-              flex: "0 1 50%"
-            }}
-          >
+        <div className={props.classes.cardContent}>
+          <div className={props.classes.cardLeftPane}>
             <Typography variant="body1">Par - {props.par}</Typography>
             <Typography variant="body1">
               Difficulty - {props.difficulty}
             </Typography>
             <Typography variant="body1">Yards - {props.yards}</Typography>
           </div>
-          <div
-            style={{
-              display: "inline-block",
-              flex: "0 1 50%"
-            }}
-          >
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={props.decrement}
-              className={props.classes.button}
-            >
-              <Typography variant="button">-</Typography>
-            </Button>
-            <Typography variant="body1" className={props.classes.score}>
+          <div className={props.classes.cardRightPane}>
+            <Button clicked={props.decrement}>-</Button>
+            <Typography variant="title" className={props.classes.score}>
               {props.score}
             </Typography>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={props.increment}
-              className={props.classes.button}
-            >
-              <Typography variant="button">+</Typography>
-            </Button>
+            <Button clicked={props.increment}>+</Button>
           </div>
         </div>
       </Card>

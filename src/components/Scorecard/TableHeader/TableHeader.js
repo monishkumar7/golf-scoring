@@ -2,7 +2,7 @@ import React from "react";
 import { Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
-const styles = {
+const styles = theme => ({
   tableHeader: {
     display: "inline-block",
     boxSizing: "border-box",
@@ -15,14 +15,16 @@ const styles = {
   title: {
     fontSize: "14px",
     fontWeight: "bold",
-    background: "#bdd4de",
+    background: theme.palette.primary.main,
+    color: "#fff",
     margin: "0 0 5px 0",
     padding: "5px 0",
     textTransform: "uppercase"
   },
   text: {
     fontWeight: "bold",
-    fontSize: "19px"
+    fontSize: "20px",
+    lineHeight: "27px"
   },
   textDiv: {
     fontSize: "12px",
@@ -31,7 +33,7 @@ const styles = {
   summary: {
     width: "50%"
   }
-};
+});
 
 const tableHeader = props => {
   let content = "-";

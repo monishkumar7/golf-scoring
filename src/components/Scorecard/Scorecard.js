@@ -1,8 +1,17 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
 
 import HoleScore from "./HoleScore/HoleScore";
 import TableHeader from "./TableHeader/TableHeader";
+
+const styles = theme => ({
+  scoreCardContainer: {
+    position: "sticky",
+    top: "0",
+    zIndex: "1"
+  }
+});
 
 const scorecard = props => {
   const scorecard1 = props.holesArray.slice(0, 9).map(hole => {
@@ -28,7 +37,7 @@ const scorecard = props => {
   });
 
   return (
-    <Grid container style={{ position: "sticky", top: "0", zIndex: "1" }}>
+    <Grid container className={props.classes.scoreCardContainer}>
       <Grid item xs={12} md={6} xl={4}>
         <TableHeader title="Hole" text content="Score" />
         {scorecard1}
@@ -47,4 +56,4 @@ const scorecard = props => {
   );
 };
 
-export default scorecard;
+export default withStyles(styles)(scorecard);

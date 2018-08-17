@@ -4,6 +4,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import { BrowserRouter } from "react-router-dom";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core";
 
 import "./index.css";
 import App from "./containers/App/App";
@@ -18,17 +19,39 @@ const rootReducer = combineReducers({
   scores: scoresReducer
 });
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: "#63a4ff",
+      main: "#1976d2",
+      dark: "#004ba0",
+      contrastText: "#ffffff"
+    },
+    secondary: {
+      light: "#ffc246",
+      main: "#ff9100",
+      dark: "#c56200",
+      contrastText: "#000000"
+    }
+  },
+  typography: {
+    fontFamily: ["Open Sans", "sans-serif"].join(",")
+  }
+});
+
 const store = createStore(
   rootReducer,
   composeEnhancers(applyMiddleware(thunk))
 );
 
 const app = (
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>
+  <MuiThemeProvider theme={theme}>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
+  </MuiThemeProvider>
 );
 
 ReactDOM.render(app, document.getElementById("root"));

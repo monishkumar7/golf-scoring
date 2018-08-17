@@ -1,9 +1,17 @@
 import React from "react";
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = theme => ({
+  headerToolbar: {
+    justifyContent: "space-between",
+    backgroundColor: theme.palette.primary.dark
+  }
+});
 
 const Header = props => (
   <AppBar position="static">
-    <Toolbar style={{ justifyContent: "space-between" }}>
+    <Toolbar className={props.classes.headerToolbar}>
       <Typography variant="headline" color="inherit">
         Allcal Golf Scoring
       </Typography>
@@ -20,4 +28,4 @@ const Header = props => (
   </AppBar>
 );
 
-export default Header;
+export default withStyles(styles)(Header);

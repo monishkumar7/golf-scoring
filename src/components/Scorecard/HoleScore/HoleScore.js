@@ -2,11 +2,12 @@ import React from "react";
 import { Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
-const styles = {
+const styles = theme => ({
   holeNumber: {
     fontSize: "14px",
     fontWeight: "200",
-    background: "#bdd4de",
+    background: theme.palette.primary.main,
+    color: "#fff",
     margin: "0 0 5px 0",
     padding: "5px"
   },
@@ -22,7 +23,7 @@ const styles = {
   score: {
     fontSize: "20px"
   }
-};
+});
 
 const holeScore = props => {
   let holeScore = "-";
