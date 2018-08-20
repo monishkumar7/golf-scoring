@@ -1,5 +1,4 @@
 import axios from "../../axios-allcal-staging-api";
-
 import * as actionTypes from "./actionTypes";
 
 export const webLogin = (email, password) => {

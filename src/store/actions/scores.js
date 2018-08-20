@@ -2,6 +2,9 @@ import axios from "../../axios-allcal-staging-dashboard";
 
 import * as actionTypes from "./actionTypes";
 
+const eventId = localStorage.getItem("eventId");
+const loginToken = localStorage.getItem("loginToken");
+
 export const updateEventId = eventId => {
   return {
     type: actionTypes.UPDATE_EVENTID,
@@ -9,9 +12,25 @@ export const updateEventId = eventId => {
   };
 };
 
-export const inputChangeUpdate = (holeNumber, holeScore) => {
-  const loginToken = localStorage.getItem("loginToken");
-  const eventId = localStorage.getItem("eventId");
+export const incrementScore = (holeNumber, holeScore) => {
+  const updatedScore = +holeScore + +1;
+  return dispatch => {
+    dispatch(apiScoreUpdate(holeNumber, updatedScore, true));
+  };
+};
+
+export const decrementScore = (holeNumber, holeScore) => {
+  const updatedScore = holeScore - 1;
+  return dispatch => {
+    if (updatedScore <= 0) {
+      dispatch(apiScoreUpdate(holeNumber, updatedScore, false));
+    } else {
+      dispatch(apiScoreUpdate(holeNumber, updatedScore, true));
+    }
+  };
+};
+
+export const apiScoreUpdate = (holeNumber, holeScore, touched) => {
   return dispatch => {
     const data = {
       holeNumber: holeNumber,
@@ -24,90 +43,33 @@ export const inputChangeUpdate = (holeNumber, holeScore) => {
         }
       })
       .then(response => {
-        dispatch(inputChange(holeScore, holeNumber));
+        dispatch(scoreUpdate(holeNumber, holeScore, touched));
       })
       .catch(error => {});
   };
 };
 
-export const incrementScore = (holeNumber, holeScore) => {
-  const loginToken = localStorage.getItem("loginToken");
-  const eventId = localStorage.getItem("eventId");
-  return dispatch => {
-    const data = {
-      holeNumber: holeNumber,
-      score: +holeScore + +1
-    };
-    axios
-      .put("event/" + eventId + "/score", data, {
-        headers: {
-          "login-token": loginToken
-        }
-      })
-      .then(response => {
-        dispatch(inputChange(+holeScore + +1, holeNumber));
-      })
-      .catch(error => {});
-  };
-};
-
-export const decrementScore = (holeNumber, holeScore) => {
-  const loginToken = localStorage.getItem("loginToken");
-  const eventId = localStorage.getItem("eventId");
-  return dispatch => {
-    const data = {
-      holeNumber: holeNumber,
-      score: holeScore - 1
-    };
-    axios
-      .put("event/" + eventId + "/score", data, {
-        headers: {
-          "login-token": loginToken
-        }
-      })
-      .then(response => {
-        dispatch(inputChange(holeScore - 1, holeNumber));
-      })
-      .catch(error => {});
-  };
-};
-
-export const inputChange = (score, id) => {
+export const scoreUpdate = (holeNumber, holeScore, touched) => {
   return {
-    type: actionTypes.INPUT_CHANGE,
-    newScore: score,
-    holeId: id
+    type: actionTypes.SCORE_UPDATE,
+    holeNumber: holeNumber,
+    holeScore: holeScore,
+    touched: touched
   };
 };
 
-export const resetScoreUpdate = () => {
-  const loginToken = localStorage.getItem("loginToken");
-  const eventId = localStorage.getItem("eventId");
-  //FIXME:
-  //Don't do reset like this.
-  //Use a proper API
+export const apiResetScore = () => {
   return dispatch => {
-    let c = 0;
-    for (let i = 1; i <= 18; i++) {
-      const data = {
-        holeNumber: i,
-        score: ""
-      };
-      axios
-        .put("event/" + eventId + "/score", data, {
-          headers: {
-            "login-token": loginToken
-          }
-        })
-        .then(response => {
-          dispatch(resetScore());
-          c++;
-          c === 17
-            ? dispatch(fetchScores(eventId, loginToken))
-            : console.log(null);
-        })
-        .catch(error => {});
-    }
+    axios
+      .delete("event/" + eventId + "/score/refresh", {
+        headers: {
+          "login-token": loginToken
+        }
+      })
+      .then(response => {
+        dispatch(resetScore());
+      })
+      .catch(error => {});
   };
 };
 
@@ -117,23 +79,7 @@ export const resetScore = () => {
   };
 };
 
-export const submitScore = () => {
-  return dispatch => {};
-};
-
-export const submitSuccess = () => {
-  return {
-    type: actionTypes.SUBMIT_SUCCESS
-  };
-};
-
-export const submitFail = () => {
-  return {
-    type: actionTypes.SUBMIT_FAIL
-  };
-};
-
-export const fetchScores = (eventId, loginToken) => {
+export const fetchScores = () => {
   return dispatch => {
     axios
       .get("/event/" + eventId + "/score", {

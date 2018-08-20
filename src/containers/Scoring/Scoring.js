@@ -9,6 +9,10 @@ import * as actionCreators from "../../store/actions";
 import Button from "../../components/UI/Button/Button";
 
 class Scoring extends Component {
+  componentDidMount = () => {
+    this.props.onFetchScores();
+  };
+
   submitScore = () => {
     this.props.history.push("/submitSuccess");
     this.props.onSubmitClicked();
@@ -23,6 +27,10 @@ class Scoring extends Component {
           par={hole.par}
           score={hole.value}
           difficulty={hole.difficulty}
+          touched={hole.touched}
+          scoreClicked={() => {
+            this.props.onTouchScoreUpdate(hole.id, hole.par, true);
+          }}
           decrement={() => {
             this.props.onDecrementScore(hole.id, hole.value);
           }}
@@ -71,21 +79,18 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onInputChanged: (holeNumber, holeScore) =>
-      dispatch(actionCreators.inputChangeUpdate(holeNumber, holeScore)),
     onResetClicked: () => {
       let confirmation = window.confirm("Are you sure?");
-      if (confirmation) dispatch(actionCreators.resetScoreUpdate());
+      if (confirmation) dispatch(actionCreators.apiResetScore());
     },
-    onAppLogin: loginToken => dispatch(actionCreators.appLogin(loginToken)),
     onSubmitClicked: () => dispatch(actionCreators.submitScore()),
     onIncrementScore: (holeNumber, holeScore) =>
       dispatch(actionCreators.incrementScore(holeNumber, holeScore)),
     onDecrementScore: (holeNumber, holeScore) =>
       dispatch(actionCreators.decrementScore(holeNumber, holeScore)),
-    onUpdateEventId: eventId => dispatch(actionCreators.updateEventId(eventId)),
-    onFetchScores: (eventId, loginToken) =>
-      dispatch(actionCreators.fetchScores(eventId, loginToken))
+    onFetchScores: () => dispatch(actionCreators.fetchScores()),
+    onTouchScoreUpdate: (holeNumber, holeScore, touched) =>
+      dispatch(actionCreators.apiScoreUpdate(holeNumber, holeScore, touched))
   };
 };
 

@@ -6,7 +6,7 @@ import Button from "../UI/Button/Button";
 
 const styles = theme => ({
   holeScore: {
-    padding: "5px 10px"
+    padding: "0.4rem 0.9rem"
   },
   card: {
     padding: "10px 10px 20px",
@@ -52,6 +52,11 @@ const styles = theme => ({
 });
 
 const HoleScore = props => {
+  let holeScore = "-";
+  if (props.touched) {
+    holeScore = props.score;
+  }
+
   return (
     <Grid item xs={12} sm={6} lg={4} className={props.classes.holeScore}>
       <Card className={props.classes.card}>
@@ -67,9 +72,15 @@ const HoleScore = props => {
             <Typography variant="body1">Yards - {props.yards}</Typography>
           </div>
           <div className={props.classes.cardRightPane}>
-            <Button clicked={props.decrement}>-</Button>
-            <Typography variant="title" className={props.classes.score}>
-              {props.score}
+            <Button disabled={!props.touched} clicked={props.decrement}>
+              -
+            </Button>
+            <Typography
+              onClick={props.scoreClicked}
+              variant="title"
+              className={props.classes.score}
+            >
+              {holeScore}
             </Typography>
             <Button clicked={props.increment}>+</Button>
           </div>
