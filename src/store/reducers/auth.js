@@ -7,7 +7,8 @@ const initialState = {
   loginToken: null,
   loading: false,
   auth: false,
-  appMode: false
+  appMode: false,
+  isLoading: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -27,6 +28,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         auth: false,
         error: action.error
+      };
+
+    case actionTypes.AUTH_START:
+      return {
+        ...state,
+        isLoading: true
       };
 
     default:

@@ -13,11 +13,6 @@ class Scoring extends Component {
     this.props.onFetchScores();
   };
 
-  submitScore = () => {
-    this.props.history.push("/submitSuccess");
-    this.props.onSubmitClicked();
-  };
-
   render() {
     const holeInput = this.props.holesArray.map(hole => {
       return (
@@ -55,9 +50,7 @@ class Scoring extends Component {
           <Button disabled={false} clicked={this.props.onResetClicked}>
             Reset Score
           </Button>
-          <Button disabled={false} clicked={this.submitScore}>
-            Submit Score
-          </Button>
+          <Button disabled={false}>Submit Score</Button>
         </div>
       );
     }
@@ -83,12 +76,11 @@ const mapDispatchToProps = dispatch => {
       let confirmation = window.confirm("Are you sure?");
       if (confirmation) dispatch(actionCreators.apiResetScore());
     },
-    onSubmitClicked: () => dispatch(actionCreators.submitScore()),
     onIncrementScore: (holeNumber, holeScore) =>
       dispatch(actionCreators.incrementScore(holeNumber, holeScore)),
     onDecrementScore: (holeNumber, holeScore) =>
       dispatch(actionCreators.decrementScore(holeNumber, holeScore)),
-    onFetchScores: () => dispatch(actionCreators.fetchScores()),
+    onFetchScores: () => dispatch(actionCreators.apiFetchScores()),
     onTouchScoreUpdate: (holeNumber, holeScore, touched) =>
       dispatch(actionCreators.apiScoreUpdate(holeNumber, holeScore, touched))
   };

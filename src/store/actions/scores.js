@@ -5,10 +5,46 @@ import * as actionTypes from "./actionTypes";
 const eventId = localStorage.getItem("eventId");
 const loginToken = localStorage.getItem("loginToken");
 
-export const updateEventId = eventId => {
+export const scoreUpdateStart = () => {
   return {
-    type: actionTypes.UPDATE_EVENTID,
-    eventId: eventId
+    type: actionTypes.SCORE_UPDATE_START
+  };
+};
+
+export const apiScoreUpdate = (holeNumber, holeScore, touched) => {
+  return dispatch => {
+    dispatch(scoreUpdateStart());
+    const data = {
+      holeNumber: holeNumber,
+      score: holeScore
+    };
+    axios
+      .put("event/" + eventId + "/score", data, {
+        headers: {
+          "login-token": loginToken
+        }
+      })
+      .then(response => {
+        dispatch(scoreUpdateSuccess(holeNumber, holeScore, touched));
+      })
+      .catch(error => {
+        dispatch(scoreUpdateFail());
+      });
+  };
+};
+
+export const scoreUpdateSuccess = (holeNumber, holeScore, touched) => {
+  return {
+    type: actionTypes.SCORE_UPDATE_SUCCESS,
+    holeNumber: holeNumber,
+    holeScore: holeScore,
+    touched: touched
+  };
+};
+
+export const scoreUpdateFail = () => {
+  return {
+    type: actionTypes.SCORE_UPDATE_FAIL
   };
 };
 
@@ -30,57 +66,15 @@ export const decrementScore = (holeNumber, holeScore) => {
   };
 };
 
-export const apiScoreUpdate = (holeNumber, holeScore, touched) => {
-  return dispatch => {
-    const data = {
-      holeNumber: holeNumber,
-      score: holeScore
-    };
-    axios
-      .put("event/" + eventId + "/score", data, {
-        headers: {
-          "login-token": loginToken
-        }
-      })
-      .then(response => {
-        dispatch(scoreUpdate(holeNumber, holeScore, touched));
-      })
-      .catch(error => {});
-  };
-};
-
-export const scoreUpdate = (holeNumber, holeScore, touched) => {
+export const fetchStart = () => {
   return {
-    type: actionTypes.SCORE_UPDATE,
-    holeNumber: holeNumber,
-    holeScore: holeScore,
-    touched: touched
+    type: actionTypes.FETCH_START
   };
 };
 
-export const apiResetScore = () => {
+export const apiFetchScores = () => {
   return dispatch => {
-    axios
-      .delete("event/" + eventId + "/score/refresh", {
-        headers: {
-          "login-token": loginToken
-        }
-      })
-      .then(response => {
-        dispatch(resetScore());
-      })
-      .catch(error => {});
-  };
-};
-
-export const resetScore = () => {
-  return {
-    type: actionTypes.RESET_SCORE
-  };
-};
-
-export const fetchScores = () => {
-  return dispatch => {
+    dispatch(fetchStart());
     axios
       .get("/event/" + eventId + "/score", {
         headers: {
@@ -106,5 +100,48 @@ export const fetchSuccess = holeScores => {
 export const fetchFail = () => {
   return {
     type: actionTypes.FETCH_FAIL
+  };
+};
+
+export const resetScoreStart = () => {
+  return {
+    type: actionTypes.RESET_SCORE_START
+  };
+};
+
+export const apiResetScore = () => {
+  return dispatch => {
+    dispatch(resetScoreStart());
+    axios
+      .delete("event/" + eventId + "/score/refresh", {
+        headers: {
+          "login-token": loginToken
+        }
+      })
+      .then(response => {
+        dispatch(resetScoreSuccess());
+      })
+      .catch(error => {
+        dispatch(resetScoreFail());
+      });
+  };
+};
+
+export const resetScoreSuccess = () => {
+  return {
+    type: actionTypes.RESET_SCORE_SUCCESS
+  };
+};
+
+export const resetScoreFail = () => {
+  return {
+    type: actionTypes.RESET_SCORE_FAIL
+  };
+};
+
+export const updateEventId = eventId => {
+  return {
+    type: actionTypes.UPDATE_EVENTID,
+    eventId: eventId
   };
 };

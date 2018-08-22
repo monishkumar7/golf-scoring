@@ -113,10 +113,10 @@ const reducer = (state = initialState, action) => {
     case actionTypes.FETCH_SUCCESS:
       return fetchSuccess(state, action);
 
-    case actionTypes.SCORE_UPDATE:
+    case actionTypes.SCORE_UPDATE_SUCCESS:
       return scoreUpdate(state, action);
 
-    case actionTypes.RESET_SCORE:
+    case actionTypes.RESET_SCORE_SUCCESS:
       return {
         ...state,
         holesArray: [

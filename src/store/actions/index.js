@@ -3,8 +3,7 @@ export { appLogin, webLogin } from "./auth";
 export {
   updateEventId,
   apiResetScore,
-  submitScore,
-  fetchScores,
+  apiFetchScores,
   incrementScore,
   decrementScore,
   apiScoreUpdate

@@ -3,6 +3,7 @@ import * as actionTypes from "./actionTypes";
 
 export const webLogin = (email, password) => {
   return dispatch => {
+    dispatch(authStart());
     const data = {
       email: email,
       password: password
@@ -27,6 +28,7 @@ export const webLogin = (email, password) => {
 
 export const appLogin = loginToken => {
   return dispatch => {
+    dispatch(authStart());
     axios
       .get("/account", {
         headers: {
@@ -46,6 +48,12 @@ export const appLogin = loginToken => {
       .catch(error => {
         dispatch(authFail(error));
       });
+  };
+};
+
+export const authStart = () => {
+  return {
+    type: actionTypes.AUTH_START
   };
 };
 
