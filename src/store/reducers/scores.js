@@ -25,7 +25,65 @@ const initialState = {
   total2: "",
   total: "",
   eventId: null,
-  submitted: false
+  submitted: false,
+  previousGames: [
+    {
+      holesArray: [
+        { id: 1, value: "", par: 4, difficulty: 4, touched: false },
+        { id: 2, value: "", par: 4, difficulty: 7, touched: false },
+        { id: 3, value: "", par: 3, difficulty: 18, touched: false },
+        { id: 4, value: "", par: 4, difficulty: 15, touched: false },
+        { id: 5, value: "", par: 4, difficulty: 11, touched: false },
+        { id: 6, value: "", par: 4, difficulty: 2, touched: false },
+        { id: 7, value: "", par: 3, difficulty: 3, touched: false },
+        { id: 8, value: "", par: 5, difficulty: 9, touched: false },
+        { id: 9, value: "", par: 4, difficulty: 10, touched: false },
+        { id: 10, value: "", par: 4, difficulty: 17, touched: false },
+        { id: 11, value: "", par: 5, difficulty: 12, touched: false },
+        { id: 12, value: "", par: 4, difficulty: 16, touched: false },
+        { id: 13, value: "", par: 3, difficulty: 8, touched: false },
+        { id: 14, value: "", par: 4, difficulty: 1, touched: false },
+        { id: 15, value: "", par: 4, difficulty: 5, touched: false },
+        { id: 16, value: "", par: 4, difficulty: 13, touched: false },
+        { id: 17, value: "", par: 5, difficulty: 6, touched: false },
+        { id: 18, value: "", par: 4, difficulty: 1, touched: false }
+      ],
+      total1: "",
+      total2: "",
+      total: "",
+      title: "Day 1",
+      eventId: "56456464",
+      submitted: false
+    },
+    {
+      holesArray: [
+        { id: 1, value: "", par: 4, difficulty: 4, touched: false },
+        { id: 2, value: "", par: 4, difficulty: 7, touched: false },
+        { id: 3, value: "", par: 3, difficulty: 18, touched: false },
+        { id: 4, value: "", par: 4, difficulty: 15, touched: false },
+        { id: 5, value: "", par: 4, difficulty: 11, touched: false },
+        { id: 6, value: "", par: 4, difficulty: 2, touched: false },
+        { id: 7, value: "", par: 3, difficulty: 3, touched: false },
+        { id: 8, value: "", par: 5, difficulty: 9, touched: false },
+        { id: 9, value: "", par: 4, difficulty: 10, touched: false },
+        { id: 10, value: "", par: 4, difficulty: 17, touched: false },
+        { id: 11, value: "", par: 5, difficulty: 12, touched: false },
+        { id: 12, value: "", par: 4, difficulty: 16, touched: false },
+        { id: 13, value: "", par: 3, difficulty: 8, touched: false },
+        { id: 14, value: "", par: 4, difficulty: 1, touched: false },
+        { id: 15, value: "", par: 4, difficulty: 5, touched: false },
+        { id: 16, value: "", par: 4, difficulty: 13, touched: false },
+        { id: 17, value: "", par: 5, difficulty: 6, touched: false },
+        { id: 18, value: "", par: 4, difficulty: 1, touched: false }
+      ],
+      total1: "",
+      total2: "",
+      total: "",
+      title: "Day 2",
+      eventId: "67586768",
+      submitted: false
+    }
+  ]
 };
 
 const fetchSuccess = (state, action) => {
