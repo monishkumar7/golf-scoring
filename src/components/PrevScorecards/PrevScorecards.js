@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Grid, Card } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { connect } from "react-redux";
 
 import PrevScorecard from "./PrevScorecard/PrevScorecard";
@@ -8,9 +8,7 @@ class PrevScorecards extends Component {
   render() {
     const scorecards = this.props.scorecards.map(scorecard => (
       <Grid item xs={12} key={scorecard.eventId}>
-        <Card style={{ padding: "1rem", margin: "1rem" }}>
-          <PrevScorecard title={scorecard.title} id={scorecard.eventId} />
-        </Card>
+        <PrevScorecard id={scorecard.eventId} />
       </Grid>
     ));
     return (

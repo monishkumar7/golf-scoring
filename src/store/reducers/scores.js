@@ -51,8 +51,7 @@ const initialState = {
       total1: "",
       total2: "",
       total: "",
-      title: "Day 1",
-      eventId: "56456464",
+      eventId: "1",
       submitted: false
     },
     {
@@ -79,8 +78,7 @@ const initialState = {
       total1: "",
       total2: "",
       total: "",
-      title: "Day 2",
-      eventId: "67586768",
+      eventId: "2",
       submitted: false
     }
   ]
