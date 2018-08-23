@@ -26,6 +26,12 @@ export const webLogin = (email, password) => {
   };
 };
 
+export const authStart = () => {
+  return {
+    type: actionTypes.AUTH_START
+  };
+};
+
 export const appLogin = loginToken => {
   return dispatch => {
     dispatch(authStart());
@@ -48,12 +54,6 @@ export const appLogin = loginToken => {
       .catch(error => {
         dispatch(authFail(error));
       });
-  };
-};
-
-export const authStart = () => {
-  return {
-    type: actionTypes.AUTH_START
   };
 };
 

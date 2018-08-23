@@ -11,7 +11,7 @@ export const scoreUpdateStart = () => {
   };
 };
 
-export const apiScoreUpdate = (holeNumber, holeScore, touched) => {
+export const scoreUpdate = (holeNumber, holeScore, touched) => {
   return dispatch => {
     dispatch(scoreUpdateStart());
     const data = {
@@ -51,7 +51,7 @@ export const scoreUpdateFail = () => {
 export const incrementScore = (holeNumber, holeScore) => {
   const updatedScore = +holeScore + +1;
   return dispatch => {
-    dispatch(apiScoreUpdate(holeNumber, updatedScore, true));
+    dispatch(scoreUpdate(holeNumber, updatedScore, true));
   };
 };
 
@@ -59,22 +59,22 @@ export const decrementScore = (holeNumber, holeScore) => {
   const updatedScore = holeScore - 1;
   return dispatch => {
     if (updatedScore <= 0) {
-      dispatch(apiScoreUpdate(holeNumber, updatedScore, false));
+      dispatch(scoreUpdate(holeNumber, updatedScore, false));
     } else {
-      dispatch(apiScoreUpdate(holeNumber, updatedScore, true));
+      dispatch(scoreUpdate(holeNumber, updatedScore, true));
     }
   };
 };
 
-export const fetchStart = () => {
+export const fetchScoresStart = () => {
   return {
-    type: actionTypes.FETCH_START
+    type: actionTypes.FETCH_SCORES_START
   };
 };
 
-export const apiFetchScores = () => {
+export const fetchScores = () => {
   return dispatch => {
-    dispatch(fetchStart());
+    dispatch(fetchScoresStart());
     axios
       .get("/event/" + eventId + "/score", {
         headers: {
@@ -82,24 +82,24 @@ export const apiFetchScores = () => {
         }
       })
       .then(response => {
-        dispatch(fetchSuccess(response.data.data));
+        dispatch(fetchScoresSuccess(response.data.data));
       })
       .catch(error => {
-        dispatch(fetchFail());
+        dispatch(fetchScoresFail());
       });
   };
 };
 
-export const fetchSuccess = holeScores => {
+export const fetchScoresSuccess = holeScores => {
   return {
-    type: actionTypes.FETCH_SUCCESS,
+    type: actionTypes.FETCH_SCORES_SUCCESS,
     holeScores: holeScores
   };
 };
 
-export const fetchFail = () => {
+export const fetchScoresFail = () => {
   return {
-    type: actionTypes.FETCH_FAIL
+    type: actionTypes.FETCH_SCORES_FAIL
   };
 };
 
@@ -109,7 +109,7 @@ export const resetScoreStart = () => {
   };
 };
 
-export const apiResetScore = () => {
+export const resetScore = () => {
   return dispatch => {
     dispatch(resetScoreStart());
     axios

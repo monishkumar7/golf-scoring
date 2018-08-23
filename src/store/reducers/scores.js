@@ -86,7 +86,7 @@ const initialState = {
   ]
 };
 
-const fetchSuccess = (state, action) => {
+const fetchScoresSuccess = (state, action) => {
   const holeScores = action.holeScores;
   let updatedHolesArray = [...state.holesArray];
   let updatedTotal11 = 0;
@@ -168,8 +168,8 @@ const reducer = (state = initialState, action) => {
         eventId: action.eventId
       };
 
-    case actionTypes.FETCH_SUCCESS:
-      return fetchSuccess(state, action);
+    case actionTypes.FETCH_SCORES_SUCCESS:
+      return fetchScoresSuccess(state, action);
 
     case actionTypes.SCORE_UPDATE_SUCCESS:
       return scoreUpdate(state, action);

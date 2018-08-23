@@ -74,15 +74,15 @@ const mapDispatchToProps = dispatch => {
   return {
     onResetClicked: () => {
       let confirmation = window.confirm("Are you sure?");
-      if (confirmation) dispatch(actionCreators.apiResetScore());
+      if (confirmation) dispatch(actionCreators.resetScore());
     },
     onIncrementScore: (holeNumber, holeScore) =>
       dispatch(actionCreators.incrementScore(holeNumber, holeScore)),
     onDecrementScore: (holeNumber, holeScore) =>
       dispatch(actionCreators.decrementScore(holeNumber, holeScore)),
-    onFetchScores: () => dispatch(actionCreators.apiFetchScores()),
+    onFetchScores: () => dispatch(actionCreators.fetchScores()),
     onTouchScoreUpdate: (holeNumber, holeScore, touched) =>
-      dispatch(actionCreators.apiScoreUpdate(holeNumber, holeScore, touched))
+      dispatch(actionCreators.scoreUpdate(holeNumber, holeScore, touched))
   };
 };
 
