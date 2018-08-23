@@ -12,13 +12,16 @@ const styles = {
   },
   linkText: {
     textDecoration: "none"
+  },
+  homeContainer: {
+    height: "50vh"
   }
 };
 
 const home = props => {
   const { classes } = props;
   return (
-    <Grid container>
+    <Grid container alignContent="center" className={classes.homeContainer}>
       <Grid item xs={12} className={classes.buttonDiv}>
         <Link to="/prev" className={classes.linkText}>
           <Button
@@ -33,26 +36,30 @@ const home = props => {
         </Link>
       </Grid>
       <Grid item xs={12} className={classes.buttonDiv}>
-        <Button
-          color="secondary"
-          variant="contained"
-          className={classes.button}
-        >
-          <Typography variant="button" color="inherit">
-            Continue unfinished Game
-          </Typography>
-        </Button>
+        <Link to="/scoring/continue" className={classes.linkText}>
+          <Button
+            color="secondary"
+            variant="contained"
+            className={classes.button}
+          >
+            <Typography variant="button" color="inherit">
+              Continue unfinished Game
+            </Typography>
+          </Button>
+        </Link>
       </Grid>
       <Grid item xs={12} className={classes.buttonDiv}>
-        <Button
-          color="secondary"
-          variant="contained"
-          className={classes.button}
-        >
-          <Typography variant="button" color="inherit">
-            New Game
-          </Typography>
-        </Button>
+        <Link to="/scoring/newgame" className={classes.linkText}>
+          <Button
+            color="secondary"
+            variant="contained"
+            className={classes.button}
+          >
+            <Typography variant="button" color="inherit">
+              New Game
+            </Typography>
+          </Button>
+        </Link>
       </Grid>
     </Grid>
   );

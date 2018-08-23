@@ -31,7 +31,7 @@ class App extends Component {
         <Layout auth={this.props.auth} userName={this.props.userName}>
           <Switch>
             <Route path="/prev" component={PrevScorecards} />
-            <Route path="/scores" component={Scoring} />
+            <Route path="/scoring" component={Scoring} />
             <Route path="/" component={Home} />
           </Switch>
         </Layout>
