@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 import classes from "./App.css";
 import Scoring from "../Scoring/Scoring";
-import PrevScorecards from "../../components/PrevScorecards/PrevScorecards";
+import PrevScorecards from "../../containers/PrevScorecards/PrevScorecards";
 import Layout from "../../components/Layout/Layout";
 import * as actionCreators from "../../store/actions";
+import Home from "../../components/Home/Home";
 
 class App extends Component {
   componentDidMount = () => {
@@ -29,8 +30,9 @@ class App extends Component {
       <div className={classes.App}>
         <Layout auth={this.props.auth} userName={this.props.userName}>
           <Switch>
-            <Route path="/prev" exact component={PrevScorecards} />
-            <Route path="/" component={Scoring} />
+            <Route path="/prev" component={PrevScorecards} />
+            <Route path="/scores" component={Scoring} />
+            <Route path="/" component={Home} />
           </Switch>
         </Layout>
       </div>
@@ -52,7 +54,9 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App)
+);

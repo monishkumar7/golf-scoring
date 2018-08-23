@@ -4,18 +4,16 @@ import {
   Typography,
   Card,
   IconButton,
-  Collapse,
-  CardContent
+  Collapse
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import Scorecard from "../../Scorecard/Scorecard";
+import Scorecard from "../../../components/Scorecard/Scorecard";
 
 const styles = theme => ({
   scorecard: {
-    padding: "1rem",
-    margin: ".4rem 1rem"
+    margin: ".4rem .5rem"
   },
   expand: {
     transform: "rotate(0deg)",
@@ -35,6 +33,12 @@ const styles = theme => ({
   },
   cardIcon: {
     textAlign: "right"
+  },
+  collapse: {
+    padding: "0"
+  },
+  cardHeader: {
+    padding: "1rem"
   }
 });
 
@@ -59,7 +63,12 @@ class PrevScorecard extends Component {
     );
     return (
       <Card className={classes.scorecard}>
-        <Grid container justify="space-between" alignItems="center">
+        <Grid
+          container
+          justify="space-between"
+          alignItems="center"
+          className={classes.cardHeader}
+        >
           <Grid item xs={7}>
             <Typography variant="subheading">Game {this.props.id}</Typography>
           </Grid>
@@ -78,8 +87,12 @@ class PrevScorecard extends Component {
             </IconButton>
           </Grid>
         </Grid>
-        <Collapse in={this.state.expanded} timeout="auto">
-          <CardContent>{scorecard}</CardContent>
+        <Collapse
+          in={this.state.expanded}
+          timeout="auto"
+          className={classes.collapse}
+        >
+          {scorecard}
         </Collapse>
       </Card>
     );
