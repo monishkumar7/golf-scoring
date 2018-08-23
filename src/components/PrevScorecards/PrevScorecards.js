@@ -8,7 +8,13 @@ class PrevScorecards extends Component {
   render() {
     const scorecards = this.props.scorecards.map(scorecard => (
       <Grid item xs={12} key={scorecard.eventId}>
-        <PrevScorecard id={scorecard.eventId} />
+        <PrevScorecard
+          total={scorecard.total}
+          total1={scorecard.total1}
+          total2={scorecard.total2}
+          holesArray={scorecard.holesArray}
+          id={scorecard.eventId}
+        />
       </Grid>
     ));
     return (

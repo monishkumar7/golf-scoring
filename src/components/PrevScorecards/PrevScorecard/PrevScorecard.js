@@ -10,6 +10,8 @@ import {
 import { withStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
+import Scorecard from "../../Scorecard/Scorecard";
+
 const styles = theme => ({
   scorecard: {
     padding: "1rem",
@@ -27,6 +29,12 @@ const styles = theme => ({
   },
   expandOpen: {
     transform: "rotate(180deg)"
+  },
+  cardDate: {
+    textAlign: "center"
+  },
+  cardIcon: {
+    textAlign: "right"
   }
 });
 
@@ -41,16 +49,24 @@ class PrevScorecard extends Component {
 
   render() {
     const { classes } = this.props;
+    const scorecard = (
+      <Scorecard
+        total={this.props.total}
+        total1={this.props.total1}
+        total2={this.props.total2}
+        holesArray={this.props.holesArray}
+      />
+    );
     return (
       <Card className={classes.scorecard}>
         <Grid container justify="space-between" alignItems="center">
-          <Grid item xs={3}>
+          <Grid item xs={7}>
             <Typography variant="subheading">Game {this.props.id}</Typography>
           </Grid>
-          <Grid item xs={3}>
-            <Typography variant="subheading" />
+          <Grid item xs={4} className={classes.cardDate}>
+            <Typography variant="body1">Aug 22, 2018 - Wednesday</Typography>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={1} className={classes.cardIcon}>
             <IconButton
               className={[
                 classes.expand,
@@ -63,9 +79,7 @@ class PrevScorecard extends Component {
           </Grid>
         </Grid>
         <Collapse in={this.state.expanded} timeout="auto">
-          <CardContent>
-            <Typography variant="title">Collapsed</Typography>
-          </CardContent>
+          <CardContent>{scorecard}</CardContent>
         </Collapse>
       </Card>
     );
