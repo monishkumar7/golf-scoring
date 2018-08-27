@@ -145,3 +145,40 @@ export const updateEventId = eventId => {
     eventId: eventId
   };
 };
+
+export const fetchAllScoresStart = () => {
+  return {
+    type: actionTypes.FETCH_ALL_SCORES_START
+  };
+};
+
+export const fetchAllScores = () => {
+  return dispatch => {
+    dispatch(fetchAllScoresStart());
+    axios
+      .get("/scorecards", {
+        headers: {
+          "login-token": loginToken
+        }
+      })
+      .then(response => {
+        dispatch(fetchAllScoresSuccess(response.data.data));
+      })
+      .catch(error => {
+        dispatch(fetchAllScoresFail());
+      });
+  };
+};
+
+export const fetchAllScoresSuccess = holeScores => {
+  return {
+    type: actionTypes.FETCH_ALL_SCORES_SUCCESS,
+    holeScores: holeScores
+  };
+};
+
+export const fetchAllScoresFail = () => {
+  return {
+    type: actionTypes.FETCH_ALL_SCORES_FAIL
+  };
+};

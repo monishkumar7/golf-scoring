@@ -6,5 +6,6 @@ export {
   fetchScores,
   incrementScore,
   decrementScore,
-  scoreUpdate
+  scoreUpdate,
+  fetchAllScores
 } from "./scores";
