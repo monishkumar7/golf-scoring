@@ -2,10 +2,11 @@ export { appLogin, webLogin } from "./auth";
 
 export {
   updateEventId,
-  resetScore,
+  createScorecard,
+  fetchAllScores,
   fetchScores,
   incrementScore,
   decrementScore,
   scoreUpdate,
-  fetchAllScores
+  resetScore
 } from "./scores";

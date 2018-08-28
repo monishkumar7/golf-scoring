@@ -5,6 +5,117 @@ import * as actionTypes from "./actionTypes";
 const eventId = localStorage.getItem("eventId");
 const loginToken = localStorage.getItem("loginToken");
 
+export const createScorecardStart = () => {
+  return {
+    type: actionTypes.CREATE_SCORECARD_START
+  };
+};
+
+export const createScorecard = () => {
+  return dispatch => {
+    dispatch(createScorecardStart());
+    axios
+      .post("/scoreCard", {
+        headers: {
+          "login-token": loginToken
+        }
+      })
+      .then(response => {
+        dispatch(createScorecardSuccess(response.data.data));
+      })
+      .catch(error => {
+        dispatch(createScorecardFail());
+      });
+  };
+};
+
+export const createScorecardSuccess = holeScores => {
+  return {
+    type: actionTypes.CREATE_SCORECARD_SUCCESS,
+    holeScores: holeScores
+  };
+};
+
+export const createScorecardFail = () => {
+  return {
+    type: actionTypes.CREATE_SCORECARD_FAIL
+  };
+};
+
+export const fetchAllScoresStart = () => {
+  return {
+    type: actionTypes.FETCH_ALL_SCORES_START
+  };
+};
+
+export const fetchAllScores = () => {
+  return dispatch => {
+    dispatch(fetchAllScoresStart());
+    axios
+      .get("/scoreCards", {
+        headers: {
+          "login-token": loginToken
+        }
+      })
+      .then(response => {
+        dispatch(fetchAllScoresSuccess(response.data.data));
+      })
+      .catch(error => {
+        dispatch(fetchAllScoresFail());
+      });
+  };
+};
+
+export const fetchAllScoresSuccess = holeScores => {
+  return {
+    type: actionTypes.FETCH_ALL_SCORES_SUCCESS,
+    holeScores: holeScores
+  };
+};
+
+export const fetchAllScoresFail = () => {
+  return {
+    type: actionTypes.FETCH_ALL_SCORES_FAIL
+  };
+};
+
+export const fetchScoresStart = () => {
+  return {
+    type: actionTypes.FETCH_SCORES_START
+  };
+};
+
+export const fetchScores = () => {
+  return dispatch => {
+    dispatch(fetchScoresStart());
+    axios
+      .get("/scoreCard/" + eventId + "/score", {
+        headers: {
+          "login-token": loginToken
+        }
+      })
+      .then(response => {
+        dispatch(fetchScoresSuccess(response.data.data));
+      })
+      .catch(error => {
+        dispatch(fetchScoresFail());
+      });
+  };
+};
+
+export const fetchScoresSuccess = holeScores => {
+  return {
+    type: actionTypes.FETCH_SCORES_SUCCESS,
+    holeScores: holeScores
+  };
+};
+
+export const fetchScoresFail = () => {
+  return {
+    type: actionTypes.FETCH_SCORES_FAIL
+  };
+};
+
 export const scoreUpdateStart = () => {
   return {
     type: actionTypes.SCORE_UPDATE_START
@@ -19,7 +130,7 @@ export const scoreUpdate = (holeNumber, holeScore, touched) => {
       score: holeScore
     };
     axios
-      .put("event/" + eventId + "/score", data, {
+      .put("scoreCard/" + eventId + "/score", data, {
         headers: {
           "login-token": loginToken
         }
@@ -66,43 +177,6 @@ export const decrementScore = (holeNumber, holeScore) => {
   };
 };
 
-export const fetchScoresStart = () => {
-  return {
-    type: actionTypes.FETCH_SCORES_START
-  };
-};
-
-export const fetchScores = () => {
-  return dispatch => {
-    dispatch(fetchScoresStart());
-    axios
-      .get("/event/" + eventId + "/score", {
-        headers: {
-          "login-token": loginToken
-        }
-      })
-      .then(response => {
-        dispatch(fetchScoresSuccess(response.data.data));
-      })
-      .catch(error => {
-        dispatch(fetchScoresFail());
-      });
-  };
-};
-
-export const fetchScoresSuccess = holeScores => {
-  return {
-    type: actionTypes.FETCH_SCORES_SUCCESS,
-    holeScores: holeScores
-  };
-};
-
-export const fetchScoresFail = () => {
-  return {
-    type: actionTypes.FETCH_SCORES_FAIL
-  };
-};
-
 export const resetScoreStart = () => {
   return {
     type: actionTypes.RESET_SCORE_START
@@ -113,7 +187,7 @@ export const resetScore = () => {
   return dispatch => {
     dispatch(resetScoreStart());
     axios
-      .delete("event/" + eventId + "/score/refresh", {
+      .delete("scoreCard/" + eventId + "/score/refresh", {
         headers: {
           "login-token": loginToken
         }
@@ -143,42 +217,5 @@ export const updateEventId = eventId => {
   return {
     type: actionTypes.UPDATE_EVENTID,
     eventId: eventId
-  };
-};
-
-export const fetchAllScoresStart = () => {
-  return {
-    type: actionTypes.FETCH_ALL_SCORES_START
-  };
-};
-
-export const fetchAllScores = () => {
-  return dispatch => {
-    dispatch(fetchAllScoresStart());
-    axios
-      .get("/scorecards", {
-        headers: {
-          "login-token": loginToken
-        }
-      })
-      .then(response => {
-        dispatch(fetchAllScoresSuccess(response.data.data));
-      })
-      .catch(error => {
-        dispatch(fetchAllScoresFail());
-      });
-  };
-};
-
-export const fetchAllScoresSuccess = holeScores => {
-  return {
-    type: actionTypes.FETCH_ALL_SCORES_SUCCESS,
-    holeScores: holeScores
-  };
-};
-
-export const fetchAllScoresFail = () => {
-  return {
-    type: actionTypes.FETCH_ALL_SCORES_FAIL
   };
 };
