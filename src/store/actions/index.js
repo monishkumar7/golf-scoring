@@ -1,7 +1,6 @@
 export { appLogin, webLogin } from "./auth";
 
 export {
-  updateEventId,
   createScorecard,
   fetchAllScorecards,
   fetchScorecard,

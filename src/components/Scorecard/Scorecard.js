@@ -17,9 +17,9 @@ const scorecard = props => {
   const scorecard1 = props.holesArray.slice(0, 9).map(hole => {
     return (
       <HoleScore
-        key={hole.id}
-        holeNumber={hole.id}
-        holeScore={hole.value}
+        key={hole.number}
+        holeNumber={hole.number}
+        holeScore={hole.score}
         touched={hole.touched}
       />
     );
@@ -28,9 +28,9 @@ const scorecard = props => {
   const scorecard2 = props.holesArray.slice(9).map(hole => {
     return (
       <HoleScore
-        key={hole.id}
-        holeNumber={hole.id}
-        holeScore={hole.value}
+        key={hole.number}
+        holeNumber={hole.number}
+        holeScore={hole.score}
         touched={hole.touched}
       />
     );

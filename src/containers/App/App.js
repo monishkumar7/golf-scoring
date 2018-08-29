@@ -13,17 +13,14 @@ class App extends Component {
   componentDidMount = () => {
     const params = new URLSearchParams(window.location.search);
     this.setParams(params);
-
     const loginToken = localStorage.getItem("loginToken");
-    const eventId = localStorage.getItem("eventId");
+
     this.props.onAppLogin(loginToken);
     this.props.onFetchAllScorecards(loginToken);
-    this.props.onUpdateEventId(eventId);
   };
 
   setParams = params => {
     localStorage.setItem("loginToken", params.get("loginToken"));
-    localStorage.setItem("eventId", params.get("eventId"));
   };
 
   render() {
@@ -51,7 +48,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onAppLogin: loginToken => dispatch(actionCreators.appLogin(loginToken)),
-    onUpdateEventId: eventId => dispatch(actionCreators.updateEventId(eventId)),
     onFetchAllScorecards: loginToken =>
       dispatch(actionCreators.fetchAllScorecards(loginToken))
   };

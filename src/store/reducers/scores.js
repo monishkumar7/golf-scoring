@@ -254,12 +254,6 @@ const updateScoreSuccess = (state, action) => {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.UPDATE_EVENTID:
-      return {
-        ...state,
-        eventId: action.eventId
-      };
-
     case actionTypes.FETCH_SCORECARDS_SUCCESS:
       return fetchScorecardSuccess(state, action);
 

@@ -2,7 +2,6 @@ import axios from "../../axios-allcal-staging-dashboard";
 
 import * as actionTypes from "./actionTypes";
 
-const eventId = localStorage.getItem("eventId");
 const loginToken = localStorage.getItem("loginToken");
 
 export const createScorecardStart = () => {
@@ -126,7 +125,7 @@ export const updateScoreStart = () => {
   };
 };
 
-export const updateScore = (holeNumber, holeScore, touched) => {
+export const updateScore = (scorecardId, holeNumber, holeScore, touched) => {
   return dispatch => {
     dispatch(updateScoreStart());
     const data = {
@@ -134,7 +133,7 @@ export const updateScore = (holeNumber, holeScore, touched) => {
       score: holeScore
     };
     axios
-      .put("scoreCard/" + eventId + "/score", data, {
+      .put("scoreCard/" + scorecardId + "/score", data, {
         headers: {
           "login-token": loginToken
         }
@@ -187,11 +186,11 @@ export const resetScoreStart = () => {
   };
 };
 
-export const resetScore = () => {
+export const resetScore = scorecardId => {
   return dispatch => {
     dispatch(resetScoreStart());
     axios
-      .delete("scoreCard/" + eventId + "/score/refresh", {
+      .delete("scoreCard/" + scorecardId + "/score/refresh", {
         headers: {
           "login-token": loginToken
         }
@@ -214,12 +213,5 @@ export const resetScoreSuccess = () => {
 export const resetScoreFail = () => {
   return {
     type: actionTypes.RESET_SCORE_FAIL
-  };
-};
-
-export const updateEventId = eventId => {
-  return {
-    type: actionTypes.UPDATE_EVENTID,
-    eventId: eventId
   };
 };

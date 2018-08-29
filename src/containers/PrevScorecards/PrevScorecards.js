@@ -13,7 +13,7 @@ class PrevScorecards extends Component {
           total1={scorecard.total1}
           total2={scorecard.total2}
           holesArray={scorecard.holesArray}
-          id={scorecard.eventId}
+          id={scorecard.scorecardId}
         />
       </Grid>
     ));
