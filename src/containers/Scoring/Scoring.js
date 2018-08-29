@@ -9,10 +9,6 @@ import * as actionCreators from "../../store/actions";
 import Button from "../../components/UI/Button/Button";
 
 class Scoring extends Component {
-  componentDidMount = () => {
-    this.props.onFetchScores();
-  };
-
   render() {
     const holeInput = this.props.holesArray.map(hole => {
       return (
@@ -24,7 +20,7 @@ class Scoring extends Component {
           difficulty={hole.difficulty}
           touched={hole.touched}
           scoreClicked={() => {
-            this.props.onTouchScoreUpdate(hole.id, hole.par, true);
+            this.props.onTouchUpdateScore(hole.id, hole.par, true);
           }}
           decrement={() => {
             this.props.onDecrementScore(hole.id, hole.value);
@@ -80,9 +76,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(actionCreators.incrementScore(holeNumber, holeScore)),
     onDecrementScore: (holeNumber, holeScore) =>
       dispatch(actionCreators.decrementScore(holeNumber, holeScore)),
-    onFetchScores: () => dispatch(actionCreators.fetchScores()),
-    onTouchScoreUpdate: (holeNumber, holeScore, touched) =>
-      dispatch(actionCreators.scoreUpdate(holeNumber, holeScore, touched))
+    onTouchUpdateScore: (holeNumber, holeScore, touched) =>
+      dispatch(actionCreators.updateScore(holeNumber, holeScore, touched))
   };
 };
 

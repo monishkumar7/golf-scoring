@@ -17,7 +17,7 @@ class App extends Component {
     const loginToken = localStorage.getItem("loginToken");
     const eventId = localStorage.getItem("eventId");
     this.props.onAppLogin(loginToken);
-    this.props.onFetchAllScores();
+    this.props.onFetchAllScorecards(loginToken);
     this.props.onUpdateEventId(eventId);
   };
 
@@ -52,7 +52,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onAppLogin: loginToken => dispatch(actionCreators.appLogin(loginToken)),
     onUpdateEventId: eventId => dispatch(actionCreators.updateEventId(eventId)),
-    onFetchAllScores: () => dispatch(actionCreators.fetchAllScores())
+    onFetchAllScorecards: loginToken =>
+      dispatch(actionCreators.fetchAllScorecards(loginToken))
   };
 };
 

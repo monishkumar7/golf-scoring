@@ -42,15 +42,15 @@ export const createScorecardFail = () => {
   };
 };
 
-export const fetchAllScoresStart = () => {
+export const fetchAllScorecardsStart = () => {
   return {
-    type: actionTypes.FETCH_ALL_SCORES_START
+    type: actionTypes.FETCH_ALL_SCORECARDS_START
   };
 };
 
-export const fetchAllScores = () => {
+export const fetchAllScorecards = loginToken => {
   return dispatch => {
-    dispatch(fetchAllScoresStart());
+    dispatch(fetchAllScorecardsStart());
     axios
       .get("/scoreCards", {
         headers: {
@@ -58,73 +58,77 @@ export const fetchAllScores = () => {
         }
       })
       .then(response => {
-        dispatch(fetchAllScoresSuccess(response.data.data));
+        dispatch(fetchAllScorecardsSuccess(response.data.data));
+        response.data.data.forEach(scorecard => {
+          dispatch(fetchScorecard(scorecard._id, scorecard.isComplete));
+        });
       })
       .catch(error => {
-        dispatch(fetchAllScoresFail());
+        dispatch(fetchAllScorecardsFail());
       });
   };
 };
 
-export const fetchAllScoresSuccess = holeScores => {
+export const fetchAllScorecardsSuccess = scoreCards => {
   return {
-    type: actionTypes.FETCH_ALL_SCORES_SUCCESS,
-    holeScores: holeScores
+    type: actionTypes.FETCH_ALL_SCORECARDS_SUCCESS,
+    scoreCards: scoreCards
   };
 };
 
-export const fetchAllScoresFail = () => {
+export const fetchAllScorecardsFail = () => {
   return {
-    type: actionTypes.FETCH_ALL_SCORES_FAIL
+    type: actionTypes.FETCH_ALL_SCORECARDS_FAIL
   };
 };
 
-export const fetchScoresStart = () => {
+export const fetchScorecardStart = () => {
   return {
-    type: actionTypes.FETCH_SCORES_START
+    type: actionTypes.FETCH_SCORECARDS_START
   };
 };
 
-export const fetchScores = () => {
+export const fetchScorecard = (scorecardId, isComplete) => {
   return dispatch => {
-    dispatch(fetchScoresStart());
+    dispatch(fetchScorecardStart());
     axios
-      .get("/scoreCard/" + eventId + "/score", {
+      .get("/scoreCard/" + scorecardId + "/score", {
         headers: {
           "login-token": loginToken
         }
       })
       .then(response => {
-        dispatch(fetchScoresSuccess(response.data.data));
+        dispatch(fetchScorecardSuccess(response.data.data, isComplete));
       })
       .catch(error => {
-        dispatch(fetchScoresFail());
+        dispatch(fetchScorecardFail());
       });
   };
 };
 
-export const fetchScoresSuccess = holeScores => {
+export const fetchScorecardSuccess = (holeScores, isComplete) => {
   return {
-    type: actionTypes.FETCH_SCORES_SUCCESS,
-    holeScores: holeScores
+    type: actionTypes.FETCH_SCORECARDS_SUCCESS,
+    holeScores: holeScores,
+    isComplete: isComplete
   };
 };
 
-export const fetchScoresFail = () => {
+export const fetchScorecardFail = () => {
   return {
-    type: actionTypes.FETCH_SCORES_FAIL
+    type: actionTypes.FETCH_SCORECARDS_FAIL
   };
 };
 
-export const scoreUpdateStart = () => {
+export const updateScoreStart = () => {
   return {
-    type: actionTypes.SCORE_UPDATE_START
+    type: actionTypes.UPDATE_SCORE_START
   };
 };
 
-export const scoreUpdate = (holeNumber, holeScore, touched) => {
+export const updateScore = (holeNumber, holeScore, touched) => {
   return dispatch => {
-    dispatch(scoreUpdateStart());
+    dispatch(updateScoreStart());
     const data = {
       holeNumber: holeNumber,
       score: holeScore
@@ -136,33 +140,33 @@ export const scoreUpdate = (holeNumber, holeScore, touched) => {
         }
       })
       .then(response => {
-        dispatch(scoreUpdateSuccess(holeNumber, holeScore, touched));
+        dispatch(updateScoreSuccess(holeNumber, holeScore, touched));
       })
       .catch(error => {
-        dispatch(scoreUpdateFail());
+        dispatch(updateScoreFail());
       });
   };
 };
 
-export const scoreUpdateSuccess = (holeNumber, holeScore, touched) => {
+export const updateScoreSuccess = (holeNumber, holeScore, touched) => {
   return {
-    type: actionTypes.SCORE_UPDATE_SUCCESS,
+    type: actionTypes.UPDATE_SCORE_SUCCESS,
     holeNumber: holeNumber,
     holeScore: holeScore,
     touched: touched
   };
 };
 
-export const scoreUpdateFail = () => {
+export const updateScoreFail = () => {
   return {
-    type: actionTypes.SCORE_UPDATE_FAIL
+    type: actionTypes.UPDATE_SCORE_FAIL
   };
 };
 
 export const incrementScore = (holeNumber, holeScore) => {
   const updatedScore = +holeScore + +1;
   return dispatch => {
-    dispatch(scoreUpdate(holeNumber, updatedScore, true));
+    dispatch(updateScore(holeNumber, updatedScore, true));
   };
 };
 
@@ -170,9 +174,9 @@ export const decrementScore = (holeNumber, holeScore) => {
   const updatedScore = holeScore - 1;
   return dispatch => {
     if (updatedScore <= 0) {
-      dispatch(scoreUpdate(holeNumber, updatedScore, false));
+      dispatch(updateScore(holeNumber, updatedScore, false));
     } else {
-      dispatch(scoreUpdate(holeNumber, updatedScore, true));
+      dispatch(updateScore(holeNumber, updatedScore, true));
     }
   };
 };

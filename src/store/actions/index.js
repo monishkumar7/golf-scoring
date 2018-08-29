@@ -3,10 +3,10 @@ export { appLogin, webLogin } from "./auth";
 export {
   updateEventId,
   createScorecard,
-  fetchAllScores,
-  fetchScores,
+  fetchAllScorecards,
+  fetchScorecard,
   incrementScore,
   decrementScore,
-  scoreUpdate,
+  updateScore,
   resetScore
 } from "./scores";
