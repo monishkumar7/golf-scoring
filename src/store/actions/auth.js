@@ -1,5 +1,6 @@
 import axios from "../../axios-allcal-staging-api";
 import * as actionTypes from "./actionTypes";
+import { fetchAllScorecards } from "./scores";
 
 export const webLogin = (email, password) => {
   return dispatch => {
@@ -50,6 +51,7 @@ export const appLogin = loginToken => {
             true
           )
         );
+        dispatch(fetchAllScorecards());
       })
       .catch(error => {
         dispatch(authFail(error));

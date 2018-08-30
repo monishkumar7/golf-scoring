@@ -47,7 +47,7 @@ export const fetchAllScorecardsStart = () => {
   };
 };
 
-export const fetchAllScorecards = loginToken => {
+export const fetchAllScorecards = () => {
   return dispatch => {
     dispatch(fetchAllScorecardsStart());
     axios
@@ -58,9 +58,9 @@ export const fetchAllScorecards = loginToken => {
       })
       .then(response => {
         dispatch(fetchAllScorecardsSuccess(response.data.data));
-        response.data.data.forEach(scorecard => {
+        for (let scorecard of response.data.data) {
           dispatch(fetchScorecard(scorecard._id, scorecard.isComplete));
-        });
+        }
       })
       .catch(error => {
         dispatch(fetchAllScorecardsFail());
@@ -83,7 +83,7 @@ export const fetchAllScorecardsFail = () => {
 
 export const fetchScorecardStart = () => {
   return {
-    type: actionTypes.FETCH_SCORECARDS_START
+    type: actionTypes.FETCH_SCORECARD_START
   };
 };
 
@@ -107,7 +107,7 @@ export const fetchScorecard = (scorecardId, isComplete) => {
 
 export const fetchScorecardSuccess = (holeScores, isComplete) => {
   return {
-    type: actionTypes.FETCH_SCORECARDS_SUCCESS,
+    type: actionTypes.FETCH_SCORECARD_SUCCESS,
     holeScores: holeScores,
     isComplete: isComplete
   };
@@ -115,7 +115,7 @@ export const fetchScorecardSuccess = (holeScores, isComplete) => {
 
 export const fetchScorecardFail = () => {
   return {
-    type: actionTypes.FETCH_SCORECARDS_FAIL
+    type: actionTypes.FETCH_SCORECARD_FAIL
   };
 };
 

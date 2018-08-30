@@ -6,7 +6,7 @@ import PrevScorecard from "./PrevScorecard/PrevScorecard";
 
 class PrevScorecards extends Component {
   render() {
-    const scorecards = this.props.scorecards.map(scorecard => (
+    const scorecards = this.props.prevScorecards.map(scorecard => (
       <Grid item xs={12} key={scorecard.scorecardId}>
         <PrevScorecard
           total={scorecard.total}
@@ -27,8 +27,7 @@ class PrevScorecards extends Component {
 
 const mapStateToProps = state => {
   return {
-    scorecards: state.scores.previousScorecards
+    prevScorecards: state.scores.previousScorecards
   };
 };
-
 export default connect(mapStateToProps)(PrevScorecards);

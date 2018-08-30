@@ -13,6 +13,12 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.AUTH_START:
+      return {
+        ...state,
+        isLoading: true
+      };
+
     case actionTypes.AUTH_SUCCESS:
       return {
         ...state,
@@ -20,20 +26,16 @@ const reducer = (state = initialState, action) => {
         userName: action.userName,
         loginToken: action.loginToken,
         appMode: action.appMode,
-        auth: true
+        auth: true,
+        isLoading: false
       };
 
     case actionTypes.AUTH_FAIL:
       return {
         ...state,
         auth: false,
-        error: action.error
-      };
-
-    case actionTypes.AUTH_START:
-      return {
-        ...state,
-        isLoading: true
+        error: action.error,
+        isLoading: false
       };
 
     default:

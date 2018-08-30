@@ -138,7 +138,8 @@ const initialState = {
     total2: "",
     total: "",
     isComplete: false
-  }
+  },
+  isLoading: false
 };
 
 const fetchAllScorecardsSuccess = (state, action) => {
@@ -157,7 +158,8 @@ const fetchAllScorecardsSuccess = (state, action) => {
       ...state.currentScorecard,
       scorecardId: currentScorecardId
     },
-    previousScorecards: scorecardsArray
+    previousScorecards: scorecardsArray,
+    isLoading: false
   };
 };
 
@@ -195,12 +197,14 @@ const fetchScorecardSuccess = (state, action) => {
   if (action.isComplete) {
     return {
       ...state,
-      previousScorecards: updatedPrevScorecards
+      previousScorecards: updatedPrevScorecards,
+      isLoading: false
     };
   } else {
     return {
       ...state,
-      currentScorecard: fetchedScorecard
+      currentScorecard: fetchedScorecard,
+      isLoading: false
     };
   }
 };
@@ -254,11 +258,74 @@ const updateScoreSuccess = (state, action) => {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.FETCH_SCORECARDS_SUCCESS:
+    case actionTypes.CREATE_SCORECARD_START:
+      return {
+        ...state,
+        isLoading: true
+      };
+
+    case actionTypes.CREATE_SCORECARD_SUCCESS:
+      return {
+        ...state,
+        isLoading: false
+      };
+
+    case actionTypes.CREATE_SCORECARD_FAIL:
+      return {
+        ...state,
+        isLoading: false
+      };
+
+    case actionTypes.FETCH_ALL_SCORECARDS_START:
+      return {
+        ...state,
+        isLoading: true
+      };
+
+    case actionTypes.FETCH_ALL_SCORECARDS_SUCCESS:
+      return fetchAllScorecardsSuccess(state, action);
+
+    case actionTypes.FETCH_ALL_SCORECARDS_FAIL:
+      return {
+        ...state,
+        isLoading: false
+      };
+
+    case actionTypes.FETCH_SCORECARD_START:
+      return {
+        ...state,
+        isLoading: true
+      };
+
+    case actionTypes.FETCH_SCORECARD_SUCCESS:
       return fetchScorecardSuccess(state, action);
+
+    case actionTypes.FETCH_SCORECARD_FAIL:
+      return {
+        ...state,
+        isLoading: false
+      };
+
+    case actionTypes.UPDATE_SCORE_START:
+      return {
+        ...state,
+        isLoading: true
+      };
 
     case actionTypes.UPDATE_SCORE_SUCCESS:
       return updateScoreSuccess(state, action);
+
+    case actionTypes.UPDATE_SCORE_FAIL:
+      return {
+        ...state,
+        isLoading: false
+      };
+
+    case actionTypes.RESET_SCORE_START:
+      return {
+        ...state,
+        isLoading: true
+      };
 
     case actionTypes.RESET_SCORE_SUCCESS:
       return {
@@ -289,8 +356,11 @@ const reducer = (state = initialState, action) => {
         submitted: false
       };
 
-    case actionTypes.FETCH_ALL_SCORECARDS_SUCCESS:
-      return fetchAllScorecardsSuccess(state, action);
+    case actionTypes.RESET_SCORE_FAIL:
+      return {
+        ...state,
+        isLoading: false
+      };
 
     default:
       return state;

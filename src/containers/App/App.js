@@ -8,6 +8,7 @@ import PrevScorecards from "../../containers/PrevScorecards/PrevScorecards";
 import Layout from "../../components/Layout/Layout";
 import * as actionCreators from "../../store/actions";
 import Home from "../../components/Home/Home";
+import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 
 class App extends Component {
   componentDidMount = () => {
@@ -16,7 +17,6 @@ class App extends Component {
     const loginToken = localStorage.getItem("loginToken");
 
     this.props.onAppLogin(loginToken);
-    this.props.onFetchAllScorecards(loginToken);
   };
 
   setParams = params => {
@@ -24,9 +24,11 @@ class App extends Component {
   };
 
   render() {
+    const loadingSpinner = this.props.isAuthLoading ? <LoadingSpinner /> : null;
     return (
       <div className={classes.App}>
         <Layout auth={this.props.auth} userName={this.props.userName}>
+          {loadingSpinner}
           <Switch>
             <Route path="/prev" component={PrevScorecards} />
             <Route path="/scoring" component={Scoring} />
@@ -41,15 +43,14 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     auth: state.auth.auth,
-    userName: state.auth.userName
+    userName: state.auth.userName,
+    isAuthLoading: state.auth.isLoading
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAppLogin: loginToken => dispatch(actionCreators.appLogin(loginToken)),
-    onFetchAllScorecards: loginToken =>
-      dispatch(actionCreators.fetchAllScorecards(loginToken))
+    onAppLogin: loginToken => dispatch(actionCreators.appLogin(loginToken))
   };
 };
 

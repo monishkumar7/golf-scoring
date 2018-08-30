@@ -1,6 +1,9 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Grid, Button, Typography, withStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+
+import LoadingSpinner from "../UI/LoadingSpinner/LoadingSpinner";
 
 const styles = {
   buttonDiv: {
@@ -22,47 +25,61 @@ const home = props => {
   const { classes } = props;
   return (
     <Grid container alignContent="center" className={classes.homeContainer}>
-      <Grid item xs={12} className={classes.buttonDiv}>
-        <Link to="/prev" className={classes.linkText}>
-          <Button
-            color="secondary"
-            variant="contained"
-            className={classes.button}
-          >
-            <Typography variant="button" color="inherit">
-              View Prev Scores
-            </Typography>
-          </Button>
-        </Link>
-      </Grid>
-      <Grid item xs={12} className={classes.buttonDiv}>
-        <Link to="/scoring/continue" className={classes.linkText}>
-          <Button
-            color="secondary"
-            variant="contained"
-            className={classes.button}
-          >
-            <Typography variant="button" color="inherit">
-              Continue unfinished Game
-            </Typography>
-          </Button>
-        </Link>
-      </Grid>
-      <Grid item xs={12} className={classes.buttonDiv}>
-        <Link to="/scoring/newgame" className={classes.linkText}>
-          <Button
-            color="secondary"
-            variant="contained"
-            className={classes.button}
-          >
-            <Typography variant="button" color="inherit">
-              New Game
-            </Typography>
-          </Button>
-        </Link>
-      </Grid>
+      {props.isLoading ? (
+        <Grid item xs={12}>
+          <LoadingSpinner />
+        </Grid>
+      ) : (
+        <Fragment>
+          <Grid item xs={12} className={classes.buttonDiv}>
+            <Link to="/prev" className={classes.linkText}>
+              <Button
+                color="secondary"
+                variant="contained"
+                className={classes.button}
+              >
+                <Typography variant="button" color="inherit">
+                  View Prev Scores
+                </Typography>
+              </Button>
+            </Link>
+          </Grid>
+          <Grid item xs={12} className={classes.buttonDiv}>
+            <Link to="/scoring/continue" className={classes.linkText}>
+              <Button
+                color="secondary"
+                variant="contained"
+                className={classes.button}
+              >
+                <Typography variant="button" color="inherit">
+                  Continue unfinished Game
+                </Typography>
+              </Button>
+            </Link>
+          </Grid>
+          <Grid item xs={12} className={classes.buttonDiv}>
+            <Link to="/scoring/newgame" className={classes.linkText}>
+              <Button
+                color="secondary"
+                variant="contained"
+                className={classes.button}
+              >
+                <Typography variant="button" color="inherit">
+                  New Game
+                </Typography>
+              </Button>
+            </Link>
+          </Grid>
+        </Fragment>
+      )}
     </Grid>
   );
 };
 
-export default withStyles(styles)(home);
+const mapStateToProps = state => {
+  return {
+    isLoading: state.scores.isLoading
+  };
+};
+
+export default withStyles(styles)(connect(mapStateToProps)(home));
