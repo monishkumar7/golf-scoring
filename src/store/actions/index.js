@@ -7,5 +7,6 @@ export {
   incrementScore,
   decrementScore,
   updateScore,
-  resetScore
+  resetScorecard,
+  submitScorecard
 } from "./scores";

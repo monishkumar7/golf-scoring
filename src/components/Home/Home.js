@@ -1,9 +1,10 @@
-import React, { Fragment } from "react";
+import React, { Component, Fragment } from "react";
 import { Grid, Button, Typography, withStyles } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import LoadingSpinner from "../UI/LoadingSpinner/LoadingSpinner";
+import * as actionCreators from "../../store/actions";
 
 const styles = {
   buttonDiv: {
@@ -21,65 +22,105 @@ const styles = {
   }
 };
 
-const home = props => {
-  const { classes } = props;
-  return (
-    <Grid container alignContent="center" className={classes.homeContainer}>
-      {props.isLoading ? (
-        <Grid item xs={12}>
-          <LoadingSpinner />
-        </Grid>
-      ) : (
-        <Fragment>
-          <Grid item xs={12} className={classes.buttonDiv}>
-            <Link to="/prev" className={classes.linkText}>
-              <Button
-                color="secondary"
-                variant="contained"
-                className={classes.button}
-              >
-                <Typography variant="button" color="inherit">
-                  View Prev Scores
-                </Typography>
-              </Button>
-            </Link>
+class Home extends Component {
+  state = {
+    redirect: false
+  };
+
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    });
+  };
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to="/home" />;
+    }
+  };
+
+  createScorecardHandler = () => {
+    this.props.onCreateScorecard();
+    this.setRedirect();
+  };
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <Grid container alignContent="center" className={classes.homeContainer}>
+        {this.props.isLoading ? (
+          <Grid item xs={12}>
+            <LoadingSpinner />
           </Grid>
-          <Grid item xs={12} className={classes.buttonDiv}>
-            <Link to="/scoring/continue" className={classes.linkText}>
-              <Button
-                color="secondary"
-                variant="contained"
-                className={classes.button}
-              >
-                <Typography variant="button" color="inherit">
-                  Continue unfinished Game
-                </Typography>
-              </Button>
-            </Link>
-          </Grid>
-          <Grid item xs={12} className={classes.buttonDiv}>
-            <Link to="/scoring/newgame" className={classes.linkText}>
-              <Button
-                color="secondary"
-                variant="contained"
-                className={classes.button}
-              >
-                <Typography variant="button" color="inherit">
-                  New Game
-                </Typography>
-              </Button>
-            </Link>
-          </Grid>
-        </Fragment>
-      )}
-    </Grid>
-  );
-};
+        ) : (
+          <Fragment>
+            {this.renderRedirect()}
+            <Grid item xs={12} className={classes.buttonDiv}>
+              <Link to="/prev" className={classes.linkText}>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  className={classes.button}
+                >
+                  <Typography variant="button" color="inherit">
+                    View Prev Scores
+                  </Typography>
+                </Button>
+              </Link>
+            </Grid>
+            {this.props.currentScorecardId ? (
+              <Grid item xs={12} className={classes.buttonDiv}>
+                <Link to="/scoring" className={classes.linkText}>
+                  <Button
+                    color="secondary"
+                    variant="contained"
+                    className={classes.button}
+                  >
+                    <Typography variant="button" color="inherit">
+                      Continue unfinished Game
+                    </Typography>
+                  </Button>
+                </Link>
+              </Grid>
+            ) : (
+              <Grid item xs={12} className={classes.buttonDiv}>
+                <Link to="/scoring/newgame" className={classes.linkText}>
+                  <Button
+                    color="secondary"
+                    variant="contained"
+                    className={classes.button}
+                    onClick={this.createScorecardHandler}
+                  >
+                    <Typography variant="button" color="inherit">
+                      New Game
+                    </Typography>
+                  </Button>
+                </Link>
+              </Grid>
+            )}
+          </Fragment>
+        )}
+      </Grid>
+    );
+  }
+}
 
 const mapStateToProps = state => {
   return {
-    isLoading: state.scores.isLoading
+    isLoading: state.scores.isLoading,
+    currentScorecardId: state.scores.currentScorecard.scorecardId
   };
 };
 
-export default withStyles(styles)(connect(mapStateToProps)(home));
+const mapDispatchToProps = dispatch => {
+  return {
+    onCreateScorecard: () => dispatch(actionCreators.createScorecard())
+  };
+};
+
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Home)
+);

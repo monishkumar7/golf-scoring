@@ -210,25 +210,25 @@ const fetchScorecardSuccess = (state, action) => {
 };
 
 const updateScoreSuccess = (state, action) => {
-  let updatedTotal1 = state.total1;
-  let updatedTotal2 = state.total2;
-  let updatedTotal = state.total;
-  if (state.holesArray[action.holeNumber - 1].touched) {
+  let updatedTotal1 = state.currentScorecard.total1;
+  let updatedTotal2 = state.currentScorecard.total2;
+  let updatedTotal = state.currentScorecard.total;
+  if (state.currentScorecard.holesArray[action.holeNumber - 1].touched) {
     if (action.holeNumber < 10) {
       updatedTotal1 =
         +updatedTotal1 +
         +action.holeScore -
-        +state.holesArray[action.holeNumber - 1].value;
+        +state.currentScorecard.holesArray[action.holeNumber - 1].score;
     } else if (action.holeNumber > 9) {
       updatedTotal2 =
         +updatedTotal2 +
         +action.holeScore -
-        +state.holesArray[action.holeNumber - 1].value;
+        +state.currentScorecard.holesArray[action.holeNumber - 1].score;
     }
     updatedTotal =
       +updatedTotal +
       +action.holeScore -
-      +state.holesArray[action.holeNumber - 1].value;
+      +state.currentScorecard.holesArray[action.holeNumber - 1].score;
   } else {
     if (action.holeNumber < 10) {
       updatedTotal1 = +updatedTotal1 + +action.holeScore;
@@ -239,20 +239,39 @@ const updateScoreSuccess = (state, action) => {
   }
   return {
     ...state,
-    holesArray: state.holesArray.map((arrayItem, index) => {
-      if (index + 1 !== action.holeNumber) {
-        return arrayItem;
-      }
+    currentScorecard: {
+      ...state.currentScorecard,
+      holesArray: state.currentScorecard.holesArray.map((arrayItem, index) => {
+        if (index + 1 !== action.holeNumber) {
+          return arrayItem;
+        }
 
-      return {
-        ...arrayItem,
-        value: action.holeScore,
-        touched: action.touched
-      };
-    }),
-    total1: updatedTotal1,
-    total2: updatedTotal2,
-    total: updatedTotal
+        return {
+          ...arrayItem,
+          score: action.holeScore,
+          touched: action.touched
+        };
+      }),
+      total1: updatedTotal1,
+      total2: updatedTotal2,
+      total: updatedTotal
+    },
+    isLoading: false
+  };
+};
+
+const createScorecard = (state, action) => {
+  return {
+    ...state,
+    currentScorecard: {
+      scorecardId: action.scorecardId,
+      holesArray: emptyHolesArray.map(emptyHole => ({ ...emptyHole })),
+      total1: "",
+      total2: "",
+      total: "",
+      isComplete: false
+    },
+    isLoading: false
   };
 };
 
@@ -265,10 +284,7 @@ const reducer = (state = initialState, action) => {
       };
 
     case actionTypes.CREATE_SCORECARD_SUCCESS:
-      return {
-        ...state,
-        isLoading: false
-      };
+      return createScorecard(state, action);
 
     case actionTypes.CREATE_SCORECARD_FAIL:
       return {
@@ -321,42 +337,49 @@ const reducer = (state = initialState, action) => {
         isLoading: false
       };
 
-    case actionTypes.RESET_SCORE_START:
+    case actionTypes.RESET_SCORECARD_START:
       return {
         ...state,
         isLoading: true
       };
 
-    case actionTypes.RESET_SCORE_SUCCESS:
+    case actionTypes.RESET_SCORECARD_SUCCESS:
       return {
         ...state,
-        holesArray: [
-          { id: 1, value: "", par: 4, difficulty: 4, touched: false },
-          { id: 2, value: "", par: 4, difficulty: 7, touched: false },
-          { id: 3, value: "", par: 3, difficulty: 18, touched: false },
-          { id: 4, value: "", par: 4, difficulty: 15, touched: false },
-          { id: 5, value: "", par: 4, difficulty: 11, touched: false },
-          { id: 6, value: "", par: 4, difficulty: 2, touched: false },
-          { id: 7, value: "", par: 3, difficulty: 3, touched: false },
-          { id: 8, value: "", par: 5, difficulty: 9, touched: false },
-          { id: 9, value: "", par: 4, difficulty: 10, touched: false },
-          { id: 10, value: "", par: 4, difficulty: 17, touched: false },
-          { id: 11, value: "", par: 5, difficulty: 12, touched: false },
-          { id: 12, value: "", par: 4, difficulty: 16, touched: false },
-          { id: 13, value: "", par: 3, difficulty: 8, touched: false },
-          { id: 14, value: "", par: 4, difficulty: 1, touched: false },
-          { id: 15, value: "", par: 4, difficulty: 5, touched: false },
-          { id: 16, value: "", par: 4, difficulty: 13, touched: false },
-          { id: 17, value: "", par: 5, difficulty: 6, touched: false },
-          { id: 18, value: "", par: 4, difficulty: 1, touched: false }
-        ],
-        total1: "",
-        total2: "",
-        total: "",
-        submitted: false
+        currentScorecard: {
+          ...state.currentScorecard,
+          holesArray: emptyHolesArray.map(emptyHole => ({ ...emptyHole })),
+          total1: "",
+          total2: "",
+          total: "",
+          isComplete: false
+        },
+        isLoading: false
       };
 
-    case actionTypes.RESET_SCORE_FAIL:
+    case actionTypes.RESET_SCORECARD_FAIL:
+      return {
+        ...state,
+        isLoading: false
+      };
+
+    case actionTypes.SUBMIT_SCORECARD_START:
+      return {
+        ...state,
+        isLoading: true
+      };
+
+    case actionTypes.SUBMIT_SCORECARD_SUCCESS:
+      return {
+        ...state,
+        currentScorecard: {
+          ...state.currentScorecard,
+          isComplete: true
+        },
+        isLoading: false
+      };
+
+    case actionTypes.SUBMIT_SCORECARD_FAIL:
       return {
         ...state,
         isLoading: false

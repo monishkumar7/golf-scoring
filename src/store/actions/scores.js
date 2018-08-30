@@ -14,11 +14,15 @@ export const createScorecard = () => {
   return dispatch => {
     dispatch(createScorecardStart());
     axios
-      .post("/scoreCard", {
-        headers: {
-          "login-token": loginToken
+      .post(
+        "/scoreCard",
+        {},
+        {
+          headers: {
+            "login-token": loginToken
+          }
         }
-      })
+      )
       .then(response => {
         dispatch(createScorecardSuccess(response.data.data));
       })
@@ -28,10 +32,10 @@ export const createScorecard = () => {
   };
 };
 
-export const createScorecardSuccess = holeScores => {
+export const createScorecardSuccess = newScorecard => {
   return {
     type: actionTypes.CREATE_SCORECARD_SUCCESS,
-    holeScores: holeScores
+    scorecardId: newScorecard._id
   };
 };
 
@@ -162,33 +166,33 @@ export const updateScoreFail = () => {
   };
 };
 
-export const incrementScore = (holeNumber, holeScore) => {
+export const incrementScore = (scorecardId, holeNumber, holeScore) => {
   const updatedScore = +holeScore + +1;
   return dispatch => {
-    dispatch(updateScore(holeNumber, updatedScore, true));
+    dispatch(updateScore(scorecardId, holeNumber, updatedScore, true));
   };
 };
 
-export const decrementScore = (holeNumber, holeScore) => {
+export const decrementScore = (scorecardId, holeNumber, holeScore) => {
   const updatedScore = holeScore - 1;
   return dispatch => {
     if (updatedScore <= 0) {
-      dispatch(updateScore(holeNumber, updatedScore, false));
+      dispatch(updateScore(scorecardId, holeNumber, updatedScore, false));
     } else {
-      dispatch(updateScore(holeNumber, updatedScore, true));
+      dispatch(updateScore(scorecardId, holeNumber, updatedScore, true));
     }
   };
 };
 
-export const resetScoreStart = () => {
+export const resetScorecardStart = () => {
   return {
-    type: actionTypes.RESET_SCORE_START
+    type: actionTypes.RESET_SCORECARD_START
   };
 };
 
-export const resetScore = scorecardId => {
+export const resetScorecard = scorecardId => {
   return dispatch => {
-    dispatch(resetScoreStart());
+    dispatch(resetScorecardStart());
     axios
       .delete("scoreCard/" + scorecardId + "/score/refresh", {
         headers: {
@@ -196,22 +200,61 @@ export const resetScore = scorecardId => {
         }
       })
       .then(response => {
-        dispatch(resetScoreSuccess());
+        dispatch(resetScorecardSuccess());
       })
       .catch(error => {
-        dispatch(resetScoreFail());
+        dispatch(resetScorecardFail());
       });
   };
 };
 
-export const resetScoreSuccess = () => {
+export const resetScorecardSuccess = () => {
   return {
-    type: actionTypes.RESET_SCORE_SUCCESS
+    type: actionTypes.RESET_SCORECARD_SUCCESS
   };
 };
 
-export const resetScoreFail = () => {
+export const resetScorecardFail = () => {
   return {
-    type: actionTypes.RESET_SCORE_FAIL
+    type: actionTypes.RESET_SCORECARD_FAIL
+  };
+};
+
+export const submitScorecardStart = () => {
+  return {
+    type: actionTypes.SUBMIT_SCORECARD_START
+  };
+};
+
+export const submitScorecard = scorecardId => {
+  return dispatch => {
+    dispatch(submitScorecardStart());
+    const data = {
+      isComplete: true
+    };
+    axios
+      .put("scoreCards/" + scorecardId, data, {
+        headers: {
+          "login-token": loginToken
+        }
+      })
+      .then(response => {
+        dispatch(submitScorecardSuccess());
+      })
+      .catch(error => {
+        dispatch(submitScorecardFail());
+      });
+  };
+};
+
+export const submitScorecardSuccess = () => {
+  return {
+    type: actionTypes.SUBMIT_SCORECARD_SUCCESS
+  };
+};
+
+export const submitScorecardFail = () => {
+  return {
+    type: actionTypes.SUBMIT_SCORECARD_FAIL
   };
 };
