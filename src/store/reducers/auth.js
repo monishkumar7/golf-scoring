@@ -38,6 +38,9 @@ const reducer = (state = initialState, action) => {
         isLoading: false
       };
 
+    case actionTypes.AUTH_LOGOUT:
+      return state;
+
     default:
       return state;
   }

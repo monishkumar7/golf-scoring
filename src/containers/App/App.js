@@ -6,26 +6,19 @@ import classes from "./App.css";
 import Scoring from "../Scoring/Scoring";
 import PrevScorecards from "../../containers/PrevScorecards/PrevScorecards";
 import Layout from "../../components/Layout/Layout";
-import * as actionCreators from "../../store/actions";
-import Home from "../../components/Home/Home";
+import Home from "../Home/Home";
 import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
+import * as actionCreators from "../../store/actions";
 
 class App extends Component {
   componentDidMount = () => {
     const params = new URLSearchParams(window.location.search);
-    this.setParams(params);
-    const loginToken = localStorage.getItem("loginToken");
-
-    this.props.onAppLogin(loginToken);
-  };
-
-  setParams = params => {
-    localStorage.setItem("loginToken", params.get("loginToken"));
+    this.props.onCheckAuthState(params.get("loginToken"));
   };
 
   render() {
     const loadingSpinner = this.props.isAuthLoading ? <LoadingSpinner /> : null;
-    return (
+    const content = this.props.auth ? (
       <div className={classes.App}>
         <Layout auth={this.props.auth} userName={this.props.userName}>
           {loadingSpinner}
@@ -36,7 +29,11 @@ class App extends Component {
           </Switch>
         </Layout>
       </div>
+    ) : (
+      <p>Please Login to continue!</p>
     );
+
+    return content;
   }
 }
 
@@ -50,7 +47,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAppLogin: loginToken => dispatch(actionCreators.appLogin(loginToken))
+    onCheckAuthState: urlToken =>
+      dispatch(actionCreators.checkAuthState(urlToken))
   };
 };
 

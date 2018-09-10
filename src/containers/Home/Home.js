@@ -3,7 +3,7 @@ import { Grid, Button, Typography, withStyles } from "@material-ui/core";
 import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import LoadingSpinner from "../UI/LoadingSpinner/LoadingSpinner";
+import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 import * as actionCreators from "../../store/actions";
 
 const styles = {
@@ -27,6 +27,10 @@ class Home extends Component {
     redirect: false
   };
 
+  componentDidMount = () => {
+    this.props.onFetchScorecards(this.props.loginToken);
+  };
+
   setRedirect = () => {
     this.setState({
       redirect: true
@@ -46,7 +50,7 @@ class Home extends Component {
 
   render() {
     const { classes } = this.props;
-    return (
+    return this.props.isAuth ? (
       <Grid container alignContent="center" className={classes.homeContainer}>
         {this.props.isLoading ? (
           <Grid item xs={12}>
@@ -101,6 +105,10 @@ class Home extends Component {
           </Fragment>
         )}
       </Grid>
+    ) : (
+      <Grid container justify="center">
+        <Typography variant="body1">Please Login to continue!</Typography>
+      </Grid>
     );
   }
 }
@@ -108,13 +116,17 @@ class Home extends Component {
 const mapStateToProps = state => {
   return {
     isLoading: state.scores.isLoading,
-    currentScorecardId: state.scores.currentScorecard.scorecardId
+    currentScorecardId: state.scores.currentScorecard.scorecardId,
+    isAuth: state.auth.auth,
+    loginToken: state.auth.loginToken
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onCreateScorecard: () => dispatch(actionCreators.createScorecard())
+    onCreateScorecard: () => dispatch(actionCreators.createScorecard()),
+    onFetchScorecards: loginToken =>
+      dispatch(actionCreators.fetchAllScorecards(loginToken))
   };
 };
 

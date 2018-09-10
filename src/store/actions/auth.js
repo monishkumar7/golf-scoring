@@ -1,6 +1,5 @@
 import axios from "../../axios-allcal-staging-api";
 import * as actionTypes from "./actionTypes";
-import { fetchAllScorecards } from "./scores";
 
 export const webLogin = (email, password) => {
   return dispatch => {
@@ -27,12 +26,6 @@ export const webLogin = (email, password) => {
   };
 };
 
-export const authStart = () => {
-  return {
-    type: actionTypes.AUTH_START
-  };
-};
-
 export const appLogin = loginToken => {
   return dispatch => {
     dispatch(authStart());
@@ -43,6 +36,9 @@ export const appLogin = loginToken => {
         }
       })
       .then(response => {
+        localStorage.setItem("userId", response.data.userId);
+        localStorage.setItem("userName", response.data.name);
+        localStorage.setItem("loginToken", loginToken);
         dispatch(
           authSuccess(
             response.data.userId,
@@ -51,11 +47,16 @@ export const appLogin = loginToken => {
             true
           )
         );
-        dispatch(fetchAllScorecards());
       })
       .catch(error => {
         dispatch(authFail(error));
       });
+  };
+};
+
+export const authStart = () => {
+  return {
+    type: actionTypes.AUTH_START
   };
 };
 
@@ -73,5 +74,32 @@ export const authFail = error => {
   return {
     type: actionTypes.AUTH_FAIL,
     error: error.message
+  };
+};
+
+export const logout = () => {
+  localStorage.removeItem("userId");
+  localStorage.removeItem("userName");
+  localStorage.removeItem("loginToken");
+  return {
+    type: actionTypes.AUTH_LOGOUT
+  };
+};
+
+export const checkAuthState = urlToken => {
+  return dispatch => {
+    const loginToken = localStorage.getItem("loginToken");
+    loginToken
+      ? dispatch(
+          authSuccess(
+            localStorage.getItem("userId"),
+            localStorage.getItem("userName"),
+            loginToken,
+            true
+          )
+        )
+      : urlToken
+        ? dispatch(appLogin(urlToken))
+        : dispatch(logout());
   };
 };

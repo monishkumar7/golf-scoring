@@ -1,4 +1,4 @@
-export { appLogin, webLogin } from "./auth";
+export { checkAuthState, webLogin } from "./auth";
 
 export {
   createScorecard,

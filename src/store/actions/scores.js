@@ -51,7 +51,7 @@ export const fetchAllScorecardsStart = () => {
   };
 };
 
-export const fetchAllScorecards = () => {
+export const fetchAllScorecards = loginToken => {
   return dispatch => {
     dispatch(fetchAllScorecardsStart());
     axios
