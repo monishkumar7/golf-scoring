@@ -10,22 +10,6 @@ import * as actionCreators from "../../store/actions";
 import Button from "../../components/UI/Button/Button";
 
 class Scoring extends Component {
-  state = {
-    redirect: false
-  };
-
-  setRedirect = () => {
-    this.setState({
-      redirect: true
-    });
-  };
-
-  renderRedirect = () => {
-    if (this.state.redirect) {
-      return <Redirect to="/home" />;
-    }
-  };
-
   resetHandler = () => {
     let confirmation = window.confirm(
       "Are you sure you want to reset the scorecard?"
@@ -34,12 +18,21 @@ class Scoring extends Component {
   };
 
   submitHandler = () => {
+    let allValuesFilled = true;
     let confirmation = window.confirm(
       "Are you sure you want to submit the scorecard?"
     );
     if (confirmation) {
-      this.props.onSubmitScorecard(this.props.scorecardId);
-      this.setRedirect();
+      for (let hole of this.props.holesArray)
+        if (hole.score === "") allValuesFilled = false;
+      if (!allValuesFilled) {
+        let confirmation2 = window.confirm(
+          "All hole values are not filled. Are you sure you want to Submit an incomplete scorecard?"
+        );
+        if (confirmation2) this.props.onSubmitScorecard(this.props.scorecardId);
+      } else {
+        this.props.onSubmitScorecard(this.props.scorecardId);
+      }
     }
   };
 
@@ -83,7 +76,7 @@ class Scoring extends Component {
     if (this.props.auth) {
       authContent = (
         <div className={classes.Scoring}>
-          {this.renderRedirect()}
+          {this.props.redirect === "/home" ? <Redirect to="/home" /> : null}
           <Scorecard
             total={this.props.total}
             total1={this.props.total1}
@@ -111,7 +104,8 @@ const mapStateToProps = state => {
     total1: state.scores.currentScorecard.total1,
     total2: state.scores.currentScorecard.total2,
     total: state.scores.currentScorecard.total,
-    auth: state.auth.auth
+    auth: state.auth.loginToken !== null,
+    redirect: state.scores.redirectPath
   };
 };
 

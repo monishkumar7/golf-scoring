@@ -6,9 +6,7 @@ const initialState = {
   error: null,
   loginToken: null,
   loading: false,
-  auth: false,
-  appMode: false,
-  isLoading: false
+  appMode: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,7 +14,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.AUTH_START:
       return {
         ...state,
-        isLoading: true
+        loading: true
       };
 
     case actionTypes.AUTH_SUCCESS:
@@ -26,16 +24,14 @@ const reducer = (state = initialState, action) => {
         userName: action.userName,
         loginToken: action.loginToken,
         appMode: action.appMode,
-        auth: true,
-        isLoading: false
+        loading: false
       };
 
     case actionTypes.AUTH_FAIL:
       return {
         ...state,
-        auth: false,
         error: action.error,
-        isLoading: false
+        loading: false
       };
 
     case actionTypes.AUTH_LOGOUT:

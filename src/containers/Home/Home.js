@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Grid, Button, Typography, withStyles } from "@material-ui/core";
-import { Redirect, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
@@ -23,42 +23,24 @@ const styles = {
 };
 
 class Home extends Component {
-  state = {
-    redirect: false
-  };
-
   componentDidMount = () => {
     this.props.onFetchScorecards(this.props.loginToken);
   };
 
-  setRedirect = () => {
-    this.setState({
-      redirect: true
-    });
-  };
-
-  renderRedirect = () => {
-    if (this.state.redirect) {
-      return <Redirect to="/home" />;
-    }
-  };
-
   createScorecardHandler = () => {
     this.props.onCreateScorecard();
-    this.setRedirect();
   };
 
   render() {
     const { classes } = this.props;
     return this.props.isAuth ? (
       <Grid container alignContent="center" className={classes.homeContainer}>
-        {this.props.isLoading ? (
+        {this.props.loading ? (
           <Grid item xs={12}>
             <LoadingSpinner />
           </Grid>
         ) : (
           <Fragment>
-            {this.renderRedirect()}
             <Grid item xs={12} className={classes.buttonDiv}>
               <Link to="/prev" className={classes.linkText}>
                 <Button
@@ -115,9 +97,9 @@ class Home extends Component {
 
 const mapStateToProps = state => {
   return {
-    isLoading: state.scores.isLoading,
+    loading: state.scores.loading,
     currentScorecardId: state.scores.currentScorecard.scorecardId,
-    isAuth: state.auth.auth,
+    isAuth: state.auth.loginToken !== null,
     loginToken: state.auth.loginToken
   };
 };
