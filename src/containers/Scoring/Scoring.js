@@ -5,7 +5,6 @@ import { Redirect } from "react-router-dom";
 
 import Scorecard from "../../components/Scorecard/Scorecard";
 import HoleInput from "../../components/HoleInput/HoleInput";
-import classes from "./Scoring.css";
 import * as actionCreators from "../../store/actions";
 import Button from "../../components/UI/Button/Button";
 
@@ -75,7 +74,7 @@ class Scoring extends Component {
     let authContent = "Please Login to Continue!";
     if (this.props.auth) {
       authContent = (
-        <div className={classes.Scoring}>
+        <div>
           {this.props.redirect === "/home" ? <Redirect to="/home" /> : null}
           <Scorecard
             total={this.props.total}
@@ -84,12 +83,14 @@ class Scoring extends Component {
             holesArray={this.props.holesArray}
           />
           <Grid container>{holeInput}</Grid>
-          <Button disabled={false} clicked={this.resetHandler}>
-            Reset Scorecard
-          </Button>
-          <Button disabled={false} clicked={this.submitHandler}>
-            Submit Scorecard
-          </Button>
+          <Grid container justify="center" style={{ padding: "2rem" }}>
+            <Button disabled={false} clicked={this.resetHandler}>
+              Reset Scorecard
+            </Button>
+            <Button disabled={false} clicked={this.submitHandler}>
+              Submit Scorecard
+            </Button>
+          </Grid>
         </div>
       );
     }

@@ -15,7 +15,9 @@ const styles = theme => ({
   score: {
     display: "inline-block",
     fontSize: "2.5rem",
-    margin: "0 15px"
+    margin: "0 15px",
+    width: "3rem",
+    textAlign: "center"
   },
   button: {
     margin: "0 10px",
@@ -25,10 +27,11 @@ const styles = theme => ({
     color: "white"
   },
   cardHeader: {
-    margin: "-10px -10px 10px",
+    margin: "-.7rem -.7rem 1rem",
     backgroundColor: theme.palette.primary.light,
-    padding: "5px",
-    color: "white"
+    padding: ".5rem",
+    color: "white",
+    textAlign: "center"
   },
   cardContent: {
     display: "inline-flex",
@@ -48,6 +51,9 @@ const styles = theme => ({
     flex: "0 1 50%",
     justifyContent: "center",
     alignContent: "center"
+  },
+  leftPaneText: {
+    textAlign: "right"
   }
 });
 
@@ -65,11 +71,41 @@ const HoleScore = props => {
         </Typography>
         <div className={props.classes.cardContent}>
           <div className={props.classes.cardLeftPane}>
-            <Typography variant="body1">Par - {props.par}</Typography>
-            <Typography variant="body1">
-              Difficulty - {props.difficulty}
-            </Typography>
-            <Typography variant="body1">Yards - {props.yards}</Typography>
+            <Grid container justify="center">
+              <Grid item xs={6}>
+                <Typography
+                  variant="body1"
+                  className={props.classes.leftPaneText}
+                >
+                  Par - &nbsp;
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="body1">{props.par}</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography
+                  variant="body1"
+                  className={props.classes.leftPaneText}
+                >
+                  Difficulty - &nbsp;
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="body1">{props.difficulty}</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography
+                  variant="body1"
+                  className={props.classes.leftPaneText}
+                >
+                  Yards - &nbsp;
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="body1">{props.yards}</Typography>
+              </Grid>
+            </Grid>
           </div>
           <div className={props.classes.cardRightPane}>
             <Button disabled={!props.touched} clicked={props.decrement}>
