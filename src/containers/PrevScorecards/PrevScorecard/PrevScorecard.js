@@ -70,10 +70,14 @@ class PrevScorecard extends Component {
           className={classes.cardHeader}
         >
           <Grid item xs={7}>
-            <Typography variant="subheading">Game {this.props.id}</Typography>
+            <Typography variant="subheading">
+              Game {this.props.index + 1}
+            </Typography>
           </Grid>
           <Grid item xs={4} className={classes.cardDate}>
-            <Typography variant="body1">Aug 22, 2018 - Wednesday</Typography>
+            <Typography variant="body1">
+              {new Date(this.props.lastUpdatedTime).toDateString()}
+            </Typography>
           </Grid>
           <Grid item xs={1} className={classes.cardIcon}>
             <IconButton

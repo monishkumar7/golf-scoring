@@ -6,7 +6,7 @@ import PrevScorecard from "./PrevScorecard/PrevScorecard";
 
 class PrevScorecards extends Component {
   render() {
-    const scorecards = this.props.prevScorecards.map(scorecard => (
+    const scorecards = this.props.prevScorecards.map((scorecard, index) => (
       <Grid item xs={12} key={scorecard.scorecardId}>
         <PrevScorecard
           total={scorecard.total}
@@ -14,6 +14,8 @@ class PrevScorecards extends Component {
           total2={scorecard.total2}
           holesArray={scorecard.holesArray}
           id={scorecard.scorecardId}
+          index={index}
+          lastUpdatedTime={scorecard.lastUpdatedTime}
         />
       </Grid>
     ));

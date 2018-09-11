@@ -150,7 +150,8 @@ const fetchAllScorecardsSuccess = (state, action) => {
   scoreCards.forEach(scorecard => {
     if (scorecard.isComplete)
       scorecardsArray.push({
-        scorecardId: scorecard._id
+        scorecardId: scorecard._id,
+        lastUpdatedTime: Date.parse(scorecard.lastUpdatedTime)
       });
     else currentScorecardId = scorecard._id;
   });
@@ -172,6 +173,7 @@ const fetchScorecardSuccess = (state, action) => {
   let updatedTotal11 = 0;
   let updatedTotal21 = 0;
   let updatedTotal22 = 0;
+  let updatedLastUpdatedTime = new Date("January 1 2018");
   for (let holeScore of holeScores) {
     if (holeScore.score) {
       updatedHolesArray[holeScore.holeNumber - 1].score = holeScore.score;
@@ -182,6 +184,10 @@ const fetchScorecardSuccess = (state, action) => {
         updatedTotal21 += +holeScore.score;
       }
       updatedTotal22 += +holeScore.score;
+      updatedLastUpdatedTime =
+        updatedLastUpdatedTime > holeScore.lastUpdatedTime
+          ? updatedLastUpdatedTime
+          : holeScore.lastUpdatedTime;
     }
   }
   const fetchedScorecard = {
@@ -190,12 +196,20 @@ const fetchScorecardSuccess = (state, action) => {
     total1: updatedTotal11,
     total2: updatedTotal21,
     total: updatedTotal22,
-    isComplete: action.isComplete
+    isComplete: action.isComplete,
+    lastUpdatedTime: updatedLastUpdatedTime
   };
   let updatedPrevScorecards = state.previousScorecards.filter(
     prev => prev.scorecardId !== fetchedScorecardId
   );
   updatedPrevScorecards = updatedPrevScorecards.concat(fetchedScorecard);
+  updatedPrevScorecards.sort(function(a, b) {
+    return a.lastUpdatedTime > b.lastUpdatedTime
+      ? 1
+      : b.lastUpdatedTime > a.lastUpdatedTime
+        ? -1
+        : 0;
+  });
   if (action.isComplete) {
     return {
       ...state,
