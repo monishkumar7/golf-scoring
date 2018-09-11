@@ -18,20 +18,27 @@ class Scoring extends Component {
 
   submitHandler = () => {
     let allValuesFilled = true;
-    let confirmation = window.confirm(
-      "Are you sure you want to submit the scorecard?"
-    );
-    if (confirmation) {
-      for (let hole of this.props.holesArray)
-        if (hole.score === "") allValuesFilled = false;
-      if (!allValuesFilled) {
-        let confirmation2 = window.confirm(
-          "All hole values are not filled. Are you sure you want to Submit an incomplete scorecard?"
-        );
-        if (confirmation2) this.props.onSubmitScorecard(this.props.scorecardId);
-      } else {
-        this.props.onSubmitScorecard(this.props.scorecardId);
+    let allEmptyCounter = 0;
+
+    for (let hole of this.props.holesArray)
+      if (hole.score === "") {
+        allValuesFilled = false;
+        allEmptyCounter++;
       }
+    if (allEmptyCounter >= 18) {
+      window.alert(
+        "You cannot submit an empty scorecard. Please fill up values"
+      );
+    } else if (!allValuesFilled) {
+      let confirmation2 = window.confirm(
+        "All hole values are not filled. Are you sure you want to Submit an incomplete scorecard?"
+      );
+      if (confirmation2) this.props.onSubmitScorecard(this.props.scorecardId);
+    } else {
+      let confirmation = window.confirm(
+        "Are you sure you want to submit the scorecard?"
+      );
+      if (confirmation) this.props.onSubmitScorecard(this.props.scorecardId);
     }
   };
 

@@ -14,27 +14,31 @@ const styles = theme => ({
 });
 
 const scorecard = props => {
-  const scorecard1 = props.holesArray.slice(0, 9).map(hole => {
-    return (
-      <HoleScore
-        key={hole.number}
-        holeNumber={hole.number}
-        holeScore={hole.score}
-        touched={hole.touched}
-      />
-    );
-  });
+  const scorecard1 = props.holesArray
+    ? props.holesArray.slice(0, 9).map(hole => {
+        return (
+          <HoleScore
+            key={hole.number}
+            holeNumber={hole.number}
+            holeScore={hole.score}
+            touched={hole.touched}
+          />
+        );
+      })
+    : null;
 
-  const scorecard2 = props.holesArray.slice(9).map(hole => {
-    return (
-      <HoleScore
-        key={hole.number}
-        holeNumber={hole.number}
-        holeScore={hole.score}
-        touched={hole.touched}
-      />
-    );
-  });
+  const scorecard2 = props.holesArray
+    ? props.holesArray.slice(9).map(hole => {
+        return (
+          <HoleScore
+            key={hole.number}
+            holeNumber={hole.number}
+            holeScore={hole.score}
+            touched={hole.touched}
+          />
+        );
+      })
+    : null;
 
   return (
     <Grid container className={props.classes.scoreCardContainer}>
