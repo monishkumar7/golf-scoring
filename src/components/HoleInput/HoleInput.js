@@ -94,7 +94,7 @@ const HoleScore = props => {
               <Grid item xs={6}>
                 <Typography variant="body1">{props.difficulty}</Typography>
               </Grid>
-              <Grid item xs={6}>
+              {/* <Grid item xs={6}>
                 <Typography
                   variant="body1"
                   className={props.classes.leftPaneText}
@@ -104,7 +104,7 @@ const HoleScore = props => {
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="body1">{props.yards}</Typography>
-              </Grid>
+              </Grid> */}
             </Grid>
           </div>
           <div className={props.classes.cardRightPane}>

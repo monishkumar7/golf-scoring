@@ -5,98 +5,98 @@ const emptyHolesArray = [
     number: 1,
     score: "",
     par: 4,
-    difficulty: 4,
+    difficulty: 17,
     touched: false
   },
   {
     number: 2,
     score: "",
     par: 4,
-    difficulty: 4,
+    difficulty: 13,
     touched: false
   },
   {
     number: 3,
     score: "",
-    par: 4,
-    difficulty: 4,
+    par: 3,
+    difficulty: 15,
     touched: false
   },
   {
     number: 4,
     score: "",
     par: 4,
-    difficulty: 4,
+    difficulty: 5,
     touched: false
   },
   {
     number: 5,
     score: "",
     par: 4,
-    difficulty: 4,
+    difficulty: 3,
     touched: false
   },
   {
     number: 6,
     score: "",
     par: 4,
-    difficulty: 4,
+    difficulty: 1,
     touched: false
   },
   {
     number: 7,
     score: "",
-    par: 4,
-    difficulty: 4,
+    par: 3,
+    difficulty: 11,
     touched: false
   },
   {
     number: 8,
     score: "",
-    par: 4,
-    difficulty: 4,
+    par: 5,
+    difficulty: 7,
     touched: false
   },
   {
     number: 9,
     score: "",
     par: 4,
-    difficulty: 4,
+    difficulty: 9,
     touched: false
   },
   {
     number: 10,
     score: "",
     par: 4,
-    difficulty: 4,
+    difficulty: 14,
     touched: false
   },
   {
     number: 11,
     score: "",
-    par: 4,
-    difficulty: 4,
+    par: 5,
+    difficulty: 6,
     touched: false
   },
   {
     number: 12,
     score: "",
     par: 4,
-    difficulty: 4,
+    difficulty: 8,
     touched: false
   },
   {
     number: 13,
     score: "",
-    par: 4,
-    difficulty: 4,
+    par: 3,
+    difficulty: 18,
     touched: false
   },
   {
     number: 14,
     score: "",
     par: 4,
-    difficulty: 4,
+    difficulty: 10,
     touched: false
   },
   {
@@ -110,21 +110,21 @@ const emptyHolesArray = [
     number: 16,
     score: "",
     par: 4,
-    difficulty: 4,
+    difficulty: 2,
     touched: false
   },
   {
     number: 17,
     score: "",
-    par: 4,
-    difficulty: 4,
+    par: 5,
+    difficulty: 16,
     touched: false
   },
   {
     number: 18,
     score: "",
     par: 4,
-    difficulty: 4,
+    difficulty: 12,
     touched: false
   }
 ];
