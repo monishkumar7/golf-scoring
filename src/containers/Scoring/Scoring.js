@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import { Redirect } from "react-router-dom";
@@ -7,8 +7,14 @@ import Scorecard from "../../components/Scorecard/Scorecard";
 import HoleInput from "../../components/HoleInput/HoleInput";
 import * as actionCreators from "../../store/actions";
 import Button from "../../components/UI/Button/Button";
+import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 
 class Scoring extends Component {
+  componentDidMount = () => {
+    if (this.props.scorecardId)
+      this.props.onFetchScorecard(this.props.scorecardId);
+  };
+
   resetHandler = () => {
     let confirmation = window.confirm(
       "Are you sure you want to reset the scorecard?"
@@ -89,15 +95,23 @@ class Scoring extends Component {
             total2={this.props.total2}
             holesArray={this.props.holesArray}
           />
-          <Grid container>{holeInput}</Grid>
-          <Grid container justify="center" style={{ padding: "2rem" }}>
-            <Button disabled={false} clicked={this.resetHandler}>
-              Reset Scorecard
-            </Button>
-            <Button disabled={false} clicked={this.submitHandler}>
-              Submit Scorecard
-            </Button>
-          </Grid>
+          {this.props.loading ? (
+            <Grid item xs={12}>
+              <LoadingSpinner />
+            </Grid>
+          ) : (
+            <Fragment>
+              <Grid container>{holeInput}</Grid>
+              <Grid container justify="center" style={{ padding: "2rem" }}>
+                <Button disabled={false} clicked={this.resetHandler}>
+                  Reset Scorecard
+                </Button>
+                <Button disabled={false} clicked={this.submitHandler}>
+                  Submit Scorecard
+                </Button>
+              </Grid>
+            </Fragment>
+          )}
         </div>
       );
     }
@@ -113,7 +127,8 @@ const mapStateToProps = state => {
     total2: state.scores.currentScorecard.total2,
     total: state.scores.currentScorecard.total,
     auth: state.auth.loginToken !== null,
-    redirect: state.scores.redirectPath
+    redirect: state.scores.redirectPath,
+    loading: state.scores.loading
   };
 };
 
@@ -134,7 +149,9 @@ const mapDispatchToProps = dispatch => {
         actionCreators.updateScore(scorecardId, holeNumber, holeScore, touched)
       ),
     onSubmitScorecard: scorecardId =>
-      dispatch(actionCreators.submitScorecard(scorecardId))
+      dispatch(actionCreators.submitScorecard(scorecardId)),
+    onFetchScorecard: scorecardId =>
+      dispatch(actionCreators.fetchCurrentScorecard(scorecardId))
   };
 };
 

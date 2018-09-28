@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
-import classes from "./App.css";
 import Scoring from "../Scoring/Scoring";
 import PrevScorecards from "../../containers/PrevScorecards/PrevScorecards";
 import Layout from "../../components/Layout/Layout";
@@ -19,7 +18,7 @@ class App extends Component {
   render() {
     const loadingSpinner = this.props.isAuthLoading ? <LoadingSpinner /> : null;
     const content = this.props.auth ? (
-      <div className={classes.App}>
+      <div>
         <Layout auth={this.props.auth} userName={this.props.userName}>
           {loadingSpinner}
           <Switch>

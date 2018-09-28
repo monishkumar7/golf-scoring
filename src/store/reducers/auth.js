@@ -5,8 +5,7 @@ const initialState = {
   userName: null,
   error: null,
   loginToken: null,
-  loading: false,
-  appMode: false
+  loading: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -23,7 +22,6 @@ const reducer = (state = initialState, action) => {
         userId: action.userId,
         userName: action.userName,
         loginToken: action.loginToken,
-        appMode: action.appMode,
         loading: false
       };
 

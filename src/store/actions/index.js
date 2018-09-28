@@ -1,9 +1,10 @@
-export { checkAuthState, webLogin } from "./auth";
+export { checkAuthState } from "./auth";
 
 export {
   createScorecard,
   fetchAllScorecards,
-  fetchScorecard,
+  fetchCurrentScorecard,
+  fetchPreviousScorecard,
   incrementScore,
   decrementScore,
   updateScore,

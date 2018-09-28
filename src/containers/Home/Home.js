@@ -24,11 +24,11 @@ const styles = {
 
 class Home extends Component {
   componentDidMount = () => {
-    this.props.onFetchScorecards(this.props.loginToken);
+    this.props.onFetchScorecards(this.props.loginToken, false);
   };
 
   createScorecardHandler = () => {
-    this.props.onCreateScorecard();
+    this.props.onCreateScorecard(this.props.loginToken);
   };
 
   render() {
@@ -106,9 +106,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onCreateScorecard: () => dispatch(actionCreators.createScorecard()),
-    onFetchScorecards: loginToken =>
-      dispatch(actionCreators.fetchAllScorecards(loginToken))
+    onCreateScorecard: loginToken =>
+      dispatch(actionCreators.createScorecard(loginToken)),
+    onFetchScorecards: (loginToken, withPrevious) =>
+      dispatch(actionCreators.fetchAllScorecards(loginToken, withPrevious))
   };
 };
 

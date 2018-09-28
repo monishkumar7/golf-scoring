@@ -1,33 +1,11 @@
 import axios from "../../axios-allcal-staging-api";
 import * as actionTypes from "./actionTypes";
 
-export const webLogin = (email, password) => {
-  return dispatch => {
-    dispatch(authStart());
-    const data = {
-      email: email,
-      password: password
-    };
-    axios
-      .post("/auth/login", data)
-      .then(response => {
-        dispatch(
-          authSuccess(
-            response.data.userId,
-            response.data.name,
-            response.data.loginToken,
-            false
-          )
-        );
-      })
-      .catch(error => {
-        dispatch(authFail(error));
-      });
-  };
-};
-
 export const appLogin = loginToken => {
   return dispatch => {
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("loginToken");
     dispatch(authStart());
     axios
       .get("/account", {
@@ -40,12 +18,7 @@ export const appLogin = loginToken => {
         localStorage.setItem("userName", response.data.name);
         localStorage.setItem("loginToken", loginToken);
         dispatch(
-          authSuccess(
-            response.data.userId,
-            response.data.name,
-            loginToken,
-            true
-          )
+          authSuccess(response.data.userId, response.data.name, loginToken)
         );
       })
       .catch(error => {
@@ -60,13 +33,12 @@ export const authStart = () => {
   };
 };
 
-export const authSuccess = (userId, userName, loginToken, appMode) => {
+export const authSuccess = (userId, userName, loginToken) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
     userId: userId,
     userName: userName,
-    loginToken: loginToken,
-    appMode: appMode
+    loginToken: loginToken
   };
 };
 
@@ -88,18 +60,14 @@ export const logout = () => {
 
 export const checkAuthState = urlToken => {
   return dispatch => {
-    const loginToken = localStorage.getItem("loginToken");
-    loginToken
-      ? dispatch(
-          authSuccess(
-            localStorage.getItem("userId"),
-            localStorage.getItem("userName"),
-            loginToken,
-            true
-          )
+    if (urlToken) dispatch(appLogin(urlToken));
+    else if (localStorage.getItem("loginToken"))
+      dispatch(
+        authSuccess(
+          localStorage.getItem("userId"),
+          localStorage.getItem("userName"),
+          localStorage.getItem("loginToken")
         )
-      : urlToken
-        ? dispatch(appLogin(urlToken))
-        : dispatch(logout());
+      );
   };
 };

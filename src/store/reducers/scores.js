@@ -143,7 +143,7 @@ const initialState = {
   redirectPath: ""
 };
 
-const fetchAllScorecardsSuccess = (state, action) => {
+const fetchAllScorecards = (state, action) => {
   const scoreCards = action.scoreCards;
   let scorecardsArray = [];
   let currentScorecardId = null;
@@ -166,7 +166,47 @@ const fetchAllScorecardsSuccess = (state, action) => {
   };
 };
 
-const fetchScorecardSuccess = (state, action) => {
+const fetchCurrentScorecard = (state, action) => {
+  const holeScores = action.holeScores;
+  const fetchedScorecardId = action.holeScores[0].linkedScoreCardId;
+  let updatedHolesArray = emptyHolesArray.map(emptyHole => ({ ...emptyHole }));
+  let updatedTotal11 = 0;
+  let updatedTotal21 = 0;
+  let updatedTotal22 = 0;
+  let updatedLastUpdatedTime = new Date("January 1 2018");
+  for (let holeScore of holeScores) {
+    if (holeScore.score) {
+      updatedHolesArray[holeScore.holeNumber - 1].score = holeScore.score;
+      updatedHolesArray[holeScore.holeNumber - 1].touched = true;
+      if (holeScore.holeNumber <= 9) {
+        updatedTotal11 += +holeScore.score;
+      } else {
+        updatedTotal21 += +holeScore.score;
+      }
+      updatedTotal22 += +holeScore.score;
+      updatedLastUpdatedTime =
+        updatedLastUpdatedTime > holeScore.lastUpdatedTime
+          ? updatedLastUpdatedTime
+          : holeScore.lastUpdatedTime;
+    }
+  }
+  const fetchedScorecard = {
+    scorecardId: fetchedScorecardId,
+    holesArray: updatedHolesArray,
+    total1: updatedTotal11,
+    total2: updatedTotal21,
+    total: updatedTotal22,
+    isComplete: false,
+    lastUpdatedTime: updatedLastUpdatedTime
+  };
+  return {
+    ...state,
+    currentScorecard: fetchedScorecard,
+    loading: false
+  };
+};
+
+const fetchPreviousScorecard = (state, action) => {
   const holeScores = action.holeScores;
   const fetchedScorecardId = action.holeScores[0].linkedScoreCardId;
   let updatedHolesArray = emptyHolesArray.map(emptyHole => ({ ...emptyHole }));
@@ -204,9 +244,9 @@ const fetchScorecardSuccess = (state, action) => {
   );
   updatedPrevScorecards = updatedPrevScorecards.concat(fetchedScorecard);
   updatedPrevScorecards.sort(function(a, b) {
-    return a.lastUpdatedTime > b.lastUpdatedTime
+    return a.lastUpdatedTime < b.lastUpdatedTime
       ? 1
-      : b.lastUpdatedTime > a.lastUpdatedTime
+      : b.lastUpdatedTime < a.lastUpdatedTime
         ? -1
         : 0;
   });
@@ -225,7 +265,7 @@ const fetchScorecardSuccess = (state, action) => {
   }
 };
 
-const updateScoreSuccess = (state, action) => {
+const updateScore = (state, action) => {
   let updatedTotal1 = state.currentScorecard.total1;
   let updatedTotal2 = state.currentScorecard.total2;
   let updatedTotal = state.currentScorecard.total;
@@ -271,8 +311,7 @@ const updateScoreSuccess = (state, action) => {
       total1: updatedTotal1,
       total2: updatedTotal2,
       total: updatedTotal
-    },
-    loading: false
+    }
   };
 };
 
@@ -291,7 +330,7 @@ const createScorecard = (state, action) => {
   };
 };
 
-const submitScorecardSuccess = (state, action) => {
+const submitScorecard = (state, action) => {
   return {
     ...state,
     currentScorecard: {
@@ -331,7 +370,7 @@ const reducer = (state = initialState, action) => {
       };
 
     case actionTypes.FETCH_ALL_SCORECARDS_SUCCESS:
-      return fetchAllScorecardsSuccess(state, action);
+      return fetchAllScorecards(state, action);
 
     case actionTypes.FETCH_ALL_SCORECARDS_FAIL:
       return {
@@ -339,16 +378,31 @@ const reducer = (state = initialState, action) => {
         loading: false
       };
 
-    case actionTypes.FETCH_SCORECARD_START:
+    case actionTypes.FETCH_CURRENT_SCORECARD_START:
       return {
         ...state,
         loading: true
       };
 
-    case actionTypes.FETCH_SCORECARD_SUCCESS:
-      return fetchScorecardSuccess(state, action);
+    case actionTypes.FETCH_CURRENT_SCORECARD_SUCCESS:
+      return fetchCurrentScorecard(state, action);
 
-    case actionTypes.FETCH_SCORECARD_FAIL:
+    case actionTypes.FETCH_CURRENT_SCORECARD_FAIL:
+      return {
+        ...state,
+        loading: false
+      };
+
+    case actionTypes.FETCH_PREVIOUS_SCORECARD_START:
+      return {
+        ...state,
+        loading: true
+      };
+
+    case actionTypes.FETCH_PREVIOUS_SCORECARD_SUCCESS:
+      return fetchPreviousScorecard(state, action);
+
+    case actionTypes.FETCH_PREVIOUS_SCORECARD_FAIL:
       return {
         ...state,
         loading: false
@@ -356,17 +410,15 @@ const reducer = (state = initialState, action) => {
 
     case actionTypes.UPDATE_SCORE_START:
       return {
-        ...state,
-        loading: true
+        ...state
       };
 
     case actionTypes.UPDATE_SCORE_SUCCESS:
-      return updateScoreSuccess(state, action);
+      return updateScore(state, action);
 
     case actionTypes.UPDATE_SCORE_FAIL:
       return {
-        ...state,
-        loading: false
+        ...state
       };
 
     case actionTypes.RESET_SCORECARD_START:
@@ -402,7 +454,7 @@ const reducer = (state = initialState, action) => {
       };
 
     case actionTypes.SUBMIT_SCORECARD_SUCCESS:
-      return submitScorecardSuccess(state, action);
+      return submitScorecard(state, action);
 
     case actionTypes.SUBMIT_SCORECARD_FAIL:
       return {
