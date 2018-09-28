@@ -8,10 +8,7 @@ import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 
 class PrevScorecards extends Component {
   componentDidMount = () => {
-    this.props.onFetchPreviousScorecard(
-      localStorage.getItem("loginToken"),
-      true
-    );
+    this.props.onFetchPreviousScorecards(this.props.prevScorecards);
   };
 
   render() {
@@ -52,8 +49,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchPreviousScorecard: (loginToken, withPrevious) =>
-      dispatch(actionCreators.fetchAllScorecards(loginToken, withPrevious))
+    onFetchPreviousScorecards: scorecards =>
+      dispatch(actionCreators.fetchPreviousScorecards(scorecards))
   };
 };
 

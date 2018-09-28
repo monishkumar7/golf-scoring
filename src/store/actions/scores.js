@@ -62,29 +62,6 @@ export const fetchAllScorecards = loginToken => {
       })
       .then(response => {
         dispatch(fetchAllScorecardsSuccess(response.data.data));
-        // if (withPrevious) {
-        //   let scorecardCount = response.data.data.length;
-        //   for (let i = 1; i <= scorecardCount; i++) {
-        //     // const data = {
-        //     //   holeNumber: i,
-        //     //    score: ""
-        //     //  };
-        //     //  axios
-        //     //    .put("event/" + eventId + "/score", data, {
-        //     //      headers: {
-        //     //        "login-token": loginToken
-        //     //      }
-        //     //   })
-        //     //   .then(response => {
-        //     //     dispatch(resetScore());
-        //     //     c++;
-        //     //     c === 17
-        //     //       ? dispatch(fetchScores(eventId, loginToken))
-        //     //       : console.log("Not yet");
-        //     //   })
-        //     //   .catch(error => {});
-        //   }
-        // }
       })
       .catch(error => {
         dispatch(fetchAllScorecardsFail());
@@ -142,40 +119,42 @@ export const fetchCurrentScorecardFail = () => {
   };
 };
 
-export const fetchPreviousScorecardStart = () => {
+export const fetchPreviousScorecardsStart = () => {
   return {
-    type: actionTypes.FETCH_PREVIOUS_SCORECARD_START
+    type: actionTypes.FETCH_PREVIOUS_SCORECARDS_START
   };
 };
 
-export const fetchPreviousScorecard = scorecardId => {
+export const fetchPreviousScorecards = scorecards => {
   return dispatch => {
-    dispatch(fetchPreviousScorecardStart());
-    axios
-      .get("/scoreCard/" + scorecardId + "/score", {
-        headers: {
-          "login-token": loginToken
-        }
-      })
-      .then(response => {
-        dispatch(fetchPreviousScorecardSuccess(response.data.data));
-      })
-      .catch(error => {
-        dispatch(fetchPreviousScorecardFail());
-      });
+    for (let scorecard of scorecards) {
+      dispatch(fetchPreviousScorecardsStart());
+      axios
+        .get("/scoreCard/" + scorecard.scorecardId + "/score", {
+          headers: {
+            "login-token": loginToken
+          }
+        })
+        .then(response => {
+          dispatch(fetchPreviousScorecardsSuccess(response.data.data));
+        })
+        .catch(error => {
+          dispatch(fetchPreviousScorecardsFail());
+        });
+    }
   };
 };
 
-export const fetchPreviousScorecardSuccess = holeScores => {
+export const fetchPreviousScorecardsSuccess = holeScores => {
   return {
-    type: actionTypes.FETCH_PREVIOUS_SCORECARD_SUCCESS,
+    type: actionTypes.FETCH_PREVIOUS_SCORECARDS_SUCCESS,
     holeScores: holeScores
   };
 };
 
-export const fetchPreviousScorecardFail = () => {
+export const fetchPreviousScorecardsFail = () => {
   return {
-    type: actionTypes.FETCH_PREVIOUS_SCORECARD_FAIL
+    type: actionTypes.FETCH_PREVIOUS_SCORECARDS_FAIL
   };
 };
 

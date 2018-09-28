@@ -206,7 +206,7 @@ const fetchCurrentScorecard = (state, action) => {
   };
 };
 
-const fetchPreviousScorecard = (state, action) => {
+const fetchPreviousScorecards = (state, action) => {
   const holeScores = action.holeScores;
   const fetchedScorecardId = action.holeScores[0].linkedScoreCardId;
   let updatedHolesArray = emptyHolesArray.map(emptyHole => ({ ...emptyHole }));
@@ -250,19 +250,11 @@ const fetchPreviousScorecard = (state, action) => {
         ? -1
         : 0;
   });
-  if (action.isComplete) {
-    return {
-      ...state,
-      previousScorecards: updatedPrevScorecards,
-      loading: false
-    };
-  } else {
-    return {
-      ...state,
-      currentScorecard: fetchedScorecard,
-      loading: false
-    };
-  }
+  return {
+    ...state,
+    previousScorecards: updatedPrevScorecards,
+    loading: false
+  };
 };
 
 const updateScore = (state, action) => {
@@ -393,16 +385,16 @@ const reducer = (state = initialState, action) => {
         loading: false
       };
 
-    case actionTypes.FETCH_PREVIOUS_SCORECARD_START:
+    case actionTypes.FETCH_PREVIOUS_SCORECARDS_START:
       return {
         ...state,
         loading: true
       };
 
-    case actionTypes.FETCH_PREVIOUS_SCORECARD_SUCCESS:
-      return fetchPreviousScorecard(state, action);
+    case actionTypes.FETCH_PREVIOUS_SCORECARDS_SUCCESS:
+      return fetchPreviousScorecards(state, action);
 
-    case actionTypes.FETCH_PREVIOUS_SCORECARD_FAIL:
+    case actionTypes.FETCH_PREVIOUS_SCORECARDS_FAIL:
       return {
         ...state,
         loading: false
