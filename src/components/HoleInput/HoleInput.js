@@ -121,6 +121,18 @@ const HoleScore = props => {
             <Button clicked={props.increment}>+</Button>
           </div>
         </div>
+        <Grid container justify="center" className={props.classes.cardHeader}>
+          {props.distance ? (
+            <Grid item xs={6}>
+              <Typography variant="body2">
+                Distance to Hole {props.number} - {props.distance}
+              </Typography>
+            </Grid>
+          ) : null}
+          <Grid item xs={6}>
+            <Button clicked={props.getDistance}>Get Distance</Button>
+          </Grid>
+        </Grid>
       </Card>
     </Grid>
   );

@@ -10,6 +10,41 @@ import Button from "../../components/UI/Button/Button";
 import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 
 class Scoring extends Component {
+  state = {
+    holeCoords: [
+      {
+        holeNumber: 1,
+        latitude: 43.566767,
+        longitude: -83.524522
+      },
+      {
+        holeNumber: 2,
+        latitude: 43.566767,
+        longitude: -23.524522
+      },
+      {
+        holeNumber: 3,
+        latitude: 63.566767,
+        longitude: -83.524522
+      },
+      {
+        holeNumber: 4,
+        latitude: 53.566767,
+        longitude: -83.524522
+      },
+      {
+        holeNumber: 5,
+        latitude: 33.566767,
+        longitude: -83.524522
+      },
+      {
+        holeNumber: 6,
+        latitude: 23.566767,
+        longitude: -83.524522
+      }
+    ],
+    distance: ""
+  };
   componentDidMount = () => {
     if (this.props.scorecardId)
       this.props.onFetchScorecard(this.props.scorecardId);
@@ -48,6 +83,41 @@ class Scoring extends Component {
     }
   };
 
+  distanceBetween = (lat1, lon1, lat2, lon2, unit) => {
+    var radlat1 = (Math.PI * lat1) / 180;
+    var radlat2 = (Math.PI * lat2) / 180;
+    var theta = lon1 - lon2;
+    var radtheta = (Math.PI * theta) / 180;
+    var dist =
+      Math.sin(radlat1) * Math.sin(radlat2) +
+      Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+    dist = Math.acos(dist);
+    dist = (dist * 180) / Math.PI;
+    dist = dist * 60 * 1.1515;
+    if (unit === "Y") {
+      dist = dist * 1760;
+    }
+    return dist;
+  };
+
+  getDistance = holeNumber => {
+    let hole = this.state.holeCoords.find(obj => {
+      return obj.holeNumber === holeNumber;
+    });
+    navigator.geolocation.getCurrentPosition(data => {
+      let distanceCalc = this.distanceBetween(
+        data.coords.latitude,
+        data.coords.longitude,
+        hole.latitude,
+        hole.longitude,
+        "Y"
+      );
+      console.log(distanceCalc);
+      console.log("Accurate to", data.coords.accuracy * 1.09361, "yards");
+      this.setState({ distance: distanceCalc });
+    });
+  };
+
   render() {
     const holeInput = this.props.holesArray.map(hole => {
       return (
@@ -58,6 +128,10 @@ class Scoring extends Component {
           score={hole.score}
           difficulty={hole.difficulty}
           touched={hole.touched}
+          getDistance={() => {
+            this.getDistance(hole.number);
+          }}
+          distance={this.state.distance}
           scoreClicked={() => {
             this.props.onTouchUpdateScore(
               this.props.scorecardId,
