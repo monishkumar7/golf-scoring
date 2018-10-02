@@ -125,7 +125,10 @@ const HoleScore = props => {
           {props.distance ? (
             <Grid item xs={6}>
               <Typography variant="body2">
-                Distance to Hole {props.number} - {props.distance}
+                Distance to Hole {props.number} - {props.distance} yards
+              </Typography>
+              <Typography variant="caption">
+                Accurate to {props.accuracy} yards
               </Typography>
             </Grid>
           ) : null}

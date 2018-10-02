@@ -293,3 +293,12 @@ export const submitScorecardFail = () => {
     type: actionTypes.SUBMIT_SCORECARD_FAIL
   };
 };
+
+export const updateDistance = (holeNumber, holeDistance, locationAccuracy) => {
+  return {
+    type: actionTypes.UPDATE_DISTANCE,
+    holeNumber: holeNumber,
+    holeDistance: holeDistance,
+    locationAccuracy: locationAccuracy
+  };
+};

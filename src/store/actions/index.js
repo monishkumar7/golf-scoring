@@ -9,5 +9,6 @@ export {
   decrementScore,
   updateScore,
   resetScorecard,
-  submitScorecard
+  submitScorecard,
+  updateDistance
 } from "./scores";

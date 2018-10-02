@@ -10,41 +10,6 @@ import Button from "../../components/UI/Button/Button";
 import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
 
 class Scoring extends Component {
-  state = {
-    holeCoords: [
-      {
-        holeNumber: 1,
-        latitude: 43.566767,
-        longitude: -83.524522
-      },
-      {
-        holeNumber: 2,
-        latitude: 43.566767,
-        longitude: -23.524522
-      },
-      {
-        holeNumber: 3,
-        latitude: 63.566767,
-        longitude: -83.524522
-      },
-      {
-        holeNumber: 4,
-        latitude: 53.566767,
-        longitude: -83.524522
-      },
-      {
-        holeNumber: 5,
-        latitude: 33.566767,
-        longitude: -83.524522
-      },
-      {
-        holeNumber: 6,
-        latitude: 23.566767,
-        longitude: -83.524522
-      }
-    ],
-    distance: ""
-  };
   componentDidMount = () => {
     if (this.props.scorecardId)
       this.props.onFetchScorecard(this.props.scorecardId);
@@ -101,20 +66,26 @@ class Scoring extends Component {
   };
 
   getDistance = holeNumber => {
-    let hole = this.state.holeCoords.find(obj => {
-      return obj.holeNumber === holeNumber;
-    });
     navigator.geolocation.getCurrentPosition(data => {
-      let distanceCalc = this.distanceBetween(
+      let locationAccuracy = (data.coords.accuracy * 1.09361).toFixed(2);
+      let holeDistance = this.distanceBetween(
         data.coords.latitude,
         data.coords.longitude,
-        hole.latitude,
-        hole.longitude,
+        this.props.holesArray.find(hole => {
+          return hole.number === holeNumber;
+        }).latitude,
+        this.props.holesArray.find(hole => {
+          return hole.number === holeNumber;
+        }).longitude,
         "Y"
+      ).toFixed(2);
+      console.log(holeDistance);
+      console.log("Accurate to", locationAccuracy, "yards");
+      this.props.OnUpdateHoleDistance(
+        holeNumber,
+        holeDistance,
+        locationAccuracy
       );
-      console.log(distanceCalc);
-      console.log("Accurate to", data.coords.accuracy * 1.09361, "yards");
-      this.setState({ distance: distanceCalc });
     });
   };
 
@@ -128,10 +99,9 @@ class Scoring extends Component {
           score={hole.score}
           difficulty={hole.difficulty}
           touched={hole.touched}
-          getDistance={() => {
-            this.getDistance(hole.number);
-          }}
-          distance={this.state.distance}
+          getDistance={() => this.getDistance(hole.number)}
+          distance={hole.distance}
+          accuracy={hole.locationAccuracy}
           scoreClicked={() => {
             this.props.onTouchUpdateScore(
               this.props.scorecardId,
@@ -225,7 +195,15 @@ const mapDispatchToProps = dispatch => {
     onSubmitScorecard: scorecardId =>
       dispatch(actionCreators.submitScorecard(scorecardId)),
     onFetchScorecard: scorecardId =>
-      dispatch(actionCreators.fetchCurrentScorecard(scorecardId))
+      dispatch(actionCreators.fetchCurrentScorecard(scorecardId)),
+    OnUpdateHoleDistance: (holeNumber, holeDistance, locationAccuracy) =>
+      dispatch(
+        actionCreators.updateDistance(
+          holeNumber,
+          holeDistance,
+          locationAccuracy
+        )
+      )
   };
 };
 
