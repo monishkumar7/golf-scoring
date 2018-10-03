@@ -1,64 +1,64 @@
-import React from "react";
+import React from 'react';
+import { Grid, Typography, Card } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 
-import { Grid, Typography, Card } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
-import Button from "../UI/Button/Button";
+import Button from '../UI/Button/Button';
 
 const styles = theme => ({
   holeScore: {
-    padding: "0.4rem 0.9rem"
+    padding: '0.4rem 0.9rem'
   },
   card: {
-    padding: "10px 10px 20px",
-    borderRadius: "0"
+    padding: '10px 10px 20px',
+    borderRadius: '0'
   },
   score: {
-    display: "inline-block",
-    fontSize: "2.5rem",
-    margin: "0 15px",
-    width: "3rem",
-    textAlign: "center"
+    display: 'inline-block',
+    fontSize: '2.5rem',
+    margin: '0 15px',
+    width: '3rem',
+    textAlign: 'center'
   },
   button: {
-    margin: "0 10px",
-    minWidth: "45px",
-    borderRadius: "0",
+    margin: '0 10px',
+    minWidth: '45px',
+    borderRadius: '0',
     backgroundColor: theme.palette.secondary.main,
-    color: "white"
+    color: 'white'
   },
   cardHeader: {
-    margin: "-.7rem -.7rem 1rem",
+    margin: '-.7rem -.7rem 1rem',
     backgroundColor: theme.palette.primary.light,
-    padding: ".5rem",
-    color: "white",
-    textAlign: "center"
+    padding: '.5rem',
+    color: 'white',
+    textAlign: 'center'
   },
   cardContent: {
-    display: "inline-flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "100%"
+    display: 'inline-flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%'
   },
   cardLeftPane: {
-    display: "flex",
-    flex: "0 1 50%",
-    justifyContent: "center",
-    alignContent: "center",
-    flexFlow: "column"
+    display: 'flex',
+    flex: '0 1 50%',
+    justifyContent: 'center',
+    alignContent: 'center',
+    flexFlow: 'column'
   },
   cardRightPane: {
-    display: "flex",
-    flex: "0 1 50%",
-    justifyContent: "center",
-    alignContent: "center"
+    display: 'flex',
+    flex: '0 1 50%',
+    justifyContent: 'center',
+    alignContent: 'center'
   },
   leftPaneText: {
-    textAlign: "right"
+    textAlign: 'right'
   }
 });
 
 const HoleScore = props => {
-  let holeScore = "-";
+  let holeScore = '-';
   if (props.touched) {
     holeScore = props.score;
   }
@@ -122,7 +122,9 @@ const HoleScore = props => {
           </div>
         </div>
         <Grid container justify="center" className={props.classes.cardHeader}>
-          {props.distance ? (
+          {props.locationFetching ? (
+            <p>Fetching Location...</p>
+          ) : props.distance ? (
             <Grid item xs={6}>
               <Typography variant="body2">
                 Distance to Hole {props.number} - {props.distance} yards

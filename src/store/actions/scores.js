@@ -1,8 +1,8 @@
-import axios from "../../axios-allcal-staging-dashboard";
+import axios from '../../axios-allcal-staging-dashboard';
 
-import * as actionTypes from "./actionTypes";
+import * as actionTypes from './actionTypes';
 
-const loginToken = localStorage.getItem("loginToken");
+const loginToken = localStorage.getItem('loginToken');
 
 export const createScorecardStart = () => {
   return {
@@ -15,11 +15,11 @@ export const createScorecard = loginToken => {
     dispatch(createScorecardStart());
     axios
       .post(
-        "/scoreCard",
+        '/scoreCard',
         {},
         {
           headers: {
-            "login-token": loginToken
+            'login-token': loginToken
           }
         }
       )
@@ -55,9 +55,9 @@ export const fetchAllScorecards = loginToken => {
   return dispatch => {
     dispatch(fetchAllScorecardsStart());
     axios
-      .get("/scoreCards", {
+      .get('/scoreCards', {
         headers: {
-          "login-token": loginToken
+          'login-token': loginToken
         }
       })
       .then(response => {
@@ -92,9 +92,9 @@ export const fetchCurrentScorecard = scorecardId => {
   return dispatch => {
     dispatch(fetchCurrentScorecardStart());
     axios
-      .get("/scoreCard/" + scorecardId + "/score", {
+      .get('/scoreCard/' + scorecardId + '/score', {
         headers: {
-          "login-token": loginToken
+          'login-token': loginToken
         }
       })
       .then(response => {
@@ -130,9 +130,9 @@ export const fetchPreviousScorecards = scorecards => {
     for (let scorecard of scorecards) {
       dispatch(fetchPreviousScorecardsStart());
       axios
-        .get("/scoreCard/" + scorecard.scorecardId + "/score", {
+        .get('/scoreCard/' + scorecard.scorecardId + '/score', {
           headers: {
-            "login-token": loginToken
+            'login-token': loginToken
           }
         })
         .then(response => {
@@ -172,9 +172,9 @@ export const updateScore = (scorecardId, holeNumber, holeScore, touched) => {
       score: holeScore
     };
     axios
-      .put("scoreCard/" + scorecardId + "/score", data, {
+      .put('scoreCard/' + scorecardId + '/score', data, {
         headers: {
-          "login-token": loginToken
+          'login-token': loginToken
         }
       })
       .then(response => {
@@ -229,9 +229,9 @@ export const resetScorecard = scorecardId => {
   return dispatch => {
     dispatch(resetScorecardStart());
     axios
-      .delete("scoreCard/" + scorecardId + "/score/refresh", {
+      .delete('scoreCard/' + scorecardId + '/score/refresh', {
         headers: {
-          "login-token": loginToken
+          'login-token': loginToken
         }
       })
       .then(response => {
@@ -268,9 +268,9 @@ export const submitScorecard = scorecardId => {
       isComplete: true
     };
     axios
-      .put("scoreCards/" + scorecardId, data, {
+      .put('scoreCards/' + scorecardId, data, {
         headers: {
-          "login-token": loginToken
+          'login-token': loginToken
         }
       })
       .then(response => {
@@ -300,5 +300,12 @@ export const updateDistance = (holeNumber, holeDistance, locationAccuracy) => {
     holeNumber: holeNumber,
     holeDistance: holeDistance,
     locationAccuracy: locationAccuracy
+  };
+};
+
+export const startLocationFetching = holeNumber => {
+  return {
+    type: actionTypes.START_LOCATION_FETCHING,
+    holeNumber: holeNumber
   };
 };

@@ -1,13 +1,13 @@
-import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
-import { Grid } from "@material-ui/core";
-import { Redirect } from "react-router-dom";
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { Grid } from '@material-ui/core';
+import { Redirect } from 'react-router-dom';
 
-import Scorecard from "../../components/Scorecard/Scorecard";
-import HoleInput from "../../components/HoleInput/HoleInput";
-import * as actionCreators from "../../store/actions";
-import Button from "../../components/UI/Button/Button";
-import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
+import Scorecard from '../../components/Scorecard/Scorecard';
+import HoleInput from '../../components/HoleInput/HoleInput';
+import * as actionCreators from '../../store/actions';
+import Button from '../../components/UI/Button/Button';
+import LoadingSpinner from '../../components/UI/LoadingSpinner/LoadingSpinner';
 
 class Scoring extends Component {
   componentDidMount = () => {
@@ -17,7 +17,7 @@ class Scoring extends Component {
 
   resetHandler = () => {
     let confirmation = window.confirm(
-      "Are you sure you want to reset the scorecard?"
+      'Are you sure you want to reset the scorecard?'
     );
     if (confirmation) this.props.onResetScorecard(this.props.scorecardId);
   };
@@ -27,22 +27,22 @@ class Scoring extends Component {
     let allEmptyCounter = 0;
 
     for (let hole of this.props.holesArray)
-      if (hole.score === "") {
+      if (hole.score === '') {
         allValuesFilled = false;
         allEmptyCounter++;
       }
     if (allEmptyCounter >= 18) {
       window.alert(
-        "You cannot submit an empty scorecard. Please fill up values"
+        'You cannot submit an empty scorecard. Please fill up values'
       );
     } else if (!allValuesFilled) {
       let confirmation2 = window.confirm(
-        "All hole values are not filled. Are you sure you want to Submit an incomplete scorecard?"
+        'All hole values are not filled. Are you sure you want to Submit an incomplete scorecard?'
       );
       if (confirmation2) this.props.onSubmitScorecard(this.props.scorecardId);
     } else {
       let confirmation = window.confirm(
-        "Are you sure you want to submit the scorecard?"
+        'Are you sure you want to submit the scorecard?'
       );
       if (confirmation) this.props.onSubmitScorecard(this.props.scorecardId);
     }
@@ -59,13 +59,14 @@ class Scoring extends Component {
     dist = Math.acos(dist);
     dist = (dist * 180) / Math.PI;
     dist = dist * 60 * 1.1515;
-    if (unit === "Y") {
+    if (unit === 'Y') {
       dist = dist * 1760;
     }
     return dist;
   };
 
   getDistance = holeNumber => {
+    this.props.OnStartLocationFetching(holeNumber);
     navigator.geolocation.getCurrentPosition(data => {
       let locationAccuracy = (data.coords.accuracy * 1.09361).toFixed(2);
       let holeDistance = this.distanceBetween(
@@ -77,10 +78,10 @@ class Scoring extends Component {
         this.props.holesArray.find(hole => {
           return hole.number === holeNumber;
         }).longitude,
-        "Y"
+        'Y'
       ).toFixed(2);
       console.log(holeDistance);
-      console.log("Accurate to", locationAccuracy, "yards");
+      console.log('Accurate to', locationAccuracy, 'yards');
       this.props.OnUpdateHoleDistance(
         holeNumber,
         holeDistance,
@@ -102,6 +103,7 @@ class Scoring extends Component {
           getDistance={() => this.getDistance(hole.number)}
           distance={hole.distance}
           accuracy={hole.locationAccuracy}
+          locationFetching={hole.isFetchingLocation}
           scoreClicked={() => {
             this.props.onTouchUpdateScore(
               this.props.scorecardId,
@@ -128,11 +130,11 @@ class Scoring extends Component {
       );
     });
 
-    let authContent = "Please Login to Continue!";
+    let authContent = 'Please Login to Continue!';
     if (this.props.auth) {
       authContent = (
         <div>
-          {this.props.redirect === "/home" ? <Redirect to="/home" /> : null}
+          {this.props.redirect === '/home' ? <Redirect to="/home" /> : null}
           <Scorecard
             total={this.props.total}
             total1={this.props.total1}
@@ -146,7 +148,7 @@ class Scoring extends Component {
           ) : (
             <Fragment>
               <Grid container>{holeInput}</Grid>
-              <Grid container justify="center" style={{ padding: "2rem" }}>
+              <Grid container justify="center" style={{ padding: '2rem' }}>
                 <Button disabled={false} clicked={this.resetHandler}>
                   Reset Scorecard
                 </Button>
@@ -196,6 +198,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(actionCreators.submitScorecard(scorecardId)),
     onFetchScorecard: scorecardId =>
       dispatch(actionCreators.fetchCurrentScorecard(scorecardId)),
+    OnStartLocationFetching: holeNumber =>
+      dispatch(actionCreators.startLocationFetching(holeNumber)),
     OnUpdateHoleDistance: (holeNumber, holeDistance, locationAccuracy) =>
       dispatch(
         actionCreators.updateDistance(

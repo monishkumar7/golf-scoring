@@ -1,217 +1,236 @@
-import * as actionTypes from "../actions/actionTypes";
+import * as actionTypes from '../actions/actionTypes';
 
 const emptyHolesArray = [
   {
     number: 1,
-    score: "",
+    score: '',
     par: 4,
     difficulty: 17,
     touched: false,
     latitude: 43.562423,
     longitude: -83.423522,
-    distance: ""
+    distance: '',
+    locationAccuracy: '',
+    isFetchingLocation: false
   },
   {
     number: 2,
-    score: "",
+    score: '',
     par: 4,
     difficulty: 13,
     touched: false,
     latitude: 42.562423,
     longitude: -83.523522,
-    distance: "",
-    locationAccuracy: ""
+    distance: '',
+    locationAccuracy: '',
+    isFetchingLocation: false
   },
   {
     number: 3,
-    score: "",
+    score: '',
     par: 3,
     difficulty: 15,
     touched: false,
     latitude: 44.562423,
     longitude: -83.323522,
-    distance: "",
-    locationAccuracy: ""
+    distance: '',
+    locationAccuracy: '',
+    isFetchingLocation: false
   },
   {
     number: 4,
-    score: "",
+    score: '',
     par: 4,
     difficulty: 5,
     touched: false,
     latitude: 42.162423,
     longitude: -83.123522,
-    distance: "",
-    locationAccuracy: ""
+    distance: '',
+    locationAccuracy: '',
+    isFetchingLocation: false
   },
   {
     number: 5,
-    score: "",
+    score: '',
     par: 4,
     difficulty: 3,
     touched: false,
     latitude: 42.262423,
     longitude: -83.223522,
-    distance: "",
-    locationAccuracy: ""
+    distance: '',
+    locationAccuracy: '',
+    isFetchingLocation: false
   },
   {
     number: 6,
-    score: "",
+    score: '',
     par: 4,
     difficulty: 1,
     touched: false,
     latitude: 42.362423,
     longitude: -83.323522,
-    distance: "",
-    locationAccuracy: ""
+    distance: '',
+    locationAccuracy: '',
+    isFetchingLocation: false
   },
   {
     number: 7,
-    score: "",
+    score: '',
     par: 3,
     difficulty: 11,
     touched: false,
     latitude: 42.462423,
     longitude: -83.423522,
-    distance: "",
-    locationAccuracy: ""
+    distance: '',
+    locationAccuracy: '',
+    isFetchingLocation: false
   },
   {
     number: 8,
-    score: "",
+    score: '',
     par: 5,
     difficulty: 7,
     touched: false,
     latitude: 42.662423,
     longitude: -83.623522,
-    distance: "",
-    locationAccuracy: ""
+    distance: '',
+    locationAccuracy: '',
+    isFetchingLocation: false
   },
   {
     number: 9,
-    score: "",
+    score: '',
     par: 4,
     difficulty: 9,
     touched: false,
     latitude: 42.762423,
     longitude: -83.723522,
-    distance: "",
-    locationAccuracy: ""
+    distance: '',
+    locationAccuracy: '',
+    isFetchingLocation: false
   },
   {
     number: 10,
-    score: "",
+    score: '',
     par: 4,
     difficulty: 14,
     touched: false,
     latitude: 42.862423,
     longitude: -83.823522,
-    distance: "",
-    locationAccuracy: ""
+    distance: '',
+    locationAccuracy: '',
+    isFetchingLocation: false
   },
   {
     number: 11,
-    score: "",
+    score: '',
     par: 5,
     difficulty: 6,
     touched: false,
     latitude: 42.962423,
     longitude: -83.923522,
-    distance: "",
-    locationAccuracy: ""
+    distance: '',
+    locationAccuracy: '',
+    isFetchingLocation: false
   },
   {
     number: 12,
-    score: "",
+    score: '',
     par: 4,
     difficulty: 8,
     touched: false,
     latitude: 42.962423,
     longitude: -83.123522,
-    distance: "",
-    locationAccuracy: ""
+    distance: '',
+    locationAccuracy: '',
+    isFetchingLocation: false
   },
   {
     number: 13,
-    score: "",
+    score: '',
     par: 3,
     difficulty: 18,
     touched: false,
     latitude: 42.862423,
     longitude: -83.223522,
-    distance: "",
-    locationAccuracy: ""
+    distance: '',
+    locationAccuracy: '',
+    isFetchingLocation: false
   },
   {
     number: 14,
-    score: "",
+    score: '',
     par: 4,
     difficulty: 10,
     touched: false,
     latitude: 42.762423,
     longitude: -83.323522,
-    distance: "",
-    locationAccuracy: ""
+    distance: '',
+    locationAccuracy: '',
+    isFetchingLocation: false
   },
   {
     number: 15,
-    score: "",
+    score: '',
     par: 4,
     difficulty: 4,
     touched: false,
     latitude: 42.662423,
     longitude: -83.423522,
-    distance: "",
-    locationAccuracy: ""
+    distance: '',
+    locationAccuracy: '',
+    isFetchingLocation: false
   },
   {
     number: 16,
-    score: "",
+    score: '',
     par: 4,
     difficulty: 2,
     touched: false,
     latitude: 42.462423,
     longitude: -83.623522,
-    distance: "",
-    locationAccuracy: ""
+    distance: '',
+    locationAccuracy: '',
+    isFetchingLocation: false
   },
   {
     number: 17,
-    score: "",
+    score: '',
     par: 5,
     difficulty: 16,
     touched: false,
     latitude: 42.262423,
     longitude: -83.823522,
-    distance: "",
-    locationAccuracy: ""
+    distance: '',
+    locationAccuracy: '',
+    isFetchingLocation: false
   },
   {
     number: 18,
-    score: "",
+    score: '',
     par: 4,
     difficulty: 12,
     touched: false,
     latitude: 42.362423,
     longitude: -83.723522,
-    distance: "",
-    locationAccuracy: ""
+    distance: '',
+    locationAccuracy: '',
+    isFetchingLocation: false
   }
 ];
 
 const initialState = {
   previousScorecards: [],
   currentScorecard: {
-    scorecardId: "",
+    scorecardId: '',
     holesArray: emptyHolesArray,
-    total1: "",
-    total2: "",
-    total: "",
+    total1: '',
+    total2: '',
+    total: '',
     isComplete: false
   },
   loading: false,
-  redirectPath: ""
+  redirectPath: ''
 };
 
 const fetchAllScorecards = (state, action) => {
@@ -233,7 +252,7 @@ const fetchAllScorecards = (state, action) => {
     },
     previousScorecards: scorecardsArray,
     loading: false,
-    redirectPath: ""
+    redirectPath: ''
   };
 };
 
@@ -244,7 +263,7 @@ const fetchCurrentScorecard = (state, action) => {
   let updatedTotal11 = 0;
   let updatedTotal21 = 0;
   let updatedTotal22 = 0;
-  let updatedLastUpdatedTime = new Date("January 1 2018");
+  let updatedLastUpdatedTime = new Date('January 1 2018');
   for (let holeScore of holeScores) {
     if (holeScore.score) {
       updatedHolesArray[holeScore.holeNumber - 1].score = holeScore.score;
@@ -284,7 +303,7 @@ const fetchPreviousScorecards = (state, action) => {
   let updatedTotal11 = 0;
   let updatedTotal21 = 0;
   let updatedTotal22 = 0;
-  let updatedLastUpdatedTime = new Date("January 1 2018");
+  let updatedLastUpdatedTime = new Date('January 1 2018');
   for (let holeScore of holeScores) {
     if (holeScore.score) {
       updatedHolesArray[holeScore.holeNumber - 1].score = holeScore.score;
@@ -384,9 +403,9 @@ const createScorecard = (state, action) => {
     currentScorecard: {
       scorecardId: action.scorecardId,
       holesArray: emptyHolesArray.map(emptyHole => ({ ...emptyHole })),
-      total1: "",
-      total2: "",
-      total: "",
+      total1: '',
+      total2: '',
+      total: '',
       isComplete: false
     },
     loading: false
@@ -397,15 +416,15 @@ const submitScorecard = (state, action) => {
   return {
     ...state,
     currentScorecard: {
-      scorecardId: "",
+      scorecardId: '',
       holesArray: emptyHolesArray.map(emptyHole => ({ ...emptyHole })),
-      total1: "",
-      total2: "",
-      total: "",
+      total1: '',
+      total2: '',
+      total: '',
       isComplete: false
     },
     loading: false,
-    redirectPath: "/home"
+    redirectPath: '/home'
   };
 };
 
@@ -422,7 +441,27 @@ const updateDistance = (state, action) => {
         return {
           ...arrayItem,
           distance: action.holeDistance,
-          locationAccuracy: action.locationAccuracy
+          locationAccuracy: action.locationAccuracy,
+          isFetchingLocation: false
+        };
+      })
+    }
+  };
+};
+
+const startLocationFetching = (state, action) => {
+  return {
+    ...state,
+    currentScorecard: {
+      ...state.currentScorecard,
+      holesArray: state.currentScorecard.holesArray.map((arrayItem, index) => {
+        if (index + 1 !== action.holeNumber) {
+          return arrayItem;
+        }
+
+        return {
+          ...arrayItem,
+          isFetchingLocation: true
         };
       })
     }
@@ -516,9 +555,9 @@ const reducer = (state = initialState, action) => {
         currentScorecard: {
           ...state.currentScorecard,
           holesArray: emptyHolesArray.map(emptyHole => ({ ...emptyHole })),
-          total1: "",
-          total2: "",
-          total: "",
+          total1: '',
+          total2: '',
+          total: '',
           isComplete: false
         },
         loading: false
@@ -547,6 +586,9 @@ const reducer = (state = initialState, action) => {
 
     case actionTypes.UPDATE_DISTANCE:
       return updateDistance(state, action);
+
+    case actionTypes.START_LOCATION_FETCHING:
+      return startLocationFetching(state, action);
 
     default:
       return state;

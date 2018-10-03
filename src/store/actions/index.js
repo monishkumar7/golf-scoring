@@ -1,4 +1,4 @@
-export { checkAuthState } from "./auth";
+export { checkAuthState } from './auth';
 
 export {
   createScorecard,
@@ -10,5 +10,6 @@ export {
   updateScore,
   resetScorecard,
   submitScorecard,
-  updateDistance
-} from "./scores";
+  updateDistance,
+  startLocationFetching
+} from './scores';
