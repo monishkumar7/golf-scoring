@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Grid, Typography, Card } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -26,91 +26,83 @@ const styles = theme => ({
     backgroundColor: theme.palette.secondary.main,
     color: 'white'
   },
-  cardHeader: {
-    margin: '-.7rem -.7rem 1rem',
-    backgroundColor: theme.palette.primary.light,
-    padding: '.5rem',
-    color: 'white',
+  holeNumber: {
+    fontWeight: 'bold',
+    fontSize: '25px',
+    textTransform: 'uppercase'
+  },
+  holeDetails: {
+    color: '#bbb'
+  },
+  cardLine: {
+    border: '.7px solid #eee'
+  },
+  scoringButtons: {
+    margin: '2rem 0 1rem'
+  },
+  distanceButton: {
+    padding: '1rem 0'
+  },
+  distanceInfo: {
     textAlign: 'center'
   },
-  cardContent: {
-    display: 'inline-flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%'
-  },
-  cardLeftPane: {
-    display: 'flex',
-    flex: '0 1 50%',
-    justifyContent: 'center',
-    alignContent: 'center',
-    flexFlow: 'column'
-  },
-  cardRightPane: {
-    display: 'flex',
-    flex: '0 1 50%',
-    justifyContent: 'center',
-    alignContent: 'center'
-  },
-  leftPaneText: {
-    textAlign: 'right'
+  distanceInfoHR: {
+    border: '.9px solid #eee',
+    width: '30%'
   }
 });
 
 const HoleScore = props => {
+  const { classes } = props;
   let holeScore = '-';
   if (props.touched) {
     holeScore = props.score;
   }
 
   return (
-    <Grid item xs={12} sm={6} lg={4} className={props.classes.holeScore}>
-      <Card className={props.classes.card}>
-        <Typography variant="subheading" className={props.classes.cardHeader}>
-          Hole {props.number}
-        </Typography>
-        <div className={props.classes.cardContent}>
-          <div className={props.classes.cardLeftPane}>
-            <Grid container justify="center">
-              <Grid item xs={6}>
-                <Typography
-                  variant="body1"
-                  className={props.classes.leftPaneText}
-                >
-                  Par - &nbsp;
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body1">{props.par}</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography
-                  variant="body1"
-                  className={props.classes.leftPaneText}
-                >
-                  Difficulty - &nbsp;
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body1">{props.difficulty}</Typography>
-              </Grid>
-              {/* <Grid item xs={6}>
-                <Typography
-                  variant="body1"
-                  className={props.classes.leftPaneText}
-                >
-                  Yards - &nbsp;
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body1">{props.yards}</Typography>
-              </Grid> */}
-            </Grid>
-          </div>
-          <div className={props.classes.cardRightPane}>
-            <Button disabled={!props.touched} clicked={props.decrement}>
+    <Grid item xs={12} sm={6} lg={4} className={classes.holeScore}>
+      <Card className={classes.card}>
+        <Grid container justify="space-between" alignItems="center">
+          <Grid item>
+            <Typography variant="subheading" className={classes.holeNumber}>
+              Hole {props.number}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant="body1" className={classes.holeDetails}>
+              Par - {props.par}
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container justify="space-between" alignItems="center">
+          <Grid item>
+            <Typography variant="body1" className={classes.holeDetails}>
+              Length - {props.yards} yards
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant="body1" className={classes.holeDetails}>
+              Difficulty - {props.difficulty}
+            </Typography>
+          </Grid>
+        </Grid>
+        <hr className={classes.cardLine} />
+        <Grid
+          container
+          justify="center"
+          alignItems="center"
+          className={classes.scoringButtons}
+        >
+          <Grid item>
+            <Button
+              type="scoreButton"
+              disabled={!props.touched}
+              clicked={props.decrement}
+            >
               -
             </Button>
+          </Grid>
+          <Grid item>
             <Typography
               onClick={props.scoreClicked}
               variant="title"
@@ -118,25 +110,37 @@ const HoleScore = props => {
             >
               {holeScore}
             </Typography>
-            <Button clicked={props.increment}>+</Button>
-          </div>
-        </div>
-        <Grid container justify="center" className={props.classes.cardHeader}>
-          {props.locationFetching ? (
-            <p>Fetching Location...</p>
-          ) : props.distance ? (
-            <Grid item xs={6}>
-              <Typography variant="body2">
-                Distance to Hole {props.number} - {props.distance} yards
-              </Typography>
-              <Typography variant="caption">
-                Accurate to {props.accuracy} yards
-              </Typography>
-            </Grid>
-          ) : null}
-          <Grid item xs={6}>
-            <Button clicked={props.getDistance}>Get Distance</Button>
           </Grid>
+          <Grid item>
+            <Button type="scoreButton" clicked={props.increment}>
+              +
+            </Button>
+          </Grid>
+        </Grid>
+        <Grid container justify="center">
+          <Grid item className={classes.distanceInfo}>
+            {props.locationFetching ? (
+              <p>Fetching Location...</p>
+            ) : props.distance ? (
+              <Fragment>
+                <Typography variant="body1">
+                  Distance to Hole {props.number}
+                </Typography>
+                <hr className={classes.distanceInfoHR} />
+                <Typography variant="headline">
+                  {props.distance} yards
+                </Typography>
+                <Typography variant="caption">
+                  (Accurate to {props.accuracy} yards)
+                </Typography>
+              </Fragment>
+            ) : null}
+          </Grid>
+        </Grid>
+        <Grid container justify="center" className={classes.distanceButton}>
+          <Button type="distanceButton" clicked={props.getDistance}>
+            Get Distance to Hole
+          </Button>
         </Grid>
       </Card>
     </Grid>

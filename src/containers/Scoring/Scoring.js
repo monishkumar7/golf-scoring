@@ -104,6 +104,7 @@ class Scoring extends Component {
           distance={hole.distance}
           accuracy={hole.locationAccuracy}
           locationFetching={hole.isFetchingLocation}
+          yards={hole.yards}
           scoreClicked={() => {
             this.props.onTouchUpdateScore(
               this.props.scorecardId,
