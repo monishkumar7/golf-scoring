@@ -1,15 +1,16 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Grid, Typography, Card } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 import Button from '../UI/Button/Button';
+import LoadingSpinner from '../UI/LoadingSpinner/LoadingSpinner';
 
 const styles = theme => ({
   holeScore: {
     padding: '0.4rem 0.9rem'
   },
   card: {
-    padding: '10px 10px 20px',
+    padding: '1rem',
     borderRadius: '0'
   },
   score: {
@@ -34,14 +35,10 @@ const styles = theme => ({
   holeDetails: {
     color: '#bbb'
   },
-  cardLine: {
-    border: '.7px solid #eee'
-  },
   scoringButtons: {
-    margin: '2rem 0 1rem'
-  },
-  distanceButton: {
-    padding: '1rem 0'
+    margin: '1rem 0',
+    padding: '2rem 0',
+    backgroundColor: '#fafafa'
   },
   distanceInfo: {
     textAlign: 'center'
@@ -86,58 +83,76 @@ const HoleScore = props => {
             </Typography>
           </Grid>
         </Grid>
-        <hr className={classes.cardLine} />
         <Grid
           container
-          justify="center"
+          justify="space-around"
           alignItems="center"
           className={classes.scoringButtons}
         >
           <Grid item>
-            <Button
-              type="scoreButton"
-              disabled={!props.touched}
-              clicked={props.decrement}
-            >
-              -
-            </Button>
+            <Typography variant="subheading">Your Score</Typography>
           </Grid>
           <Grid item>
-            <Typography
-              onClick={props.scoreClicked}
-              variant="title"
-              className={props.classes.score}
-            >
-              {holeScore}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Button type="scoreButton" clicked={props.increment}>
-              +
-            </Button>
+            <Grid container justify="space-between" alignItems="center">
+              <Grid item>
+                <Button
+                  type="scoreButton"
+                  disabled={!props.touched}
+                  clicked={props.decrement}
+                >
+                  -
+                </Button>
+              </Grid>
+              <Grid item>
+                <Typography
+                  onClick={props.scoreClicked}
+                  variant="title"
+                  className={props.classes.score}
+                >
+                  {holeScore}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Button type="scoreButton" clicked={props.increment}>
+                  +
+                </Button>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
+        {props.locationFetching ? (
+          <Grid
+            container
+            justify="center"
+            alignItems="center"
+            style={{ marginBottom: '1rem', height: '100px' }}
+          >
+            <Grid item className={classes.distanceInfo}>
+              <LoadingSpinner type="small" />
+              Fetching Location
+            </Grid>
+          </Grid>
+        ) : props.distance ? (
+          <Grid
+            container
+            justify="center"
+            alignItems="center"
+            style={{ marginBottom: '1rem', height: '100px' }}
+          >
+            <Grid item className={classes.distanceInfo}>
+              <Typography variant="body1">
+                Distance to Hole {props.number}
+              </Typography>
+              <hr className={classes.distanceInfoHR} />
+              <Typography variant="headline">{props.distance} yards</Typography>
+              <Typography variant="caption">
+                (Accurate to {props.accuracy} yards)
+              </Typography>
+            </Grid>
+          </Grid>
+        ) : null}
+
         <Grid container justify="center">
-          <Grid item className={classes.distanceInfo}>
-            {props.locationFetching ? (
-              <p>Fetching Location...</p>
-            ) : props.distance ? (
-              <Fragment>
-                <Typography variant="body1">
-                  Distance to Hole {props.number}
-                </Typography>
-                <hr className={classes.distanceInfoHR} />
-                <Typography variant="headline">
-                  {props.distance} yards
-                </Typography>
-                <Typography variant="caption">
-                  (Accurate to {props.accuracy} yards)
-                </Typography>
-              </Fragment>
-            ) : null}
-          </Grid>
-        </Grid>
-        <Grid container justify="center" className={classes.distanceButton}>
           <Button type="distanceButton" clicked={props.getDistance}>
             Get Distance to Hole
           </Button>

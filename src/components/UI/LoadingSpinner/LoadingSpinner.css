@@ -1,3 +1,8 @@
+.small {
+  font-size: 10px !important;
+  margin: 30px auto !important;
+}
+
 .loader {
   margin: 100px auto;
   font-size: 25px;
