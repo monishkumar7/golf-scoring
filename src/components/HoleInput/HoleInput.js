@@ -46,6 +46,15 @@ const styles = theme => ({
   distanceInfoHR: {
     border: '.9px solid #eee',
     width: '30%'
+  },
+  greenText: {
+    color: 'green'
+  },
+  orangeText: {
+    color: 'orange'
+  },
+  redText: {
+    color: 'red'
   }
 });
 
@@ -56,6 +65,25 @@ const HoleScore = props => {
     holeScore = props.score;
   }
 
+  let accuracy = '';
+  if (props.accuracy <= 10)
+    accuracy = (
+      <Typography variant="caption" className={classes.greenText}>
+        Very Accurate
+      </Typography>
+    );
+  else if (props.accuracy > 10 && props.accuracy <= 25)
+    accuracy = (
+      <Typography variant="caption" className={classes.orangeText}>
+        Accurate
+      </Typography>
+    );
+  else
+    accuracy = (
+      <Typography variant="caption" className={classes.redText}>
+        Not Very Accurate
+      </Typography>
+    );
   return (
     <Grid item xs={12} sm={6} lg={4} className={classes.holeScore}>
       <Card className={classes.card}>
@@ -145,9 +173,7 @@ const HoleScore = props => {
               </Typography>
               <hr className={classes.distanceInfoHR} />
               <Typography variant="headline">{props.distance} yards</Typography>
-              <Typography variant="caption">
-                (Accurate to {props.accuracy} yards)
-              </Typography>
+              {accuracy}
             </Grid>
           </Grid>
         ) : null}
