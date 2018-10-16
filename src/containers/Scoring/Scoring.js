@@ -67,27 +67,33 @@ class Scoring extends Component {
 
   getDistance = holeNumber => {
     this.props.OnStartLocationFetching(holeNumber);
-    navigator.geolocation.getCurrentPosition(data => {
-      let locationAccuracy = (data.coords.accuracy * 1.09361).toFixed(2);
-      let holeDistance = this.distanceBetween(
-        data.coords.latitude,
-        data.coords.longitude,
-        this.props.holesArray.find(hole => {
-          return hole.number === holeNumber;
-        }).latitude,
-        this.props.holesArray.find(hole => {
-          return hole.number === holeNumber;
-        }).longitude,
-        'Y'
-      ).toFixed(2);
-      console.log(holeDistance);
-      console.log('Accurate to', locationAccuracy, 'yards');
-      this.props.OnUpdateHoleDistance(
-        holeNumber,
-        holeDistance,
-        locationAccuracy
-      );
-    });
+    navigator.geolocation.getCurrentPosition(
+      data => {
+        let locationAccuracy = (data.coords.accuracy * 1.09361).toFixed(2);
+        let holeDistance = this.distanceBetween(
+          data.coords.latitude,
+          data.coords.longitude,
+          this.props.holesArray.find(hole => {
+            return hole.number === holeNumber;
+          }).latitude,
+          this.props.holesArray.find(hole => {
+            return hole.number === holeNumber;
+          }).longitude,
+          'Y'
+        ).toFixed(2);
+        console.log(holeDistance);
+        console.log('Accurate to', locationAccuracy, 'yards');
+        this.props.OnUpdateHoleDistance(
+          holeNumber,
+          holeDistance,
+          locationAccuracy
+        );
+      },
+      () => {
+        console.log('Error');
+      },
+      { enableHighAccuracy: true }
+    );
   };
 
   render() {

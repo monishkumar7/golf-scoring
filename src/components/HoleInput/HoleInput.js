@@ -69,19 +69,19 @@ const HoleScore = props => {
   if (props.accuracy <= 10)
     accuracy = (
       <Typography variant="caption" className={classes.greenText}>
-        Very Accurate
+        Very Accurate ({props.accuracy} yards)
       </Typography>
     );
-  else if (props.accuracy > 10 && props.accuracy <= 25)
+  else if (props.accuracy > 10 && props.accuracy <= 40)
     accuracy = (
       <Typography variant="caption" className={classes.orangeText}>
-        Accurate
+        Accurate ({props.accuracy} yards)
       </Typography>
     );
   else
     accuracy = (
       <Typography variant="caption" className={classes.redText}>
-        Not Very Accurate
+        Not Very Accurate ({props.accuracy} yards)
       </Typography>
     );
   return (
