@@ -119,42 +119,42 @@ export const fetchCurrentScorecardFail = () => {
   };
 };
 
-export const fetchPreviousScorecardsStart = () => {
+export const fetchPreviousScorecardStart = scorecardId => {
   return {
-    type: actionTypes.FETCH_PREVIOUS_SCORECARDS_START
+    type: actionTypes.FETCH_PREVIOUS_SCORECARD_START,
+    scorecardId: scorecardId
   };
 };
 
-export const fetchPreviousScorecards = scorecards => {
+export const fetchPreviousScorecard = scorecardId => {
   return dispatch => {
-    for (let scorecard of scorecards) {
-      dispatch(fetchPreviousScorecardsStart());
-      axios
-        .get('/scoreCard/' + scorecard.scorecardId + '/score', {
-          headers: {
-            'login-token': loginToken
-          }
-        })
-        .then(response => {
-          dispatch(fetchPreviousScorecardsSuccess(response.data.data));
-        })
-        .catch(error => {
-          dispatch(fetchPreviousScorecardsFail());
-        });
-    }
+    dispatch(fetchPreviousScorecardStart(scorecardId));
+    axios
+      .get('/scoreCard/' + scorecardId + '/score', {
+        headers: {
+          'login-token': loginToken
+        }
+      })
+      .then(response => {
+        dispatch(fetchPreviousScorecardSuccess(response.data.data));
+      })
+      .catch(error => {
+        dispatch(fetchPreviousScorecardFail(scorecardId));
+      });
   };
 };
 
-export const fetchPreviousScorecardsSuccess = holeScores => {
+export const fetchPreviousScorecardSuccess = holeScores => {
   return {
-    type: actionTypes.FETCH_PREVIOUS_SCORECARDS_SUCCESS,
+    type: actionTypes.FETCH_PREVIOUS_SCORECARD_SUCCESS,
     holeScores: holeScores
   };
 };
 
-export const fetchPreviousScorecardsFail = () => {
+export const fetchPreviousScorecardFail = scorecardId => {
   return {
-    type: actionTypes.FETCH_PREVIOUS_SCORECARDS_FAIL
+    type: actionTypes.FETCH_PREVIOUS_SCORECARD_FAIL,
+    scorecardId: scorecardId
   };
 };
 

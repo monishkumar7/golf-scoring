@@ -4,7 +4,7 @@ export {
   createScorecard,
   fetchAllScorecards,
   fetchCurrentScorecard,
-  fetchPreviousScorecards,
+  fetchPreviousScorecard,
   incrementScore,
   decrementScore,
   updateScore,

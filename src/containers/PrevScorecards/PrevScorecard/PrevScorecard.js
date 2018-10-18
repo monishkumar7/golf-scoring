@@ -1,54 +1,62 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Grid,
   Typography,
   Card,
   IconButton,
   Collapse
-} from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+} from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import Scorecard from "../../../components/Scorecard/Scorecard";
+import Scorecard from '../../../components/Scorecard/Scorecard';
+import * as actionCreators from '../../../store/actions';
+import LoadingSpinner from '../../../components/UI/LoadingSpinner/LoadingSpinner';
 
 const styles = theme => ({
   scorecard: {
-    margin: ".4rem .5rem"
+    margin: '.4rem .5rem'
   },
   expand: {
-    transform: "rotate(0deg)",
-    transition: theme.transitions.create("transform", {
+    transform: 'rotate(0deg)',
+    transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest
     }),
-    marginLeft: "auto",
-    [theme.breakpoints.up("sm")]: {
+    marginLeft: 'auto',
+    [theme.breakpoints.up('sm')]: {
       marginRight: -8
     }
   },
   expandOpen: {
-    transform: "rotate(180deg)"
+    transform: 'rotate(180deg)'
   },
   cardDate: {
-    textAlign: "center"
+    textAlign: 'center'
   },
   cardIcon: {
-    textAlign: "right"
+    textAlign: 'right'
   },
   collapse: {
-    padding: "0"
+    padding: '0'
   },
   cardHeader: {
-    padding: "1rem"
+    padding: '1rem'
   }
 });
 
 class PrevScorecard extends Component {
   state = {
-    expanded: false
+    expanded: false,
+    fetched: false
   };
 
-  handleExpandClick = () => {
-    this.setState({ expanded: !this.state.expanded });
+  handleExpandClick = scorecardId => {
+    this.setState(prevState => ({ expanded: !prevState.expanded }));
+    if (!this.state.fetched) {
+      this.props.onFetchPreviousScorecard(scorecardId);
+      this.setState(prevState => ({ fetched: true }));
+    }
   };
 
   render() {
@@ -84,23 +92,39 @@ class PrevScorecard extends Component {
               className={[
                 classes.expand,
                 this.state.expanded ? [classes.expandOpen] : null
-              ].join(" ")}
-              onClick={this.handleExpandClick}
+              ].join(' ')}
+              onClick={() => {
+                this.handleExpandClick(this.props.id);
+              }}
             >
               <ExpandMoreIcon />
             </IconButton>
           </Grid>
         </Grid>
-        <Collapse
-          in={this.state.expanded}
-          timeout="auto"
-          className={classes.collapse}
-        >
-          {scorecard}
-        </Collapse>
+        {this.props.loading ? (
+          <LoadingSpinner />
+        ) : (
+          <Collapse
+            in={this.state.expanded}
+            timeout="auto"
+            className={classes.collapse}
+          >
+            {scorecard}
+          </Collapse>
+        )}
       </Card>
     );
   }
 }
 
-export default withStyles(styles)(PrevScorecard);
+const mapDispatchWithProps = dispatch => {
+  return {
+    onFetchPreviousScorecard: scorecardId =>
+      dispatch(actionCreators.fetchPreviousScorecard(scorecardId))
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchWithProps
+)(withStyles(styles)(PrevScorecard));

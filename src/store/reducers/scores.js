@@ -12,7 +12,8 @@ const emptyHolesArray = [
     longitude: -83.423522,
     distance: '',
     locationAccuracy: '',
-    isFetchingLocation: false
+    isFetchingLocation: false,
+    isLoading: false
   },
   {
     number: 2,
@@ -25,7 +26,8 @@ const emptyHolesArray = [
     longitude: -83.523522,
     distance: '',
     locationAccuracy: '',
-    isFetchingLocation: false
+    isFetchingLocation: false,
+    isLoading: false
   },
   {
     number: 3,
@@ -38,7 +40,8 @@ const emptyHolesArray = [
     longitude: -83.323522,
     distance: '',
     locationAccuracy: '',
-    isFetchingLocation: false
+    isFetchingLocation: false,
+    isLoading: false
   },
   {
     number: 4,
@@ -51,7 +54,8 @@ const emptyHolesArray = [
     longitude: -83.123522,
     distance: '',
     locationAccuracy: '',
-    isFetchingLocation: false
+    isFetchingLocation: false,
+    isLoading: false
   },
   {
     number: 5,
@@ -64,7 +68,8 @@ const emptyHolesArray = [
     longitude: -83.223522,
     distance: '',
     locationAccuracy: '',
-    isFetchingLocation: false
+    isFetchingLocation: false,
+    isLoading: false
   },
   {
     number: 6,
@@ -77,7 +82,8 @@ const emptyHolesArray = [
     longitude: -83.323522,
     distance: '',
     locationAccuracy: '',
-    isFetchingLocation: false
+    isFetchingLocation: false,
+    isLoading: false
   },
   {
     number: 7,
@@ -90,7 +96,8 @@ const emptyHolesArray = [
     longitude: -83.423522,
     distance: '',
     locationAccuracy: '',
-    isFetchingLocation: false
+    isFetchingLocation: false,
+    isLoading: false
   },
   {
     number: 8,
@@ -103,7 +110,8 @@ const emptyHolesArray = [
     longitude: -83.623522,
     distance: '',
     locationAccuracy: '',
-    isFetchingLocation: false
+    isFetchingLocation: false,
+    isLoading: false
   },
   {
     number: 9,
@@ -116,7 +124,8 @@ const emptyHolesArray = [
     longitude: -83.723522,
     distance: '',
     locationAccuracy: '',
-    isFetchingLocation: false
+    isFetchingLocation: false,
+    isLoading: false
   },
   {
     number: 10,
@@ -129,7 +138,8 @@ const emptyHolesArray = [
     longitude: -83.823522,
     distance: '',
     locationAccuracy: '',
-    isFetchingLocation: false
+    isFetchingLocation: false,
+    isLoading: false
   },
   {
     number: 11,
@@ -142,7 +152,8 @@ const emptyHolesArray = [
     longitude: -83.923522,
     distance: '',
     locationAccuracy: '',
-    isFetchingLocation: false
+    isFetchingLocation: false,
+    isLoading: false
   },
   {
     number: 12,
@@ -155,7 +166,8 @@ const emptyHolesArray = [
     longitude: -83.123522,
     distance: '',
     locationAccuracy: '',
-    isFetchingLocation: false
+    isFetchingLocation: false,
+    isLoading: false
   },
   {
     number: 13,
@@ -168,7 +180,8 @@ const emptyHolesArray = [
     longitude: -83.223522,
     distance: '',
     locationAccuracy: '',
-    isFetchingLocation: false
+    isFetchingLocation: false,
+    isLoading: false
   },
   {
     number: 14,
@@ -181,7 +194,8 @@ const emptyHolesArray = [
     longitude: -83.323522,
     distance: '',
     locationAccuracy: '',
-    isFetchingLocation: false
+    isFetchingLocation: false,
+    isLoading: false
   },
   {
     number: 15,
@@ -194,7 +208,8 @@ const emptyHolesArray = [
     longitude: -83.423522,
     distance: '',
     locationAccuracy: '',
-    isFetchingLocation: false
+    isFetchingLocation: false,
+    isLoading: false
   },
   {
     number: 16,
@@ -207,7 +222,8 @@ const emptyHolesArray = [
     longitude: -83.623522,
     distance: '',
     locationAccuracy: '',
-    isFetchingLocation: false
+    isFetchingLocation: false,
+    isLoading: false
   },
   {
     number: 17,
@@ -220,7 +236,8 @@ const emptyHolesArray = [
     longitude: -83.823522,
     distance: '',
     locationAccuracy: '',
-    isFetchingLocation: false
+    isFetchingLocation: false,
+    isLoading: false
   },
   {
     number: 18,
@@ -233,7 +250,8 @@ const emptyHolesArray = [
     longitude: -83.723522,
     distance: '',
     locationAccuracy: '',
-    isFetchingLocation: false
+    isFetchingLocation: false,
+    isLoading: false
   }
 ];
 
@@ -257,7 +275,7 @@ const fetchAllScorecards = (state, action) => {
   let currentScorecardId = null;
   scoreCards.forEach(scorecard => {
     if (scorecard.isComplete)
-      scorecardsArray.push({
+      scorecardsArray.unshift({
         scorecardId: scorecard._id,
         lastUpdatedTime: Date.parse(scorecard.lastUpdatedTime)
       });
@@ -314,7 +332,20 @@ const fetchCurrentScorecard = (state, action) => {
   };
 };
 
-const fetchPreviousScorecards = (state, action) => {
+const fetchPreviousScorecardStart = (state, action) => {
+  let updatedPrevScorecards = state.previousScorecards.slice();
+  updatedPrevScorecards.forEach(prevScorecard => {
+    if (prevScorecard.scorecardId === action.scorecardId) {
+      prevScorecard.isLoading = true;
+    }
+  });
+  return {
+    ...state,
+    previousScorecards: updatedPrevScorecards
+  };
+};
+
+const fetchPreviousScorecard = (state, action) => {
   const holeScores = action.holeScores;
   const fetchedScorecardId = action.holeScores[0].linkedScoreCardId;
   let updatedHolesArray = emptyHolesArray.map(emptyHole => ({ ...emptyHole }));
@@ -322,6 +353,7 @@ const fetchPreviousScorecards = (state, action) => {
   let updatedTotal21 = 0;
   let updatedTotal22 = 0;
   let updatedLastUpdatedTime = new Date('January 1 2018');
+  let updatedPrevScorecards = state.previousScorecards.slice();
   for (let holeScore of holeScores) {
     if (holeScore.score) {
       updatedHolesArray[holeScore.holeNumber - 1].score = holeScore.score;
@@ -338,30 +370,33 @@ const fetchPreviousScorecards = (state, action) => {
           : holeScore.lastUpdatedTime;
     }
   }
-  const fetchedScorecard = {
-    scorecardId: fetchedScorecardId,
-    holesArray: updatedHolesArray,
-    total1: updatedTotal11,
-    total2: updatedTotal21,
-    total: updatedTotal22,
-    isComplete: action.isComplete,
-    lastUpdatedTime: updatedLastUpdatedTime
-  };
-  let updatedPrevScorecards = state.previousScorecards.filter(
-    prev => prev.scorecardId !== fetchedScorecardId
-  );
-  updatedPrevScorecards = updatedPrevScorecards.concat(fetchedScorecard);
-  updatedPrevScorecards.sort(function(a, b) {
-    return a.lastUpdatedTime < b.lastUpdatedTime
-      ? 1
-      : b.lastUpdatedTime < a.lastUpdatedTime
-        ? -1
-        : 0;
+  updatedPrevScorecards.forEach(prevScorecard => {
+    if (prevScorecard.scorecardId === fetchedScorecardId) {
+      prevScorecard.holesArray = updatedHolesArray;
+      prevScorecard.total1 = updatedTotal11;
+      prevScorecard.total2 = updatedTotal21;
+      prevScorecard.total = updatedTotal22;
+      prevScorecard.isComplete = true;
+      prevScorecard.lastUpdatedTime = updatedLastUpdatedTime;
+      prevScorecard.isLoading = false;
+    }
   });
   return {
     ...state,
-    previousScorecards: updatedPrevScorecards,
-    loading: false
+    previousScorecards: updatedPrevScorecards
+  };
+};
+
+const fetchPreviousScorecardFail = (state, action) => {
+  let updatedPrevScorecards = state.previousScorecards.slice();
+  updatedPrevScorecards.forEach(prevScorecard => {
+    if (prevScorecard.scorecardId === action.scorecardId) {
+      prevScorecard.isLoading = true;
+    }
+  });
+  return {
+    ...state,
+    previousScorecards: updatedPrevScorecards
   };
 };
 
@@ -533,20 +568,14 @@ const reducer = (state = initialState, action) => {
         loading: false
       };
 
-    case actionTypes.FETCH_PREVIOUS_SCORECARDS_START:
-      return {
-        ...state,
-        loading: true
-      };
+    case actionTypes.FETCH_PREVIOUS_SCORECARD_START:
+      return fetchPreviousScorecardStart(state, action);
 
-    case actionTypes.FETCH_PREVIOUS_SCORECARDS_SUCCESS:
-      return fetchPreviousScorecards(state, action);
+    case actionTypes.FETCH_PREVIOUS_SCORECARD_SUCCESS:
+      return fetchPreviousScorecard(state, action);
 
-    case actionTypes.FETCH_PREVIOUS_SCORECARDS_FAIL:
-      return {
-        ...state,
-        loading: false
-      };
+    case actionTypes.FETCH_PREVIOUS_SCORECARD_FAIL:
+      return fetchPreviousScorecardFail(state, action);
 
     case actionTypes.UPDATE_SCORE_START:
       return {

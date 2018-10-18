@@ -1,16 +1,10 @@
-import React, { Component, Fragment } from "react";
-import { Grid } from "@material-ui/core";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { Grid } from '@material-ui/core';
+import { connect } from 'react-redux';
 
-import PrevScorecard from "./PrevScorecard/PrevScorecard";
-import * as actionCreators from "../../store/actions";
-import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
+import PrevScorecard from './PrevScorecard/PrevScorecard';
 
 class PrevScorecards extends Component {
-  componentDidMount = () => {
-    this.props.onFetchPreviousScorecards(this.props.prevScorecards);
-  };
-
   render() {
     const totalLength = this.props.prevScorecards.length;
     const scorecards = this.props.prevScorecards.map((scorecard, index) => (
@@ -22,21 +16,12 @@ class PrevScorecards extends Component {
           holesArray={scorecard.holesArray}
           id={scorecard.scorecardId}
           index={totalLength - index}
+          loading={scorecard.isLoading}
           lastUpdatedTime={scorecard.lastUpdatedTime}
         />
       </Grid>
     ));
-    return (
-      <Fragment>
-        {this.props.loading ? (
-          <Grid item xs={12}>
-            <LoadingSpinner />
-          </Grid>
-        ) : (
-          <Grid container>{scorecards}</Grid>
-        )}
-      </Fragment>
-    );
+    return <Grid container>{scorecards}</Grid>;
   }
 }
 
@@ -46,15 +31,4 @@ const mapStateToProps = state => {
     prevScorecards: state.scores.previousScorecards
   };
 };
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onFetchPreviousScorecards: scorecards =>
-      dispatch(actionCreators.fetchPreviousScorecards(scorecards))
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PrevScorecards);
+export default connect(mapStateToProps)(PrevScorecards);
