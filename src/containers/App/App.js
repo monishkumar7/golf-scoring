@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import { Route, Switch, withRouter } from "react-router-dom";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { Route, Switch, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import Scoring from "../Scoring/Scoring";
-import PrevScorecards from "../../containers/PrevScorecards/PrevScorecards";
-import Layout from "../../components/Layout/Layout";
-import Home from "../Home/Home";
-import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
-import * as actionCreators from "../../store/actions";
+import Scoring from '../Scoring/Scoring';
+import PrevScorecards from '../../containers/PrevScorecards/PrevScorecards';
+import Layout from '../../components/Layout/Layout';
+import Home from '../Home/Home';
+import LoadingSpinner from '../../components/UI/LoadingSpinner/LoadingSpinner';
+import * as actionCreators from '../../store/actions';
 
 class App extends Component {
   componentDidMount = () => {
     const params = new URLSearchParams(window.location.search);
-    this.props.onCheckAuthState(params.get("loginToken"));
+    this.props.onCheckAuthState(params.get('token'));
   };
 
   render() {
