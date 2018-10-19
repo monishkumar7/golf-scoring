@@ -16,7 +16,7 @@ import LoadingSpinner from '../../../components/UI/LoadingSpinner/LoadingSpinner
 
 const styles = theme => ({
   scorecard: {
-    margin: '.4rem .5rem'
+    margin: '.4rem 1rem'
   },
   expand: {
     transform: 'rotate(0deg)',
