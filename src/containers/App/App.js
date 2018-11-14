@@ -6,6 +6,7 @@ import Scoring from '../Scoring/Scoring';
 import PrevScorecards from '../../containers/PrevScorecards/PrevScorecards';
 import Layout from '../../components/Layout/Layout';
 import Home from '../Home/Home';
+import LocationAdmin from '../Admin/LocationAdmin';
 import LoadingSpinner from '../../components/UI/LoadingSpinner/LoadingSpinner';
 import * as actionCreators from '../../store/actions';
 
@@ -24,6 +25,7 @@ class App extends Component {
           <Switch>
             <Route path="/prev" component={PrevScorecards} />
             <Route path="/scoring" component={Scoring} />
+            <Route path="/admin" component={LocationAdmin} />
             <Route path="/" component={Home} />
           </Switch>
         </Layout>
