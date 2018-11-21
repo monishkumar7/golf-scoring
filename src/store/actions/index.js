@@ -11,5 +11,6 @@ export {
   resetScorecard,
   submitScorecard,
   updateDistance,
-  startLocationFetching
+  startLocationFetching,
+  fetchHoleDetails
 } from './scores';

@@ -5,7 +5,7 @@ import Divider from '../UI/Divider/Divider';
 
 const ValueLine = props => {
   return (
-    <Grid container justify="space-between" alignItems="space-between">
+    <Grid container justify="space-between">
       <Grid item>
         <Typography>{props.title}</Typography>
       </Grid>

@@ -309,3 +309,43 @@ export const startLocationFetching = holeNumber => {
     holeNumber: holeNumber
   };
 };
+
+export const fetchHoleDetailsStart = () => {
+  return {
+    type: actionTypes.FETCH_HOLE_DETAILS_START
+  };
+};
+
+export const fetchHoleDetails = () => {
+  return dispatch => {
+    dispatch(fetchHoleDetailsStart());
+    axios
+      .get('organization/1234/golfMeta', {
+        headers: {
+          'login-token': loginToken
+        }
+      })
+      .then(response => {
+        // console.log(response.data.data);
+        dispatch(fetchHoleDetailsSuccess(response.data.data));
+      })
+      .catch(error => {
+        // console.log(error);
+        dispatch(fetchHoleDetailsFail(error));
+      });
+  };
+};
+
+export const fetchHoleDetailsSuccess = data => {
+  return {
+    type: actionTypes.FETCH_HOLE_DETAILS_SUCCESS,
+    holeDetails: data
+  };
+};
+
+export const fetchHoleDetailsFail = error => {
+  return {
+    type: actionTypes.FETCH_HOLE_DETAILS_FAIL,
+    error: error
+  };
+};

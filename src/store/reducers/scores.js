@@ -1,259 +1,6 @@
 import * as actionTypes from '../actions/actionTypes';
 
-const emptyHolesArray = [
-  {
-    number: 1,
-    score: '',
-    par: 4,
-    difficulty: 17,
-    touched: false,
-    yards: 250,
-    latitude: 43.562423,
-    longitude: -83.423522,
-    distance: '',
-    locationAccuracy: '',
-    isFetchingLocation: false,
-    isLoading: false
-  },
-  {
-    number: 2,
-    score: '',
-    par: 4,
-    difficulty: 13,
-    touched: false,
-    yards: 390,
-    latitude: 42.562423,
-    longitude: -83.523522,
-    distance: '',
-    locationAccuracy: '',
-    isFetchingLocation: false,
-    isLoading: false
-  },
-  {
-    number: 3,
-    score: '',
-    par: 3,
-    difficulty: 15,
-    touched: false,
-    yards: 220,
-    latitude: 44.562423,
-    longitude: -83.323522,
-    distance: '',
-    locationAccuracy: '',
-    isFetchingLocation: false,
-    isLoading: false
-  },
-  {
-    number: 4,
-    score: '',
-    par: 4,
-    difficulty: 5,
-    touched: false,
-    yards: 250,
-    latitude: 42.162423,
-    longitude: -83.123522,
-    distance: '',
-    locationAccuracy: '',
-    isFetchingLocation: false,
-    isLoading: false
-  },
-  {
-    number: 5,
-    score: '',
-    par: 4,
-    difficulty: 3,
-    touched: false,
-    yards: 360,
-    latitude: 42.262423,
-    longitude: -83.223522,
-    distance: '',
-    locationAccuracy: '',
-    isFetchingLocation: false,
-    isLoading: false
-  },
-  {
-    number: 6,
-    score: '',
-    par: 4,
-    difficulty: 1,
-    touched: false,
-    yards: 340,
-    latitude: 42.362423,
-    longitude: -83.323522,
-    distance: '',
-    locationAccuracy: '',
-    isFetchingLocation: false,
-    isLoading: false
-  },
-  {
-    number: 7,
-    score: '',
-    par: 3,
-    difficulty: 11,
-    touched: false,
-    yards: 280,
-    latitude: 42.462423,
-    longitude: -83.423522,
-    distance: '',
-    locationAccuracy: '',
-    isFetchingLocation: false,
-    isLoading: false
-  },
-  {
-    number: 8,
-    score: '',
-    par: 5,
-    difficulty: 7,
-    touched: false,
-    yards: 291,
-    latitude: 42.662423,
-    longitude: -83.623522,
-    distance: '',
-    locationAccuracy: '',
-    isFetchingLocation: false,
-    isLoading: false
-  },
-  {
-    number: 9,
-    score: '',
-    par: 4,
-    difficulty: 9,
-    touched: false,
-    yards: 311,
-    latitude: 42.762423,
-    longitude: -83.723522,
-    distance: '',
-    locationAccuracy: '',
-    isFetchingLocation: false,
-    isLoading: false
-  },
-  {
-    number: 10,
-    score: '',
-    par: 4,
-    difficulty: 14,
-    touched: false,
-    yards: 402,
-    latitude: 42.862423,
-    longitude: -83.823522,
-    distance: '',
-    locationAccuracy: '',
-    isFetchingLocation: false,
-    isLoading: false
-  },
-  {
-    number: 11,
-    score: '',
-    par: 5,
-    difficulty: 6,
-    touched: false,
-    yards: 210,
-    latitude: 42.962423,
-    longitude: -83.923522,
-    distance: '',
-    locationAccuracy: '',
-    isFetchingLocation: false,
-    isLoading: false
-  },
-  {
-    number: 12,
-    score: '',
-    par: 4,
-    difficulty: 8,
-    touched: false,
-    yards: 387,
-    latitude: 42.962423,
-    longitude: -83.123522,
-    distance: '',
-    locationAccuracy: '',
-    isFetchingLocation: false,
-    isLoading: false
-  },
-  {
-    number: 13,
-    score: '',
-    par: 3,
-    difficulty: 18,
-    touched: false,
-    yards: 270,
-    latitude: 42.862423,
-    longitude: -83.223522,
-    distance: '',
-    locationAccuracy: '',
-    isFetchingLocation: false,
-    isLoading: false
-  },
-  {
-    number: 14,
-    score: '',
-    par: 4,
-    difficulty: 10,
-    touched: false,
-    yards: 422,
-    latitude: 42.762423,
-    longitude: -83.323522,
-    distance: '',
-    locationAccuracy: '',
-    isFetchingLocation: false,
-    isLoading: false
-  },
-  {
-    number: 15,
-    score: '',
-    par: 4,
-    difficulty: 4,
-    touched: false,
-    yards: 380,
-    latitude: 42.662423,
-    longitude: -83.423522,
-    distance: '',
-    locationAccuracy: '',
-    isFetchingLocation: false,
-    isLoading: false
-  },
-  {
-    number: 16,
-    score: '',
-    par: 4,
-    difficulty: 2,
-    touched: false,
-    yards: 230,
-    latitude: 42.462423,
-    longitude: -83.623522,
-    distance: '',
-    locationAccuracy: '',
-    isFetchingLocation: false,
-    isLoading: false
-  },
-  {
-    number: 17,
-    score: '',
-    par: 5,
-    difficulty: 16,
-    touched: false,
-    yards: 280,
-    latitude: 42.262423,
-    longitude: -83.823522,
-    distance: '',
-    locationAccuracy: '',
-    isFetchingLocation: false,
-    isLoading: false
-  },
-  {
-    number: 18,
-    score: '',
-    par: 4,
-    difficulty: 12,
-    touched: false,
-    yards: 280,
-    latitude: 42.362423,
-    longitude: -83.723522,
-    distance: '',
-    locationAccuracy: '',
-    isFetchingLocation: false,
-    isLoading: false
-  }
-];
+const emptyHolesArray = [];
 
 const initialState = {
   previousScorecards: [],
@@ -521,6 +268,29 @@ const startLocationFetching = (state, action) => {
   };
 };
 
+const fetchHoleDetailsSuccess = (state, action) => {
+  action.holeDetails.map(holeDetail => {
+    emptyHolesArray.push({
+      number: holeDetail.holeNumber,
+      score: '',
+      par: holeDetail.par,
+      difficulty: holeDetail.difficulty,
+      touched: false,
+      yards: holeDetail.yards,
+      latitude: holeDetail.latitude,
+      longitude: holeDetail.longitude,
+      distance: '',
+      locationAccuracy: '',
+      isFetchingLocation: false,
+      isLoading: false
+    });
+  });
+  return {
+    ...state,
+    loading: false
+  };
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.CREATE_SCORECARD_START:
@@ -636,6 +406,21 @@ const reducer = (state = initialState, action) => {
 
     case actionTypes.START_LOCATION_FETCHING:
       return startLocationFetching(state, action);
+
+    case actionTypes.FETCH_HOLE_DETAILS_START:
+      return {
+        ...state,
+        loading: true
+      };
+
+    case actionTypes.FETCH_HOLE_DETAILS_SUCCESS:
+      return fetchHoleDetailsSuccess(state, action);
+
+    case actionTypes.FETCH_HOLE_DETAILS_FAIL:
+      return {
+        ...state,
+        loading: false
+      };
 
     default:
       return state;

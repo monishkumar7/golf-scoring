@@ -1,29 +1,31 @@
-import React, { Component, Fragment } from "react";
-import { Grid, Button, Typography, withStyles } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import React, { Component, Fragment } from 'react';
+import { Grid, Button, Typography, withStyles } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import LoadingSpinner from "../../components/UI/LoadingSpinner/LoadingSpinner";
-import * as actionCreators from "../../store/actions";
+import LoadingSpinner from '../../components/UI/LoadingSpinner/LoadingSpinner';
+import * as actionCreators from '../../store/actions';
 
 const styles = {
   buttonDiv: {
-    textAlign: "center",
-    margin: "0.5rem"
+    textAlign: 'center',
+    margin: '0.5rem'
   },
   button: {
-    width: "250px"
+    width: '250px'
   },
   linkText: {
-    textDecoration: "none"
+    textDecoration: 'none'
   },
   homeContainer: {
-    height: "50vh"
+    height: '50vh'
   }
 };
 
 class Home extends Component {
   componentDidMount = () => {
+    if (this.props.emptyHoleDetails.length === 0)
+      this.props.onFetchHoleDetails();
     this.props.onFetchScorecards(this.props.loginToken, false);
   };
 
@@ -84,6 +86,19 @@ class Home extends Component {
                 </Link>
               </Grid>
             )}
+            <Grid item xs={12} className={classes.buttonDiv}>
+              <Link to="/admin" className={classes.linkText}>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  className={classes.button}
+                >
+                  <Typography variant="button" color="inherit">
+                    Admin
+                  </Typography>
+                </Button>
+              </Link>
+            </Grid>
           </Fragment>
         )}
       </Grid>
@@ -100,7 +115,8 @@ const mapStateToProps = state => {
     loading: state.scores.loading,
     currentScorecardId: state.scores.currentScorecard.scorecardId,
     isAuth: state.auth.loginToken !== null,
-    loginToken: state.auth.loginToken
+    loginToken: state.auth.loginToken,
+    emptyHoleDetails: state.scores.currentScorecard.holesArray
   };
 };
 
@@ -109,7 +125,8 @@ const mapDispatchToProps = dispatch => {
     onCreateScorecard: loginToken =>
       dispatch(actionCreators.createScorecard(loginToken)),
     onFetchScorecards: (loginToken, withPrevious) =>
-      dispatch(actionCreators.fetchAllScorecards(loginToken, withPrevious))
+      dispatch(actionCreators.fetchAllScorecards(loginToken, withPrevious)),
+    onFetchHoleDetails: () => dispatch(actionCreators.fetchHoleDetails())
   };
 };
 
