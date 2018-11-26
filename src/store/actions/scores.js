@@ -326,11 +326,9 @@ export const fetchHoleDetails = () => {
         }
       })
       .then(response => {
-        // console.log(response.data.data);
         dispatch(fetchHoleDetailsSuccess(response.data.data));
       })
       .catch(error => {
-        // console.log(error);
         dispatch(fetchHoleDetailsFail(error));
       });
   };
@@ -346,6 +344,59 @@ export const fetchHoleDetailsSuccess = data => {
 export const fetchHoleDetailsFail = error => {
   return {
     type: actionTypes.FETCH_HOLE_DETAILS_FAIL,
+    error: error
+  };
+};
+
+export const updateHoleDetailLocal = holeDetails => {
+  return {
+    type: actionTypes.UPDATE_HOLE_DETAIL_LOCAL,
+    holeDetails: holeDetails
+  };
+};
+
+export const updateHoleDetailStart = () => {
+  return {
+    type: actionTypes.UPDATE_HOLE_DETAIL_START
+  };
+};
+
+export const updateHoleDetail = holeDetails => {
+  return dispatch => {
+    dispatch(updateHoleDetailStart());
+    const data = {
+      holeNumber: holeDetails.holeNumber,
+      latitude: holeDetails.latitude,
+      longitude: holeDetails.longitude,
+      par: holeDetails.par,
+      difficulty: holeDetails.difficulty,
+      yards: holeDetails.yards
+    };
+    axios
+      .put('organization/1234/golfMeta', data, {
+        headers: {
+          'login-token': loginToken
+        }
+      })
+      .then(response => {
+        dispatch(updateHoleDetailSuccess(response.data.data));
+      })
+      .catch(error => {
+        dispatch(updateHoleDetailFail(error));
+      });
+  };
+};
+
+export const updateHoleDetailSuccess = holeDetails => {
+  return {
+    type: actionTypes.UPDATE_HOLE_DETAIL_SUCCESS,
+    holeDetails: holeDetails
+  };
+};
+
+export const updateHoleDetailFail = error => {
+  return {
+    type: actionTypes.UPDATE_HOLE_DETAIL_FAIL,
     error: error
   };
 };

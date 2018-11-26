@@ -81,8 +81,6 @@ class Scoring extends Component {
           }).longitude,
           'Y'
         ).toFixed(2);
-        console.log(holeDistance);
-        console.log('Accurate to', locationAccuracy, 'yards');
         this.props.OnUpdateHoleDistance(
           holeNumber,
           holeDistance,

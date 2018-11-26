@@ -12,5 +12,7 @@ export {
   submitScorecard,
   updateDistance,
   startLocationFetching,
-  fetchHoleDetails
+  fetchHoleDetails,
+  updateHoleDetail,
+  updateHoleDetailLocal
 } from './scores';

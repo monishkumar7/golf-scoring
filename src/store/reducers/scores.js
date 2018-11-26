@@ -269,7 +269,7 @@ const startLocationFetching = (state, action) => {
 };
 
 const fetchHoleDetailsSuccess = (state, action) => {
-  action.holeDetails.map(holeDetail => {
+  action.holeDetails.forEach(holeDetail => {
     emptyHolesArray.push({
       number: holeDetail.holeNumber,
       score: '',
@@ -282,13 +282,80 @@ const fetchHoleDetailsSuccess = (state, action) => {
       distance: '',
       locationAccuracy: '',
       isFetchingLocation: false,
-      isLoading: false
+      isLoading: false,
+      newLat: '',
+      newLong: '',
+      newAccuracy: '',
+      isUpdating: false,
+      isUpdateLoading: false
     });
   });
   return {
     ...state,
     loading: false
   };
+};
+
+const updateHoleDetailLocal = (state, action) => {
+  const currentHolesArray = state.currentScorecard.holesArray;
+  const updatedHolesArray = [];
+  currentHolesArray.forEach(currentHole => {
+    if (currentHole.number !== action.holeDetails.holeNumber) {
+      updatedHolesArray.push(currentHole);
+    } else {
+      updatedHolesArray.push({
+        ...currentHole,
+        newLat: action.holeDetails.lat ? action.holeDetails.lat : '',
+        newLong: action.holeDetails.long ? action.holeDetails.long : '',
+        newAccuracy: action.holeDetails.accuracy,
+        isUpdateLoading: action.holeDetails.isUpdateLoading,
+        isUpdating: action.holeDetails.isUpdating
+      });
+    }
+  });
+  return {
+    ...state,
+    currentScorecard: {
+      ...state.currentScorecard,
+      holesArray: updatedHolesArray
+    }
+  };
+};
+
+const updateHoleDetailStart = (state, action) => {
+  return state;
+};
+
+const updateHoleDetailSuccess = (state, action) => {
+  const currentHolesArray = state.currentScorecard.holesArray;
+  const updatedHolesArray = [];
+  currentHolesArray.forEach(currentHole => {
+    if (currentHole.number !== action.holeDetails.holeNumber) {
+      updatedHolesArray.push(currentHole);
+    } else {
+      updatedHolesArray.push({
+        ...currentHole,
+        latitude: action.holeDetails.latitude,
+        longitude: action.holeDetails.longitude,
+        newLat: '',
+        newLong: '',
+        newAccuracy: '',
+        isUpdateLoading: false,
+        isUpdating: false
+      });
+    }
+  });
+  return {
+    ...state,
+    currentScorecard: {
+      ...state.currentScorecard,
+      holesArray: updatedHolesArray
+    }
+  };
+};
+
+const updateHoleDetailFail = (state, action) => {
+  return state;
 };
 
 const reducer = (state = initialState, action) => {
@@ -421,6 +488,18 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false
       };
+
+    case actionTypes.UPDATE_HOLE_DETAIL_LOCAL:
+      return updateHoleDetailLocal(state, action);
+
+    case actionTypes.UPDATE_HOLE_DETAIL_START:
+      return updateHoleDetailStart(state, action);
+
+    case actionTypes.UPDATE_HOLE_DETAIL_SUCCESS:
+      return updateHoleDetailSuccess(state, action);
+
+    case actionTypes.UPDATE_HOLE_DETAIL_FAIL:
+      return updateHoleDetailFail(state, action);
 
     default:
       return state;
