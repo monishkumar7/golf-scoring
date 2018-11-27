@@ -307,7 +307,9 @@ const updateHoleDetailLocal = (state, action) => {
         ...currentHole,
         newLat: action.holeDetails.lat ? action.holeDetails.lat : '',
         newLong: action.holeDetails.long ? action.holeDetails.long : '',
-        newAccuracy: action.holeDetails.accuracy,
+        newAccuracy: action.holeDetails.accuracy
+          ? action.holeDetails.accuracy
+          : '',
         isUpdateLoading: action.holeDetails.isUpdateLoading,
         isUpdating: action.holeDetails.isUpdating
       });

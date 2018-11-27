@@ -35,6 +35,7 @@ const theme = createMuiTheme({
     }
   },
   typography: {
+    useNextVariants: true,
     fontFamily: ['Open Sans', 'sans-serif'].join(',')
   }
 });

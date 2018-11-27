@@ -17,35 +17,79 @@ const styles = () => ({
 
 const holeLocation = props => {
   const { classes } = props;
+  let accuracyContent = '';
+  if (props.newAccuracy <= 30) {
+    accuracyContent = (
+      <ValueLine
+        title="Location Accuracy"
+        value={props.newAccuracy + ' yards'}
+        color="green"
+      />
+    );
+  } else if (props.newAccuracy > 30 && props.newAccuracy <= 100) {
+    accuracyContent = (
+      <ValueLine
+        title="Location Accuracy"
+        value={props.newAccuracy + ' yards'}
+        color="#ff9d00"
+      />
+    );
+  } else {
+    accuracyContent = (
+      <ValueLine
+        title="Location Accuracy"
+        value={props.newAccuracy + ' yards'}
+        color="red"
+      />
+    );
+  }
   const latAction = props.isUpdating ? (
     <Fragment>
-      <ValueLine title="New Lat" value={props.newLat} />
-      <ValueLine title="New Long" value={props.newLong} />
+      <ValueLine
+        title="New Latitude"
+        strikethrough
+        oldTitle="Old Latitude"
+        oldValue={props.latitude}
+        value={props.newLat}
+      />
+      <ValueLine
+        title="New Longitude"
+        strikethrough
+        oldTitle="Old Longitude"
+        oldValue={props.longitude}
+        value={props.newLong}
+      />
+      {accuracyContent}
       <Grid container justify="space-between">
+        {props.newAccuracy > 30 ? (
+          <Grid item xs={12} style={{ textAlign: 'center', margin: '0 0 1em' }}>
+            <Button variant="outlined" onClick={props.updateLocal}>
+              Get Location Again
+            </Button>
+          </Grid>
+        ) : (
+          ''
+        )}
         <Grid item>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={props.cancelUpdate}
-          >
+          <Button variant="outlined" onClick={props.cancelUpdate}>
             Cancel
           </Button>
         </Grid>
         <Grid item>
           <Button
-            variant="outlined"
+            variant="contained"
             color="primary"
             onClick={props.confirmUpdate}
           >
-            Confirm
+            Confirm Update
           </Button>
         </Grid>
       </Grid>
     </Fragment>
   ) : (
     <Fragment>
-      <ValueLine title="Lat" value={props.latitude} />
-      <ValueLine title="Long" value={props.longitude} />
+      <ValueLine title="Latitude" value={props.latitude} />
+      <ValueLine title="Longitude" value={props.longitude} />
       <Button
         variant="outlined"
         color="primary"
@@ -64,15 +108,15 @@ const holeLocation = props => {
           <Grid container justify="space-between" alignItems="center">
             <Grid item>
               <Typography
-                component="h3"
-                variant="subheading"
+                component="h2"
+                variant="h2"
                 className={classes.cardTitle}
               >
                 Hole
               </Typography>
             </Grid>
             <Grid item>
-              <Typography component="h1" variant="title">
+              <Typography component="h1" variant="h1">
                 {props.holeNumber}
               </Typography>
             </Grid>
